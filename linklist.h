@@ -2,11 +2,14 @@
 #define _LINKLIST_H
 
 struct nlist {  char string[MAXKVAL];     /* list struct for HIDE items   */
+			  int len;
               struct nlist *next; };
 typedef struct nlist *NLISTPTR;
 
 struct glist {  char string[MAXKVAL];     /* list struct for GROUP items  */
                 char name[MAXKVAL];
+				int len;
+				int nlen;
               struct glist *next; };
 typedef struct glist *GLISTPTR;
 
@@ -42,8 +45,8 @@ extern NLISTPTR omit_page     ;               /* pages not counted         */
 extern NLISTPTR page_prefix   ;               /* page view prefixes        */
 extern GLISTPTR search_list   ;               /* Search engine list        */
 
-extern char     *isinlist(NLISTPTR, char *);        /* scan list for str   */
-extern char     *isinglist(GLISTPTR, char *);       /* scan glist for str  */
+extern char     *isinlist(NLISTPTR, char *,int len);        /* scan list for str   */
+extern char     *isinglist(GLISTPTR, char *,int *len);       /* scan glist for str  */
 extern int      add_nlist(char *, NLISTPTR *);      /* add list item       */
 extern int      add_glist(char *, GLISTPTR *);      /* add group list item */
 

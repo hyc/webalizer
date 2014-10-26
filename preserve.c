@@ -56,6 +56,8 @@
 #include "parser.h"
 #include "preserve.h"
 
+extern char *strncopy(char *a, const char *b, size_t n);
+
 struct hist_rec hist[HISTSIZE];              /* history structure array   */
 
 /*********************************************/
@@ -533,7 +535,7 @@ int save_state()
 int restore_state()
 {
    FILE *fp;
-   int  i;
+   int  i, len;
    struct hnode t_hnode;         /* Temporary hash nodes */
    struct unode t_unode;
    struct rnode t_rnode;
@@ -543,6 +545,7 @@ int restore_state()
 
    char         buffer[BUFSIZE];
    char         tmp_buf[BUFSIZE];
+   char *et;
 
    u_int64_t    ul_bogus=0;
 
@@ -645,8 +648,9 @@ int restore_state()
    while ((fgets(buffer,BUFSIZE,fp)) != NULL)
    {
       if (!strncmp(buffer,"# End Of Table ",15)) break;
-      strncpy(tmp_buf,buffer,MAXURLH);
-      tmp_buf[strlen(tmp_buf)-1]=0;
+      et = strncopy(tmp_buf,buffer,MAXURLH);
+	  *--et = 0;
+	  len = et - tmp_buf;
 
       if ((fgets(buffer,BUFSIZE,fp)) == NULL) return 10;  /* error exit */
       if (!isdigit((unsigned char)buffer[0])) return 10;  /* error exit */
@@ -658,7 +662,7 @@ int restore_state()
          &t_unode.entry, &t_unode.exit);
 
       /* Good record, insert into hash table */
-      if (put_unode(tmp_buf,t_unode.flag,t_unode.count,
+      if (put_unode(tmp_buf,len,t_unode.flag,t_unode.count,
          t_unode.xfer,&ul_bogus,t_unode.entry,t_unode.exit,um_htab))
       {
          if (verbose)
@@ -676,8 +680,9 @@ int restore_state()
    {
       /* Check for end of table */
       if (!strncmp(buffer,"# End Of Table ",15)) break;
-      strncpy(tmp_buf,buffer,MAXHOST);
-      tmp_buf[strlen(buffer)-1]=0;
+      et = strncopy(tmp_buf,buffer,MAXHOST);
+	  *--et = 0;
+	  len = et - tmp_buf;
 
       if ((fgets(buffer,BUFSIZE,fp)) == NULL) return 8;  /* error exit */
       if (!isdigit((unsigned char)buffer[0])) return 8;  /* error exit */
@@ -693,14 +698,15 @@ int restore_state()
       if (buffer[0]=='-') t_hnode.lasturl=blank_str;
       else
       {
-         buffer[strlen(buffer)-1]=0;
-         t_hnode.lasturl=find_url(buffer);
+	     t_hnode.llen = strlen(buffer)-1;
+         buffer[t_hnode.llen]=0;
+         t_hnode.lasturl=find_url(buffer,&t_hnode.llen);
       }
 
       /* Good record, insert into hash table */
-      if (put_hnode(tmp_buf,t_hnode.flag,
+      if (put_hnode(tmp_buf,len,t_hnode.flag,
          t_hnode.count,t_hnode.files,t_hnode.xfer,&ul_bogus,
-         t_hnode.visit+1,t_hnode.tstamp,t_hnode.lasturl,sm_htab))
+         t_hnode.visit+1,t_hnode.tstamp,t_hnode.lasturl,t_hnode.llen,sm_htab))
       {
          /* Error adding host node (monthly), skipping .... */
          if (verbose) fprintf(stderr,"%s %s\n",msg_nomem_mh, t_hnode.string);
@@ -716,8 +722,9 @@ int restore_state()
    {
       /* Check for end of table */
       if (!strncmp(buffer,"# End Of Table ",15)) break;
-      strncpy(tmp_buf,buffer,MAXHOST);
-      tmp_buf[strlen(buffer)-1]=0;
+      et = strncopy(tmp_buf,buffer,MAXHOST);
+	  *--et = 0;
+	  len = et - tmp_buf;
 
       if ((fgets(buffer,BUFSIZE,fp)) == NULL) return 9;  /* error exit */
       if (!isdigit((unsigned char)buffer[0])) return 9;  /* error exit */
@@ -733,14 +740,15 @@ int restore_state()
       if (buffer[0]=='-') t_hnode.lasturl=blank_str;
       else
       {
-         buffer[strlen(buffer)-1]=0;
-         t_hnode.lasturl=find_url(buffer);
+	     t_hnode.llen = strlen(buffer)-1;
+         buffer[t_hnode.llen]=0;
+         t_hnode.lasturl=find_url(buffer,&t_hnode.llen);
       }
 
       /* Good record, insert into hash table */
-      if (put_hnode(tmp_buf,t_hnode.flag,
+      if (put_hnode(tmp_buf,len,t_hnode.flag,
          t_hnode.count,t_hnode.files,t_hnode.xfer,&ul_bogus,
-         t_hnode.visit+1,t_hnode.tstamp,t_hnode.lasturl,sd_htab))
+         t_hnode.visit+1,t_hnode.tstamp,t_hnode.lasturl,t_hnode.llen,sd_htab))
       {
          /* Error adding host node (daily), skipping .... */
          if (verbose) fprintf(stderr,"%s %s\n",msg_nomem_dh, t_hnode.string);
@@ -755,8 +763,9 @@ int restore_state()
    while ((fgets(buffer,BUFSIZE,fp)) != NULL)
    {
       if (!strncmp(buffer,"# End Of Table ",15)) break;
-      strncpy(tmp_buf,buffer,MAXREFH);
-      tmp_buf[strlen(buffer)-1]=0;
+      et = strncopy(tmp_buf,buffer,MAXREFH);
+	  *--et = 0;
+	  len = et - tmp_buf;
 
       if ((fgets(buffer,BUFSIZE,fp)) == NULL) return 11;  /* error exit */
       if (!isdigit((unsigned char)buffer[0])) return 11;  /* error exit */
@@ -765,7 +774,7 @@ int restore_state()
       sscanf(buffer,"%d %llu",&t_rnode.flag,&t_rnode.count);
 
       /* insert node */
-      if (put_rnode(tmp_buf,t_rnode.flag,
+      if (put_rnode(tmp_buf,len,t_rnode.flag,
          t_rnode.count, &ul_bogus, rm_htab))
       {
          if (verbose) fprintf(stderr,"%s %s\n", msg_nomem_r, log_rec.refer);
@@ -780,8 +789,9 @@ int restore_state()
    while ((fgets(buffer,BUFSIZE,fp)) != NULL)
    {
       if (!strncmp(buffer,"# End Of Table ",15)) break;
-      strncpy(tmp_buf,buffer,MAXAGENT);
-      tmp_buf[strlen(buffer)-1]=0;
+      et = strncopy(tmp_buf,buffer,MAXAGENT);
+	  *--et = 0;
+	  len = et - tmp_buf;
 
       if ((fgets(buffer,BUFSIZE,fp)) == NULL) return 12;  /* error exit */
       if (!isdigit((unsigned char)buffer[0])) return 12;  /* error exit */
@@ -790,7 +800,7 @@ int restore_state()
       sscanf(buffer,"%d %llu",&t_anode.flag,&t_anode.count);
 
       /* insert node */
-      if (put_anode(tmp_buf,t_anode.flag,t_anode.count,
+      if (put_anode(tmp_buf,len,t_anode.flag,t_anode.count,
          &ul_bogus,am_htab))
       {
          if (verbose) fprintf(stderr,"%s %s\n", msg_nomem_a, log_rec.agent);
@@ -805,8 +815,9 @@ int restore_state()
    while ((fgets(buffer,BUFSIZE,fp)) != NULL)
    {
       if (!strncmp(buffer,"# End Of Table ",15)) break;
-      strncpy(tmp_buf,buffer,MAXSRCH);
-      tmp_buf[strlen(buffer)-1]=0;
+      et = strncopy(tmp_buf,buffer,MAXSRCH);
+	  *--et = 0;
+	  len = et - tmp_buf;
 
       if ((fgets(buffer,BUFSIZE,fp)) == NULL) return 13;  /* error exit */
       if (!isdigit((unsigned char)buffer[0])) return 13;  /* error exit */
@@ -815,7 +826,7 @@ int restore_state()
       sscanf(buffer,"%llu",&t_snode.count);
 
       /* insert node */
-      if (put_snode(tmp_buf,t_snode.count,sr_htab))
+      if (put_snode(tmp_buf,len,t_snode.count,sr_htab))
       {
          if (verbose) fprintf(stderr,"%s %s\n", msg_nomem_sc, t_snode.string);
       }
@@ -830,8 +841,9 @@ int restore_state()
    {
       /* Check for end of table */
       if (!strncmp(buffer,"# End Of Table ",15)) break;
-      strncpy(tmp_buf,buffer,MAXIDENT);
-      tmp_buf[strlen(buffer)-1]=0;
+      et = strncopy(tmp_buf,buffer,MAXIDENT);
+	  *--et = 0;
+	  len = et - tmp_buf;
 
       if ((fgets(buffer,BUFSIZE,fp)) == NULL) return 14;  /* error exit */
       if (!isdigit((unsigned char)buffer[0])) return 14;  /* error exit */
@@ -843,7 +855,7 @@ int restore_state()
          &t_inode.visit, &t_inode.tstamp);
 
       /* Good record, insert into hash table */
-      if (put_inode(tmp_buf,t_inode.flag,
+      if (put_inode(tmp_buf,len,t_inode.flag,
          t_inode.count,t_inode.files,t_inode.xfer,&ul_bogus,
          t_inode.visit+1,t_inode.tstamp,im_htab))
       {

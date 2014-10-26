@@ -94,18 +94,19 @@ int bz2_rewind(void **, char *, char *);
 /* internal function prototypes */
 
 void    clear_month();                              /* clear monthly stuff */
-char    *unescape(char *);                          /* unescape URLs       */
+int     unescape(char *);                           /* unescape URLs       */
 void    print_opts(char *);                         /* print options       */
 void    print_version();                            /* duhh...             */
 int     isurlchar(unsigned char, int);              /* valid URL char fnc. */
 void    get_config(char *);                         /* Read a config file  */
 static  char *save_opt(char *);                     /* save conf option    */
 void    srch_string(char *);                        /* srch str analysis   */
-char	*get_domain(char *);                        /* return domain name  */
+char	*get_domain(char *,int *);                  /* return domain name  */
 void    agent_mangle(char *);                       /* reformat user agent */
-char    *our_gzgets(void *, char *, int);           /* our gzgets          */
+static  fgets_func our_gzgets;                      /* our gzgets          */
 int     ouricmp(char *, char *);                    /* case ins. compare   */
 int     isipaddr(char *);                           /* is IP address test  */
+fgets_func *ourget;
 
 /*********************************************/
 /* GLOBAL VARIABLES                          */
@@ -245,6 +246,7 @@ struct     log_struct log_rec;                /* expanded log storage     */
 
 void       *zlog_fp;                          /* compressed logfile ptr   */
 FILE       *log_fp;                           /* regular logfile pointer  */
+void       *our_fp;                           /* current logfile ptr      */
 
 char       buffer[BUFSIZE];                   /* log file record buffer   */
 char       tmp_buf[BUFSIZE];                  /* used to temp save above  */
@@ -408,7 +410,7 @@ int main(int argc, char *argv[])
       {
          add_nlist("htm*"  ,&page_type); /* if no page types specified, we  */
          add_nlist("cgi"   ,&page_type); /* use the default ones here...    */
-         if (!isinlist(page_type,html_ext)) add_nlist(html_ext,&page_type);
+         if (!isinlist(page_type,html_ext,4)) add_nlist(html_ext,&page_type);
       }
       else add_nlist("txt" ,&page_type); /* FTP logs default to .txt        */
    }
@@ -514,6 +516,7 @@ int main(int argc, char *argv[])
             fprintf(stderr, "%s %s (%d)\n",msg_log_err,log_fname,ENOENT);
             exit(ENOENT);
          }
+		 our_fp = zlog_fp;
       }
       else
       {
@@ -525,7 +528,10 @@ int main(int argc, char *argv[])
             fprintf(stderr, "%s %s\n",msg_log_err,log_fname);
             exit(1);
          }
+		 our_fp = log_fp;
       }
+   } else {
+      our_fp = stdin;
    }
 
    /* Using logfile ... */
@@ -575,7 +581,7 @@ int main(int argc, char *argv[])
       /* DNS Lookup (#children): */
       if (verbose>1) printf("%s (%d): ",msg_dns_rslv,dns_children);
       fflush(stdout);
-      (gz_log)?dns_resolver(zlog_fp):dns_resolver(log_fp);
+	  dns_resolver(our_fp);
 #ifdef USE_BZIP
       (gz_log==COMP_BZIP)?bz2_rewind(&zlog_fp, log_fname, "rb"):
 #endif
@@ -678,11 +684,12 @@ int main(int argc, char *argv[])
    /* MAIN PROCESS LOOP - read through log file */
    /*********************************************/
 
-   while ( (gz_log)?(our_gzgets(zlog_fp,buffer,BUFSIZE) != Z_NULL):
-           (fgets(buffer,BUFSIZE,log_fname?log_fp:stdin) != NULL))
+   ourget = gz_log ? our_gzgets : fgets;
+   while ( ourget(buffer,BUFSIZE,our_fp) != NULL )
    {
+      int len = strlen(buffer);
       total_rec++;
-      if (strlen(buffer) == (BUFSIZE-1))
+      if (len == (BUFSIZE-1))
       {
          if (verbose)
          {
@@ -694,10 +701,10 @@ int main(int argc, char *argv[])
          total_bad++;                     /* bump bad record counter      */
 
          /* get the rest of the record */
-         while ( (gz_log)?(our_gzgets(zlog_fp,buffer,BUFSIZE)!=Z_NULL):
-                 (fgets(buffer,BUFSIZE,log_fname?log_fp:stdin)!=NULL))
+         while ( ourget(buffer,BUFSIZE,our_fp) != NULL )
          {
-            if (strlen(buffer) < BUFSIZE-1)
+		    len = strlen(buffer);
+            if (len < BUFSIZE-1)
             {
                if (debug_mode && verbose) fprintf(stderr,"%s\n",buffer);
                break;
@@ -709,7 +716,7 @@ int main(int argc, char *argv[])
 
       /* got a record... */
       strcpy(tmp_buf, buffer);            /* save buffer in case of error */
-      if (parse_record(buffer))           /* parse the record             */
+      if (parse_record(buffer, len))      /* parse the record             */
       {
          /*********************************************/
          /* PASSED MINIMAL CHECKS, DO A LITTLE MORE   */
@@ -818,12 +825,16 @@ int main(int argc, char *argv[])
          /*********************************************/
 
          /* un-escape URL */
-         unescape(log_rec.url);
+         log_rec.urllen = unescape(log_rec.url);
 
          /* fix URL field */
          cp1 = cp2 = log_rec.url;
          /* handle null '-' case here... */
-         if (*++cp1 == '-') strcpy(log_rec.url,"/INVALID-URL");
+         if (*++cp1 == '-')
+		 {
+		   strcpy(log_rec.url,"/INVALID-URL");
+		   log_rec.urllen=sizeof("/INVALID-URL")-1;
+		 }
          else
          {
             /* strip actual URL out of request */
@@ -836,16 +847,17 @@ int main(int argc, char *argv[])
                while (( *cp1=='/') && (*(cp1+1)=='/')) cp1++;
                while (( *cp1!='\0')&&(*cp1!='"')) *cp2++=*cp1++;
                *cp2='\0';
+			   log_rec.urllen = cp2 - log_rec.url;
             }
          }
 
          /* strip query portion of cgi scripts */
          cp1 = log_rec.url;
          while (*cp1 != '\0')
-           if (!isurlchar(*cp1, stripcgi)) { *cp1 = '\0'; break; }
+           if (!isurlchar(*cp1, stripcgi)) { *cp1 = '\0'; log_rec.urllen = cp1 - log_rec.url; break; }
            else cp1++;
          if (log_rec.url[0]=='\0')
-           { log_rec.url[0]='/'; log_rec.url[1]='\0'; }
+           { log_rec.url[0]='/'; log_rec.url[1]='\0'; log_rec.urllen = 1; }
 
          /* Normalize URL */
          if (log_type==LOG_CLF && log_rec.resp_code!=RC_NOTFOUND && normalize)
@@ -858,10 +870,12 @@ int main(int argc, char *argv[])
                else cp1=cp2;
                /* Ok, now shift url string          */
                cp2=log_rec.url; while (*cp1!='\0') *cp2++=*cp1++; *cp2='\0';
+			   log_rec.urllen = cp2 - log_rec.url;
             }
             /* extra sanity checks on URL string */
             while ((cp2=strstr(log_rec.url,"/./")))
-               { cp1=cp2+2; while (*cp1!='\0') *cp2++=*cp1++; *cp2='\0'; }
+               { cp1=cp2+2; while (*cp1!='\0') *cp2++=*cp1++; *cp2='\0';
+			     log_rec.urllen = cp2 - log_rec.url;}
             if (log_rec.url[0]!='/')
             {
                if ( log_rec.resp_code==RC_OK             ||
@@ -872,16 +886,20 @@ int main(int argc, char *argv[])
                      fprintf(stderr,"Converted URL '%s' to '/'\n",log_rec.url);
                   log_rec.url[0]='/';
                   log_rec.url[1]='\0';
+				  log_rec.urllen = 1;
                }
                else
                {
                   if (debug_mode)
                      fprintf(stderr,"Invalid URL: '%s'\n",log_rec.url);
                   strcpy(log_rec.url,"/INVALID-URL");
+				  log_rec.urllen = sizeof("/INVALID-URL")-1;
                }
             }
-            while ( log_rec.url[ (i=strlen(log_rec.url)-1) ] == '?' )
+            while ( log_rec.url[ (i=log_rec.urllen-1) ] == '?' ) {
                log_rec.url[i]='\0';   /* drop trailing ?s if any */
+			   log_rec.urllen = i;
+			}
          }
          else
          {
@@ -908,6 +926,7 @@ int main(int argc, char *argv[])
                   if ( !stripcgi && (cp2=strchr(cp1,'?'))!=NULL )
                   { while(*cp2) *cp1++=*cp2++; *cp1='\0'; }
                   else *cp1='\0';
+				  log_rec.urllen = cp1 - log_rec.url;
                   break;
                }
             }
@@ -915,7 +934,7 @@ int main(int argc, char *argv[])
          }
 
          /* unescape referrer */
-         unescape(log_rec.refer);
+         log_rec.referlen = unescape(log_rec.refer);
 
          /* fix referrer field */
          cp1 = log_rec.refer;
@@ -930,6 +949,7 @@ int main(int argc, char *argv[])
                else *cp2++=*cp1++;
             }
             *cp3 = '\0';
+			log_rec.referlen = cp3 - log_rec.refer;
          }
 
          /* get query portion of cgi referrals */
@@ -943,13 +963,15 @@ int main(int argc, char *argv[])
                   /* Save query portion in log.rec.srchstr */
                   strncpy(log_rec.srchstr,(char *)cp1,MAXSRCH);
                   *cp1++='\0';
+				  log_rec.referlen = cp1 - log_rec.refer - 1;
                   break;
                }
                else cp1++;
             }
             /* handle null referrer */
             if (log_rec.refer[0]=='\0')
-              { log_rec.refer[0]='-'; log_rec.refer[1]='\0'; }
+              { log_rec.refer[0]='-'; log_rec.refer[1]='\0';
+			    log_rec.referlen = 1;}
          }
 
          /* if HTTP request, lowercase http://sitename/ portion */
@@ -974,19 +996,21 @@ int main(int argc, char *argv[])
          if (mangle_agent) agent_mangle(log_rec.agent);
 
          /* if necessary, shrink referrer to fit storage */
-         if (strlen(log_rec.refer)>=MAXREFH)
+         if (log_rec.referlen>=MAXREFH)
          {
             if (verbose) fprintf(stderr,"%s [%llu]\n",
                 msg_big_ref,total_rec);
             log_rec.refer[MAXREFH-1]='\0';
+			log_rec.referlen = MAXREFH-1;
          }
 
          /* if necessary, shrink URL to fit storage */
-         if (strlen(log_rec.url)>=MAXURLH)
+         if (log_rec.urllen>=MAXURLH)
          {
             if (verbose) fprintf(stderr,"%s [%llu]\n",
                 msg_big_req,total_rec);
             log_rec.url[MAXURLH-1]='\0';
+			log_rec.urllen = MAXURLH-1;
          }
 
          /* fix user agent field */
@@ -996,6 +1020,7 @@ int main(int argc, char *argv[])
          {
             while (*cp1 != '\0') { cp3 = cp2; *cp2++ = *cp1++; }
             *cp3 = '\0';
+			log_rec.agentlen = cp3 - log_rec.agent;
          }
          cp1 = log_rec.agent;    /* CHANGE !!! */
          while (*cp1 != 0)       /* get rid of more common _bad_ chars ;)   */
@@ -1003,21 +1028,22 @@ int main(int argc, char *argv[])
             if ( ((unsigned char)*cp1 < 32) ||
                  ((unsigned char)*cp1==127) ||
                  (*cp1=='<') || (*cp1=='>') )
-               { *cp1='\0'; break; }
+               { *cp1='\0'; log_rec.agentlen = cp1 - log_rec.agent; break; }
             else cp1++;
          }
 
          /* fix username if needed */
          if (log_rec.ident[0]==0)
-          {  log_rec.ident[0]='-'; log_rec.ident[1]='\0'; }
+          {  log_rec.ident[0]='-'; log_rec.ident[1]='\0'; log_rec.identlen = 1; }
          else
          {
             cp3=log_rec.ident;
             while ((unsigned char)*cp3>=32 && *cp3!='"') cp3++;
             *cp3='\0';
+			log_rec.identlen = cp3 - log_rec.ident;
          }
          /* unescape user name */
-         unescape(log_rec.ident);
+         log_rec.identlen = unescape(log_rec.ident);
 
          /********************************************/
          /* PROCESS RECORD                           */
@@ -1128,21 +1154,21 @@ int main(int argc, char *argv[])
             strncpy(log_rec.hostname,"Unknown",8);
 
          /* Ignore/Include check */
-         if ( (isinlist(include_sites,log_rec.hostname)==NULL) &&
-              (isinlist(include_urls,log_rec.url)==NULL)       &&
-              (isinlist(include_refs,log_rec.refer)==NULL)     &&
-              (isinlist(include_agents,log_rec.agent)==NULL)   &&
-              (isinlist(include_users,log_rec.ident)==NULL)    )
+         if ( (isinlist(include_sites,log_rec.hostname,log_rec.hnamelen)==NULL) &&
+              (isinlist(include_urls,log_rec.url,log_rec.urllen)==NULL)       &&
+              (isinlist(include_refs,log_rec.refer,log_rec.referlen)==NULL)     &&
+              (isinlist(include_agents,log_rec.agent,log_rec.agentlen)==NULL)   &&
+              (isinlist(include_users,log_rec.ident,log_rec.identlen)==NULL)    )
          {
-            if (isinlist(ignored_sites,log_rec.hostname)!=NULL)
+            if (isinlist(ignored_sites,log_rec.hostname,log_rec.hnamelen)!=NULL)
               { total_ignore++; continue; }
-            if (isinlist(ignored_urls,log_rec.url)!=NULL)
+            if (isinlist(ignored_urls,log_rec.url,log_rec.urllen)!=NULL)
               { total_ignore++; continue; }
-            if (isinlist(ignored_agents,log_rec.agent)!=NULL)
+            if (isinlist(ignored_agents,log_rec.agent,log_rec.agentlen)!=NULL)
               { total_ignore++; continue; }
-            if (isinlist(ignored_refs,log_rec.refer)!=NULL)
+            if (isinlist(ignored_refs,log_rec.refer,log_rec.referlen)!=NULL)
               { total_ignore++; continue; }
-            if (isinlist(ignored_users,log_rec.ident)!=NULL)
+            if (isinlist(ignored_users,log_rec.ident,log_rec.identlen)!=NULL)
               { total_ignore++; continue; }
          }
 
@@ -1201,7 +1227,7 @@ int main(int argc, char *argv[])
              (log_rec.resp_code==RC_PARTIALCONTENT))
          {
             /* URL hash table */
-            if (put_unode(log_rec.url,OBJ_REG,(u_int64_t)1,
+            if (put_unode(log_rec.url,log_rec.urllen,OBJ_REG,(u_int64_t)1,
                 log_rec.xfer_size,&t_url,(u_int64_t)0,(u_int64_t)0,um_htab))
             {
                if (verbose)
@@ -1210,7 +1236,7 @@ int main(int argc, char *argv[])
             }
 
             /* ident (username) hash table */
-            if (put_inode(log_rec.ident,OBJ_REG,
+            if (put_inode(log_rec.ident,log_rec.identlen,OBJ_REG,
                 1,(u_int64_t)i,log_rec.xfer_size,&t_user,
                 0,rec_tstamp,im_htab))
             {
@@ -1224,7 +1250,7 @@ int main(int argc, char *argv[])
          if (ntop_refs)
          {
             if (log_rec.refer[0]!='\0')
-             if (put_rnode(log_rec.refer,OBJ_REG,(u_int64_t)1,&t_ref,rm_htab))
+             if (put_rnode(log_rec.refer,log_rec.referlen,OBJ_REG,(u_int64_t)1,&t_ref,rm_htab))
              {
               if (verbose)
               fprintf(stderr,"%s %s\n", msg_nomem_r, log_rec.refer);
@@ -1232,9 +1258,9 @@ int main(int argc, char *argv[])
          }
 
          /* hostname (site) hash table - daily */
-         if (put_hnode(log_rec.hostname,OBJ_REG,
+         if (put_hnode(log_rec.hostname,log_rec.hnamelen,OBJ_REG,
              1,(u_int64_t)i,log_rec.xfer_size,&dt_site,
-             0,rec_tstamp,"",sd_htab))
+             0,rec_tstamp,"",0,sd_htab))
          {
             if (verbose)
             /* Error adding host node (daily), skipping .... */
@@ -1242,9 +1268,9 @@ int main(int argc, char *argv[])
          }
 
          /* hostname (site) hash table - monthly */
-         if (put_hnode(log_rec.hostname,OBJ_REG,
+         if (put_hnode(log_rec.hostname,log_rec.hnamelen,OBJ_REG,
              1,(u_int64_t)i,log_rec.xfer_size,&t_site,
-             0,rec_tstamp,"",sm_htab))
+             0,rec_tstamp,"",0,sm_htab))
          {
             if (verbose)
             /* Error adding host node (monthly), skipping .... */
@@ -1255,7 +1281,7 @@ int main(int argc, char *argv[])
          if (ntop_agents)
          {
             if (log_rec.agent[0]!='\0')
-             if (put_anode(log_rec.agent,OBJ_REG,(u_int64_t)1,&t_agent,am_htab))
+             if (put_anode(log_rec.agent,log_rec.agentlen,OBJ_REG,(u_int64_t)1,&t_agent,am_htab))
              {
               if (verbose)
               fprintf(stderr,"%s %s\n", msg_nomem_a, log_rec.agent);
@@ -1279,7 +1305,7 @@ int main(int argc, char *argv[])
          }
 
          /* Pages (pageview) calculation */
-         if (ispage(log_rec.url))
+         if (ispage(log_rec.url,log_rec.urllen))
          {
             t_page++;
             tm_page[rec_day-1]++;
@@ -1294,9 +1320,10 @@ int main(int argc, char *argv[])
          /*********************************************/
 
          /* URL Grouping */
-         if ( (cp1=isinglist(group_urls,log_rec.url))!=NULL)
+		 len = log_rec.urllen;
+         if ( (cp1=isinglist(group_urls,log_rec.url,&len))!=NULL)
          {
-            if (put_unode(cp1,OBJ_GRP,(u_int64_t)1,log_rec.xfer_size,
+            if (put_unode(cp1,len,OBJ_GRP,(u_int64_t)1,log_rec.xfer_size,
                 &ul_bogus,(u_int64_t)0,(u_int64_t)0,um_htab))
             {
                if (verbose)
@@ -1306,12 +1333,13 @@ int main(int argc, char *argv[])
          }
 
          /* Site Grouping */
-         if ( (cp1=isinglist(group_sites,log_rec.hostname))!=NULL)
+		 len = log_rec.hnamelen;
+         if ( (cp1=isinglist(group_sites,log_rec.hostname,&len))!=NULL)
          {
-            if (put_hnode(cp1,OBJ_GRP,1,
+            if (put_hnode(cp1,len,OBJ_GRP,1,
                           (u_int64_t)(log_rec.resp_code==RC_OK)?1:0,
                           log_rec.xfer_size,&ul_bogus,
-                          0,rec_tstamp,"",sm_htab))
+                          0,rec_tstamp,"",0,sm_htab))
             {
                if (verbose)
                /* Error adding Site node, skipping ... */
@@ -1323,13 +1351,14 @@ int main(int argc, char *argv[])
             /* Domain Grouping */
             if (group_domains)
             {
-               cp1 = get_domain(log_rec.hostname);
+			   len = log_rec.hnamelen;
+               cp1 = get_domain(log_rec.hostname,&len);
                if (cp1 != NULL)
                {
-                  if (put_hnode(cp1,OBJ_GRP,1,
+                  if (put_hnode(cp1,len,OBJ_GRP,1,
                       (u_int64_t)(log_rec.resp_code==RC_OK)?1:0,
                       log_rec.xfer_size,&ul_bogus,
-                      0,rec_tstamp,"",sm_htab))
+                      0,rec_tstamp,"",0,sm_htab))
                   {
                      if (verbose)
                      /* Error adding Site node, skipping ... */
@@ -1340,9 +1369,10 @@ int main(int argc, char *argv[])
          }
 
          /* Referrer Grouping */
-         if ( (cp1=isinglist(group_refs,log_rec.refer))!=NULL)
+		 len = log_rec.referlen;
+         if ( (cp1=isinglist(group_refs,log_rec.refer,&len))!=NULL)
          {
-            if (put_rnode(cp1,OBJ_GRP,(u_int64_t)1,&ul_bogus,rm_htab))
+            if (put_rnode(cp1,len,OBJ_GRP,(u_int64_t)1,&ul_bogus,rm_htab))
             {
                if (verbose)
                /* Error adding Referrer node, skipping ... */
@@ -1351,9 +1381,10 @@ int main(int argc, char *argv[])
          }
 
          /* User Agent Grouping */
-         if ( (cp1=isinglist(group_agents,log_rec.agent))!=NULL)
+		 len = log_rec.agentlen;
+         if ( (cp1=isinglist(group_agents,log_rec.agent,&len))!=NULL)
          {
-            if (put_anode(cp1,OBJ_GRP,(u_int64_t)1,&ul_bogus,am_htab))
+            if (put_anode(cp1,len,OBJ_GRP,(u_int64_t)1,&ul_bogus,am_htab))
             {
                if (verbose)
                /* Error adding User Agent node, skipping ... */
@@ -1362,9 +1393,10 @@ int main(int argc, char *argv[])
          }
 
          /* Ident (username) Grouping */
-         if ( (cp1=isinglist(group_users,log_rec.ident))!=NULL)
+		 len = log_rec.identlen;
+         if ( (cp1=isinglist(group_users,log_rec.ident,&len))!=NULL)
          {
-            if (put_inode(cp1,OBJ_GRP,1,
+            if (put_inode(cp1,len,OBJ_GRP,1,
                           (u_int64_t)(log_rec.resp_code==RC_OK)?1:0,
                           log_rec.xfer_size,&ul_bogus,
                           0,rec_tstamp,im_htab))
@@ -2004,12 +2036,12 @@ char *cur_time()
 /* ISPAGE - determine if an HTML page or not */
 /*********************************************/
 
-int ispage(char *str)
+int ispage(char *str,int len)
 {
    NLISTPTR t;
    char *cp1, *cp2;
 
-   if (isinlist(omit_page,str)!=NULL) return 0;
+   if (isinlist(omit_page,str,len)!=NULL) return 0;
 
    cp1=cp2=str;
    while (*cp1!='\0') { if (*cp1=='.') cp2=cp1; cp1++; }
@@ -2018,10 +2050,11 @@ int ispage(char *str)
    while(t!=NULL)
    {
       /* Check if a PagePrefix matches */
-      if(strncmp(str,t->string,strlen(t->string))==0) return 1;
+      if(len >= t->len && strncmp(str,t->string,t->len)==0) return 1;
       t=t->next;
    }
-   return (isinlist(page_type,cp2)!=NULL);
+   len -= cp2-str;
+   return (isinlist(page_type,cp2,len)!=NULL);
 }
 
 /*********************************************/
@@ -2088,12 +2121,12 @@ char from_hex(char c)                           /* convert hex to dec      */
 /* UNESCAPE - convert escape seqs to chars   */
 /*********************************************/
 
-char *unescape(char *str)
+int unescape(char *str)
 {
    unsigned char *cp1=(unsigned char *)str;     /* force unsigned so we    */
    unsigned char *cp2=cp1;                      /* can do > 127            */
 
-   if (!str) return NULL;                       /* make sure strings valid */
+   if (!str) return 0;                          /* make sure strings valid */
 
    while (*cp1)
    {
@@ -2112,7 +2145,7 @@ char *unescape(char *str)
       else *cp2++ = *cp1++;                     /* if not, just continue   */
    }
    *cp2=*cp1;                                   /* don't forget terminator */
-   return str;                                  /* return the string       */
+   return (char *)cp2-str;                      /* return the length       */
 }
 
 /*********************************************/
@@ -2137,10 +2170,11 @@ void srch_string(char *ptr)
    char tmpbuf[BUFSIZE];
    char srch[80]="";
    unsigned char *cp1, *cp2, *cps;
-   int  sp_flg=0;
+   int  sp_flg=0, len;
 
    /* Check if search engine referrer or return  */
-   if ( (cps=(unsigned char *)isinglist(search_list,log_rec.refer))==NULL)
+   len = log_rec.referlen;
+   if ( (cps=(unsigned char *)isinglist(search_list,log_rec.refer,&len))==NULL)
       return; 
 
    /* Try to find query variable */
@@ -2179,8 +2213,9 @@ void srch_string(char *ptr)
    /* strip invalid chars */
    cp1=cp2;
    while (*cp1!=0) { if ((*cp1<32)||(*cp1==127)) *cp1='_'; cp1++; }
+   len = cp1 - cp2;
 
-   if (put_snode((char *)cp2,(u_int64_t)1,sr_htab))
+   if (put_snode((char *)cp2,len,(u_int64_t)1,sr_htab))
    {
       if (verbose)
       /* Error adding search string node, skipping .... */
@@ -2193,13 +2228,13 @@ void srch_string(char *ptr)
 /* GET_DOMAIN - Get domain portion of host   */
 /*********************************************/
 
-char *get_domain(char *str)
+char *get_domain(char *str, int *len)
 {
    char *cp;
    int  i=group_domains+1;
 
    if (isipaddr(str)) return NULL;
-   cp = str+strlen(str)-1;
+   cp = str+(*len)-1;
 
    while (cp!=str)
    {
@@ -2207,6 +2242,7 @@ char *get_domain(char *str)
          if (!(--i)) return ++cp;
       cp--;
    }
+   *len -= cp - str;
    return cp;
 }
 
@@ -2352,7 +2388,7 @@ void agent_mangle(char *str)
 /* OUR_GZGETS - enhanced gzgets for log only */
 /*********************************************/
 
-char *our_gzgets(void *fp, char *buf, int size)
+char *our_gzgets(char *buf, int size, void *fp)
 {
    char *out_cp=buf;      /* point to output */
    while (1)

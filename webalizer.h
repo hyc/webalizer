@@ -135,6 +135,11 @@
 #endif  /* INADDR_NONE */
 #endif
 
+typedef struct lstr {
+	size_t	ls_size;
+	void	*ls_data;
+} lstr;
+
 /* Response code structure */
 struct response_code {     char    *desc;         /* code description     */
                       u_int64_t    count; };      /* hit counter          */
@@ -149,7 +154,8 @@ struct	country_code {u_int64_t idx;              /* TLD index number     */
 typedef struct country_code *CLISTPTR;
 
 /* log record structure */
-struct  log_struct  {  char   hostname[MAXHOST];  /* hostname             */
+struct  log_struct  {
+					   char   hostname[MAXHOST];  /* hostname             */
                        char   datetime[29];       /* raw timestamp        */
                        char   url[MAXURL];        /* raw request field    */
                         int   resp_code;          /* response code        */
@@ -157,7 +163,13 @@ struct  log_struct  {  char   hostname[MAXHOST];  /* hostname             */
                        char   refer[MAXREF];      /* referrer             */
                        char   agent[MAXAGENT];    /* user agent (browser) */
                        char   srchstr[MAXSRCH];   /* search string        */
-                       char   ident[MAXIDENT]; }; /* ident string (user)  */
+                       char   ident[MAXIDENT];    /* ident string (user)  */
+					   int hnamelen;
+					   int urllen;
+					   int referlen;
+					   int agentlen;
+					   int srchlen;
+					   int identlen; };
 
 extern struct log_struct log_rec;
 
@@ -294,9 +306,12 @@ extern char      *cur_time();
 extern u_int64_t ctry_idx(char *);
 extern char      *un_idx(u_int64_t);
 extern void      init_counters();
-extern int       ispage(char *);
+extern int       ispage(char *,int);
 extern u_int64_t jdate(int,int,int);
 extern char      from_hex(char);
 extern int       isipaddr(char *);
+
+typedef char *(fgets_func)(char *, int, void *);
+extern fgets_func *ourget;
 
 #endif  /* _WEBALIZER_H */

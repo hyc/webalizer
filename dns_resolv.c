@@ -68,6 +68,8 @@
 #include "parser.h"                            /* log parser functions     */
 #include "dns_resolv.h"                        /* our header               */
 
+extern void *our_fp;
+
 /* local data */
 
 DB       *dns_db   = NULL;                     /* DNS cache database       */
@@ -89,8 +91,6 @@ int      raiseSigChild = 1;
 time_t runtime;
 time_t start_time, end_time;
 float  temp_time;
-
-extern char *our_gzgets(void *, char *, int);  /* external our_gzgets func */
 
 /* internal function prototypes */
 
@@ -118,7 +118,7 @@ void resolve_dns(struct log_struct *log_rec)
    memset(&query, 0, sizeof(query));
    memset(&response, 0, sizeof(response));
    query.data = log_rec->hostname;
-   query.size = strlen(log_rec->hostname);
+   query.size = log_rec->hnamelen;
 
    if (debug_mode) fprintf(stderr,"Checking %s...", log_rec->hostname);
 
@@ -230,22 +230,22 @@ int dns_resolver(void *log_fp)
    verbose=0;
 
    /* Main loop to read log records (either regular or zipped) */
-   while ( (gz_log)?(our_gzgets((void *)log_fp,buffer,BUFSIZE) != Z_NULL):
-           (fgets(buffer,BUFSIZE,log_fname?(FILE *)log_fp:stdin) != NULL))
+   while ( ourget(buffer,BUFSIZE,our_fp) != NULL)
    {
-      if (strlen(buffer) == (BUFSIZE-1))
+	  int len = strlen(buffer);
+      if (len == (BUFSIZE-1))
       {
          /* get the rest of the record */
-         while ( (gz_log)?(our_gzgets((void *)log_fp,buffer,BUFSIZE)!=Z_NULL):
-                 (fgets(buffer,BUFSIZE,log_fname?(FILE *)log_fp:stdin)!=NULL))
+         while ( ourget(buffer,BUFSIZE,our_fp) != NULL)
          {
-            if (strlen(buffer) < BUFSIZE-1) break;
+		 	len = strlen(buffer);
+            if (len < BUFSIZE-1) break;
          }
          continue;                        /* go get next record if any    */
       }
 
       strcpy(tmp_buf, buffer);            /* save buffer in case of error */
-      if(parse_record(buffer))            /* parse the record             */
+      if(parse_record(buffer, len))       /* parse the record             */
       {
          struct addrinfo hints, *ares;
          memset(&hints, 0, sizeof(hints));
@@ -258,7 +258,7 @@ int dns_resolver(void *log_fp)
             memset(&q, 0, sizeof(q));
             memset(&r, 0, sizeof(r));
             q.data = log_rec.hostname;
-            q.size = strlen(log_rec.hostname);
+            q.size = log_rec.hnamelen;
 
             /* Check if we have it in DB */
             if ( (i=dns_db->get(dns_db, NULL, &q, &r, 0)) == 0 )
@@ -268,13 +268,13 @@ int dns_resolver(void *log_fp)
                if (alignedRecord.timeStamp != 0)
                   /* If it's not permanent, check if it's TTL has expired */
                   if ( (runtime-alignedRecord.timeStamp ) > (86400*cache_ttl) )
-                     put_dnode(log_rec.hostname, ares->ai_addr,
+                     put_dnode(log_rec.hostname, log_rec.hnamelen, ares->ai_addr,
                                ares->ai_addrlen,  host_table);
             }
             else
             {
                if (i==DB_NOTFOUND)
-                   put_dnode(log_rec.hostname, ares->ai_addr,
+                   put_dnode(log_rec.hostname, log_rec.hnamelen, ares->ai_addr,
                              ares->ai_addrlen, host_table);
             }
             freeaddrinfo(ares);
@@ -413,14 +413,16 @@ static void process_list(DNODEPTR l_list)
                   if(0 == getnameinfo((struct sockaddr*)child_buf, size,
                                      hbuf, sizeof(hbuf), NULL, 0, NI_NAMEREQD))
                   {
+				  	 size = strlen(hbuf);
                      /* must be at least 4 chars */
-                     if (strlen(hbuf)>3)
+                     if (size>3)
                      {
                         /* If long hostname, take max domain name part */
-                        if ((size = strlen(hbuf)) > MAXHOST-2)
+                        if (size > MAXHOST-2) {
                            strcpy(child_buf,(hbuf+(size-MAXHOST+1)));
+						   size = size - (size-MAXHOST+1);
+						}
                         else strcpy(child_buf, hbuf);
-                        size = strlen(child_buf);
                      }
                      else
                      {
