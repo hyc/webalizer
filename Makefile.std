@@ -1,0 +1,140 @@
+#
+# Makefile for webalizer - a web server logfile analysis thingie
+#
+# (c)1997-2013 by Bradford L. Barrett
+# Distributed under the GNU GPL. See "README" and "Copyright"
+# files supplied with this distribution for more information.
+#
+# This works on my Linux and Solaris systems, and should work
+# out of the box on other GCC based systems.  Tweek the values
+# below for your environment if needed before running make.
+#
+
+# Use these for SCO (and maybe others)
+#BINDIR = /usr/bin
+#MANDIR = /usr/man/man1
+#ETCDIR = /etc
+#CC     = cc
+#CFLAGS = -b elf
+#LDFLAGS= -L../usr/local/lib
+#LIBS   = -lgd -lm -lpng -lz
+#DEFS    = -DETCDIR=\"${ETCDIR}\" -DHAVE_MATH_H
+
+# These will build The Webalizer with DNS support
+# on my Linux system.  GD is statically built and
+# is located in the ../gd directory.  This system
+# also has a stock install of the berkeley db lib
+# (libdb in /usr/lib and db.h in /usr/include).
+
+BINDIR = /usr/local/bin
+MANDIR = /usr/local/man/man1
+ETCDIR = /etc
+CC     = gcc
+CFLAGS = -Wall -O2 -I../gd
+LDFLAGS= -L/usr/local/lib -L../gd
+LIBS   = -lgd -lpng -lz -lm -ldb
+DEFS   = -DETCDIR=\"${ETCDIR}\" -DHAVE_MATH_H -DUSE_DNS
+
+# Some might need this instead (Solaris?!?)
+#LIBS   = -lgd -lpng -lz -lm -ldb -lnsl -lsocket -lrt
+
+# if you want to use a different default directory for the
+# GeoDB database, add this to DEFS: -DGEODB_LOC=\"/usr/share/GeoDB\"
+
+# if you have header files in a non-standard place, you
+# should specify them on the CFLAGS line, like:
+
+#CFLAGS = -Wall -O2 -I../gd -I/src/bzip2
+
+# similar with library locations. add non-standard paths
+# using the LDFLAGS variable, like this:
+
+#LDFLAGS = -L/usr/local/lib -L/src/bzip2
+
+# If your GD lib was compiled with X/truetype, you may need
+# to use this or some variation of it:
+
+#LIBS   = -lgd -lpng -lz -lm -ldb -lX11 -lXpm -lttf
+
+# If you want bzip2 support, you need to define USE_BZIP
+# and add the bz2 library like below:
+
+#LIBS   = -lgd -lpng -lz -lm -lbz2
+#DEFS   = -DETCDIR=\"${ETCDIR}\" -DHAVE_MATH_H -DUSE_BZIP
+
+# GeoIP support?  You need USE_GEOIP and -lGeoIP
+
+#LIBS   = -lgd -lpng -lz -lm -lGeoIP
+#DEFS   = -DETCDIR=\"${ETCDIR}\" -DHAVE_MATH_H -DUSE_GEOIP
+
+# want it all?!? Give this a whirl:
+
+#LIBS   = -lgd -lpng -lz -lm -lGeoIP -lbz2 -ldb
+#DEFS   = -DETCDIR=\"${ETCDIR}\" -DHAVE_MATH_H -DUSE_GEOIP -DUSE_DNS -DUSE_BZIP
+
+# Shouldn't have to touch below here!
+
+all: webalizer wcmgr
+
+webalizer:	webalizer.o webalizer.h hashtab.o hashtab.h  \
+		linklist.o linklist.h preserve.o preserve.h  \
+                dns_resolv.o dns_resolv.h parser.o parser.h  \
+                output.o output.h graphs.o graphs.h lang.h   \
+		webalizer_lang.h
+	$(CC) ${LDFLAGS} -o webalizer webalizer.o hashtab.o linklist.o preserve.o parser.o output.o dns_resolv.o graphs.o ${LIBS}
+	rm -f webazolver
+	ln -s webalizer webazolver
+        rm -f webazolver.1
+        ln -s webalizer.1 webazolver.1
+
+webalizer.o:	webalizer.c webalizer.h parser.h output.h preserve.h \
+		graphs.h dns_resolv.h webalizer_lang.h
+	$(CC) ${CFLAGS} ${DEFS} -c webalizer.c
+
+parser.o:	parser.c parser.h webalizer.h lang.h
+	$(CC) ${CFLAGS} ${DEFS} -c parser.c
+
+hashtab.o:	hashtab.c hashtab.h dns_resolv.h webalizer.h lang.h
+	$(CC) ${CFLAGS} ${DEFS} -c hashtab.c
+
+linklist.o:	linklist.c linklist.h webalizer.h lang.h
+	$(CC) ${CFLAGS} ${DEFS} -c linklist.c
+
+output.o:	output.c output.h webalizer.h preserve.h \
+		hashtab.h graphs.h lang.h
+	$(CC) ${CFLAGS} ${DEFS} -c output.c
+
+preserve.o:	preserve.c preserve.h webalizer.h parser.h   \
+		hashtab.h graphs.h lang.h
+	$(CC) ${CFLAGS} ${DEFS} -c preserve.c
+
+dns_resolv.o:	dns_resolv.c dns_resolv.h lang.h webalizer.h
+	$(CC) ${CFLAGS} ${DEFS} -c dns_resolv.c
+
+graphs.o:	graphs.c graphs.h webalizer.h lang.h
+	$(CC) ${CFLAGS} ${DEFS} -c graphs.c
+
+wcmgr:	wcmgr.o
+	$(CC) ${LDFLAGS} -o wcmgr wcmgr.o ${LIBS}
+
+wcmgr.o:	wcmgr.c webalizer.h
+	$(CC) ${CFLAGS} ${DEFS} -c wcmgr.c
+
+clean:
+	rm -f webalizer *.o usage*.png daily*.png hourly*.png ctry*.png
+	rm -f *.html *.hist *.current core *.gif
+
+distclean: clean
+	rm -f webalizer.conf *.tar *.tgz *.Z *.tar.gz
+	rm -f Makefile webalizer_lang.h config.cache config.log config.status
+	ln -s lang/webalizer_lang.english webalizer_lang.h
+
+install: all
+	cp webalizer.1 ${MANDIR}/webalizer.1
+	cp webalizer   ${BINDIR}/webalizer
+	cp sample.conf ${ETCDIR}/webalizer.conf.sample
+
+uninstall:
+	rm -f ${MANDIR}/webalizer.1
+	rm -f ${BINDIR}/webalizer
+	rm -f ${BINDIR}/webalizer.conf.sample

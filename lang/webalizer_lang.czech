@@ -1,0 +1,640 @@
+/*
+   webalizer_lang.czech
+
+   Webalizer V2.0x Language Support file for Czech.
+   15-May-1998 by Bradford L. Barrett (brad@mrunix.net)
+   31-May-1998 Modified for level 1.1 support (brad@mrunix.net)
+   23-Jul-1998 Modified for level 1.2 support (brad@mrunix.net)
+   15-Oct-1998 Translation by Jiri T. Pelech (pes@inway.cz)
+   08-Mar-1999 Updated HTTP 1.1 response codes by Yves Lafon (ylafon@w3.org)
+   28-Jun-1999 Modified for level 1.3 support (brad@mrunix.net)
+   22-Feb-2000 Modified for level 2.0 support (brad@mrunix.net)
+   07-Jun-2000 translation added words (Jindrich.Fucik@sh.cvut.cz)
+   28-Mar-2002 Fixes/corrections by Pavel Kolesnikov (k@les.cz)
+   26-Mar-2008 Updated to current IANA TLDs (brad@mrunix.net)
+   26-May-2008 Modified for level 2.2 support (brad@mrunix.net)
+   30-Mar-2009 translations/fixes by Vitezslav Samel (vita@samel.cz)
+
+
+   Language files are named using the following convention:
+
+   webalizer_lang.LANGUAGE
+
+   where 'LANGUAGE' is the name of the language the file is
+   translated into (ie: webalizer_lang.russian for russian).
+   Either copy the desired language file to webalizer_lang.h
+   or create a symbolic link, then re-compile.
+
+   If you translate this file into a different language, please
+   send a copy to brad@mrunix.net.
+
+*/
+
+/***********************************************************************/
+/* DEFINE LANGUAGE NAME here                                           */
+/***********************************************************************/
+
+char *language  = "Czech";
+char *langcode  = "cs";
+
+/***********************************************************************/
+/*                                                                     */
+/* Informational messages                                              */
+/*                                                                     */
+/* These messages are only displayed while The Webalizer is being run, */
+/* usually to the screen, and are not part of the HTML output.         */
+/*                                                                     */
+/***********************************************************************/
+
+/* these are only used in timing totals */
+/* Format:   XXX records (XXX ignored, XXX bad) in X.XX seconds        */
+char *msg_records = "zaznamu";
+char *msg_addresses="adres";
+char *msg_ignored = "ignorovano";
+char *msg_bad     = "chybnych";
+char *msg_in      = "za";
+char *msg_seconds = "vterin";
+
+/* progress and setup error messages */
+char *msg_log_err = "Chyba: Nemohu otevrit log soubor";
+char *msg_log_use = "Pouzivam log soubor";
+char *msg_dir_err = "Chyba: Nemohu prejit do adresare";
+char *msg_dir_use = "Vytvarim vystup v";
+char *msg_cur_dir = "aktualnim adresari";
+char *msg_hostname= "Jmeno pocitace pro sestavy je";
+char *msg_ign_hist= "Ignoruji predchozi historii...";
+char *msg_no_hist = "Nemohu najit soubor historie...";
+char *msg_get_hist= "Ctu soubor historie...";
+char *msg_put_hist= "Ukladam soubor historie...";
+char *msg_hist_err= "Chyba: Nemohu zapsat soubor historie";
+char *msg_bad_hist= "Chyba: Ignoruji chybny zaznam v historii";
+char *msg_bad_conf= "Chyba: Nemohu otevrit konfiguracni soubor";
+char *msg_bad_key = "Pozor: Neplatne klicove slovo";
+char *msg_bad_date= "Chyba: Preskakuji zaznam (spatne datum)";
+char *msg_ign_nscp= "Preskakuji hlavickovy zaznam z Netscape";
+char *msg_bad_rec = "Preskakuji spatny zaznam";
+char *msg_no_vrec = "Nenalezeny platne zaznamy!";
+char *msg_gen_rpt = "Vytvarim sestavu pro";
+char *msg_gen_sum = "Vytvarim sumarni sestavu";
+char *msg_get_data= "Ctu udaje z minuleho zpracovani...";
+char *msg_put_data= "Ukladam udaje aktualniho zpracovani...";
+char *msg_no_data = "Nemohu najit udaje z minuleho zpracovani...";
+/*char *msg_bad_data= "Neplatny datovy zaznam"; */
+char *msg_bad_data= "Chyba: Nemohu obnovit data aktualniho zpracovani";
+char *msg_data_err= "Chyba: Nemohu ulozit udaje aktualniho zpracovani";
+char *msg_dup_data= "Pozor: Nalezeny pravdepodobne duplicitni udaje";
+
+/* DNS Stuff */
+char *msg_dns_nocf= "Nejsou specifikovany zadne cache soubory, koncim...";
+char *msg_dns_nodb= "Chyba: Nemohu otevrit soubory DNS cache";
+char *msg_dns_nolk= "Chyba: Nemohu zamknout soubory DNS cache";
+char *msg_dns_usec= "Pouzivam soubory DNS cache";
+char *msg_dns_rslv= "DNS Kontrola";
+char *msg_dns_none= "Neni co zpracovat";
+char *msg_dns_abrt= "Neni podpora pro DNS, koncim...";
+
+/* Geolocation stuff */
+char *msg_geo_open= "Nemohu otevrit soubor";
+char *msg_geo_use = "Pouzivam";
+char *msg_geo_nolu= "vyhledavani vypnuto";
+char *msg_geo_dflt= "default";
+
+/* memory allocation errors */
+char *msg_nomem_ts= "Nemohu alokovat dost pameti, Nej mista jsou nefunkcni!";
+char *msg_nomem_tr= "Nemohu alokovat dost pameti, Nej odkazovace jsou nefunkcni!";
+char *msg_nomem_tu= "Nemohu alokovat dost pameti, Nej URL jsou nefunkcni!";
+char *msg_nomem_tc= "Nemohu alokovat dost pameti, Nej zeme jsou nefunkcni!";
+char *msg_nomem_ta= "Nemohu alokovat dost pameti, Nej prohlizece jsou nefunkcni!";
+char *msg_nomem_tsr="Nemohu alokovat dost pameti, Nej hledane retezce jsou nefunkcni!";
+char *msg_nomem_ti= "Nemohu alokovat dost pameti, Nej uzivatele jsou nefunkcni!";
+char *msg_nomem_dh= "Chyba doplneni bloku pocitace (denni), preskakuji";
+char *msg_nomem_mh= "Chyba doplneni bloku pocitace (mesicni), preskakuji";
+char *msg_nomem_u = "Chyba doplneni bloku URL, preskakuji";
+char *msg_nomem_a = "Chyba doplneni bloku prohlizece, preskakuji";
+char *msg_nomem_r = "Chyba doplneni bloku odkazovace, preskakuji";
+char *msg_nomem_sc= "Chyba doplneni hledanych retezcu, preskakuji";
+char *msg_nomem_i = "Chyba doplneni uzivatelu, preskakuji";
+
+/* log record errors */
+char *msg_big_rec = "Chyba: Preskakuji prilis dlouhy zaznam v logu";
+char *msg_big_host= "Pozor: Orezavam prilis dlouhe jmeno pocitace";
+char *msg_big_date= "Pozor: Orezavam prilis dlouhe pole datumu";
+char *msg_big_req = "Pozor: Orezavam prilis dlouhe pole zadosti";
+char *msg_big_ref = "Pozor: Orezavam prilis dlouhe pole odkazovace";
+char *msg_big_user= "Pozor: Orezavam prilis dlouhe jmeno uzivatele";
+char *msg_big_one = "Pozor: Retezec prekrocil velikost ukladaciho mista";
+
+/* misc errors */
+char *msg_no_open = "Chyba: Nemohu otevrit soubor";
+
+/* Help display... */
+char *h_usage1 = "Pouzivani";
+char *h_usage2 = "[volby] [log soubor]";
+char *h_msg[]= {
+         "-h        = vypis tento help"                      ,
+         "-V        = vypis informaci o verzi"               ,
+         "-v        = bud upovidany"                         ,
+         "-d        = vypis dalsi ladici informace"          ,
+         "-F type   = typ logu.  type= (clf | ftp | squid | w3c)",
+         "-f        = chyby v prekladu stranek"              ,
+         "-i        = ignoruj soubor historie"               ,
+         "-p        = zapamatuj stav (inkrementalne)"        ,
+         "-b        = ignoruj stav (inkrementalne)"          ,
+         "-q        = potlac informativni zpravy"            ,
+         "-Q        = potlac VSECHNY zpravy"                 ,
+         "-Y        = potlac graf statu"                     ,
+         "-G        = potlac hodinovy graf"                  ,
+         "-H        = potlac hodinove statistiky"            ,
+         "-L        = potlac barevne kody v legendach grafu" ,
+         "-l poc    = pouzij 'num' radek v podkladu grafu"   ,
+         "-m poc    = cas pro navstevu (seconds)"            ,
+         "-T        = vypis casove informace"                ,
+         "-c file   = pouzij konfig. soubor 'file'"          ,
+         "-n name   = pouzij jmeno pocitace"                 ,
+         "-o adr    = vystupni adresar"                      ,
+         "-t name   = nazev sestavy 'name'"                  ,
+         "-a name   = skryj prohlizec 'name'"                ,
+         "-r name   = skryj odkazovac 'name'"                ,
+         "-s name   = skryj misto 'name'"                    ,
+         "-u name   = skryj URL 'name'"                      ,
+         "-x name   = pouzij priponu souboru 'name'"         ,
+         "-O name   = vynechej stranku 'name'"               ,
+         "-P name   = stranky maji priponu 'name'"           ,
+         "-I name   = nazev Index(u) 'name'"                 ,
+         "-K poc    = zobraz 'poc' mesicu v prehledu"        ,
+         "-k poc    = zobraz 'poc' mesicu v prehledovem grafu",
+         "-A poc    = zobraz 'poc' Nej prohlizecu"           ,
+         "-C poc    = zobraz 'poc' Nej zemi"                 ,
+         "-R poc    = zobraz 'poc' Nej odkazovacu"           ,
+         "-S poc    = zobraz 'poc' Nej mist"                 ,
+         "-U poc    = zobraz 'poc' Nej URL"                  ,
+         "-e poc    = zobraz 'poc' vstupnich stranek"        ,
+         "-E poc    = zobraz 'poc' odchozich stranek"        ,
+         "-g poc    = seskup domeny do 'poc' urovni"         ,
+         "-X        = skryt jednotlive site"                 ,
+         "-z dir    = vlajky zemi jsou v adresari 'dir'"     ,
+#ifdef USE_DNS
+         "-D name   = pouzij DNS Cache 'name'"               ,
+         "-N poc    = pocet DNS procesu (0=zakazat)"         ,
+         "-j        = pouzij vestavene vyhledavani v GeoDB"  ,
+         "-J name   = pouzij GeoDB databazi 'name'"          ,
+#endif
+#ifdef USE_GEOIP
+         "-w        = pouzij vyhledavani pomoci GeoIP"       ,
+         "-W name   = pouzij GeoIP databazi 'name'"          ,
+#endif
+         NULL};
+
+#define LAST_HLP_MSG (int)(sizeof(h_msg)/sizeof(char *))
+
+/***********************************************************************/
+/*                                                                     */
+/* HTML strings                                                        */
+/*                                                                     */
+/* These strings are used as part of the HTML output generated by The  */
+/* Webalizer.                                                          */
+/*                                                                     */
+/***********************************************************************/
+
+/* header strings */
+char *msg_hhdr_sp = "Období statistiky";
+char *msg_hhdr_gt = "Generováno";
+
+/* main index strings */
+char *msg_main_us = "Statistiky pøístupù pro";
+/* char *msg_main_per= "Posledních 12 mìsícù"; */
+char *msg_main_per= "Mìsíèní pøehled";
+char *msg_main_sum= "Mìsíèní pøehled";
+char *msg_main_da = "Denní prùmìr";
+char *msg_main_mt = "Mìsíèní souèty";
+
+/* month HTML page strings */
+char *msg_hmth_du = "Denní vyu¾ití za";
+char *msg_hmth_hu = "Hodinové vyu¾ití za";
+
+/* table header strings */
+char *msg_h_by    = "podle";
+char *msg_h_avg   = "Prùm";
+char *msg_h_max   = "Max";
+char *msg_h_total = "Celkem";
+char *msg_h_totals= "Celkem";
+char *msg_h_day   = "Den";
+char *msg_h_mth   = "Mìsíc";
+char *msg_h_hour  = "Hodina";
+char *msg_h_hits  = "Pøístupù";
+char *msg_h_pages = "Stránek";
+char *msg_h_visits= "Náv¹tìv";
+char *msg_h_files = "Souborù";
+char *msg_h_sites = "Míst";
+char *msg_h_xfer  = "KBytù";
+char *msg_h_hname = "Poèítaè";
+char *msg_h_url   = "URL";
+char *msg_h_agent = "Prohlí¾eè";
+char *msg_h_ref   = "Odkazovaè";
+char *msg_h_ctry  = "Zemì";
+char *msg_h_search= "Hledání";
+char *msg_h_uname = "U¾ivatel";
+
+/* links along top of page */
+char *msg_hlnk_ds = "Denní statistiky";
+char *msg_hlnk_hs = "Hodinové statistiky";
+char *msg_hlnk_u  = "URL";
+char *msg_hlnk_s  = "Místa";
+char *msg_hlnk_a  = "Prohlí¾eèe";
+char *msg_hlnk_c  = "Zemì";
+char *msg_hlnk_r  = "Odkazovaèe";
+char *msg_hlnk_en = "Vstupy";
+char *msg_hlnk_ex = "Výstupy";
+char *msg_hlnk_sr = "Hledání";
+char *msg_hlnk_i  = "U¾ivatelé";
+
+/* monthly total table */
+char *msg_mtot_ms = "Mìsíèní statistiky za";
+char *msg_mtot_th = "Celkem náv¹tìv";
+char *msg_mtot_tf = "Celkem souborù";
+char *msg_mtot_tx = "Celkem KBytù";
+char *msg_mtot_us = "Celkem jedineèných míst";
+char *msg_mtot_ur = "Celkem jedineèných odkazovaèù";
+char *msg_mtot_ua = "Celkem jedineèných Prohlí¾eèù";
+char *msg_mtot_uu = "Celkem jedineèných URL";
+char *msg_mtot_ui = "Celkem jedineèných u¾ivatelù";
+char *msg_mtot_mhd= "Objektù za den";
+char *msg_mtot_mhh= "Objektù za hodinu";
+char *msg_mtot_mfd= "Souborù za den";
+char *msg_mtot_mpd= "Stránek za den";
+char *msg_mtot_msd= "Míst za den";
+char *msg_mtot_mvd= "Náv¹tìv za den";
+char *msg_mtot_mkd= "KBytù za den";
+char *msg_mtot_rc = "Náv¹tìvy podle kódu odpovìdi";
+
+/* daily total table */
+char *msg_dtot_ds = "Denní statistiky za";
+
+/* hourly total table */
+char *msg_htot_hs = "Hodinové statistiky za";
+
+/* country pie chart */
+char *msg_ctry_use= "Vyu¾ití podle zemì";
+
+/* top tables */
+/* Formatted as "Top xxx of xxx Total something" */
+char *msg_top_top = "Nej";
+char *msg_top_of  = "z";
+char *msg_top_s   = "míst celkem";
+char *msg_top_u   = "URL celkem";
+char *msg_top_r   = "odkazovaèù celkem";
+char *msg_top_a   = "prohlí¾eèù celkem";
+char *msg_top_c   = "zemí celkem";
+char *msg_top_en  = "vstupních stránek celkem";
+char *msg_top_ex  = "výstupních stránek celkem";
+char *msg_top_sr  = "hledaných øetìzcù celkem";
+char *msg_top_i   = "u¾ivatelù celkem";
+char *msg_v_sites = "zobrazit v¹echny sítì";
+char *msg_v_urls  = "zobrazit v¹echny URL";
+char *msg_v_refs  = "zobrazit v¹echny referery";
+char *msg_v_agents= "zobrazit v¹echny u¾ivatelské prohlí¾eèe";
+char *msg_v_search= "zobrazit v¹echny hledané stránky";
+char *msg_v_users = "zobrazit v¹echna u¾ivatelská jména";
+
+/* short month names MUST BE 3 CHARS in size... pad if needed*/
+char *s_month[12]={ "Led", "Úno", "Bøe",
+                    "Dub", "Kvì", "Èer",
+                    "Èvc", "Srp", "Záø",
+                    "Øíj", "Lis", "Pro"};
+
+/* long month names - can be any length */
+char *l_month[12]={ "leden",   "únor",   "bøezen",   "duben",
+                    "kvìten",  "èerven", "èervenec", "srpen",
+                    "záøí",    "øíjen",  "listopad", "prosinec"};
+
+/* response code descriptions... order IS important!      */
+struct response_code response[] =
+       { { "Nedefinovaný kód odpovìdi",                 0 },
+         { "Kód 100 - Pokraèovat",                      0 },
+         { "Kód 101 - Pøepínání protokolù",             0 },
+         { "Kód 200 - OK",                              0 },
+         { "Kód 201 - Vytvoøeno",                       0 },
+         { "Kód 202 - Pøijato",                         0 },
+         { "Kód 203 - Neautoritativní informace",       0 },
+         { "Kód 204 - ®ádný obsah",                     0 },
+         { "Kód 205 - Obnovit obsah",                   0 },
+         { "Kód 206 - Èásteèný obsah",                  0 },
+         { "Kód 300 - Vícenásobné volby",               0 },
+         { "Kód 301 - Pøesunuto trvale",                0 },
+         { "Kód 302 - Pøítomno",                        0 },
+         { "Kód 303 - Viz dal¹í",                       0 },
+         { "Kód 304 - Nezmìnìno",                       0 },
+         { "Kód 305 - Pou¾ij proxy",                    0 },
+         { "Kód 307 - Pøesunuto doèasnì",               0 },
+         { "Kód 400 - ©patný po¾adavek",                0 },
+         { "Kód 401 - Neautorizován",                   0 },
+         { "Kód 402 - Vy¾adována platba",               0 },
+         { "Kód 403 - Zakázáno",                        0 },
+         { "Kód 404 - Nenalezeno",                      0 },
+         { "Kód 405 - Nepovolená Metoda",               0 },
+         { "Kód 406 - Nepøípustné",                     0 },
+         { "Kód 407 - Vy¾adována autentikace proxy",    0 },
+         { "Kód 408 - Pøekroèen èasový limit",          0 },
+         { "Kód 409 - Konflikt",                        0 },
+         { "Kód 410 - Zru¹eno",                         0 },
+         { "Kód 411 - ®ádost o délku",                  0 },
+         { "Kód 412 - Podmínka nesplnìna",              0 },
+         { "Kód 413 - Po¾adavek je pøíli¹ velký",       0 },
+         { "Kód 414 - URI je pøíli¹ dlouhé",            0 },
+         { "Kód 415 - Nepodporovaný typ média",         0 },
+         { "Kód 416 - Po¾adovaný rozsah neodpovídá",    0 },
+         { "Kód 417 - Oèekávání selhalo",               0 },
+         { "Kód 500 - Intenrní chyba serveru",          0 },
+         { "Kód 501 - Nezavedeno",                      0 },
+         { "Kód 502 - ©patná brána",                    0 },
+         { "Kód 503 - Slu¾ba nedostupná",               0 },
+         { "Kód 504 - Brána neodpovìdìla",              0 },
+         { "Kód 505 - Nepodporovaná verze HTTP",        0 } };
+
+char *msg_title   = "Statistiky pøístupù pro";
+char *msg_h_other = "Jiné";
+
+/* Country codes (previously in ctry.h header file) */
+
+struct	country_code ctry[] = {
+{ 0,                      "Nezji¹tìná/neznámá",               0,0,0 },
+{ IDX_3C('c','o','m'),    "Komerèní (com)",                   0,0,0 },
+{ IDX_3C('e','d','u'),    "Akademická (edu)",                 0,0,0 },
+{ IDX_3C('g','o','v'),    "US vládní (gov)",                  0,0,0 },
+{ IDX_3C('i','n','t'),    "Mezinárodní (int)",                0,0,0 },
+{ IDX_3C('m','i','l'),    "US vojenská (mil)",                0,0,0 },
+{ IDX_3C('n','e','t'),    "Sí» (net)",                        0,0,0 },
+{ IDX_3C('o','r','g'),    "Nezisková organizace (org)",       0,0,0 },
+{ IDX_3C('b','i','z'),    "Obchodní spoleènosti (biz)",       0,0,0 },
+{ IDX_3C('c','a','t'),    "Katalánská komunita (cat)",        0,0,0 },
+{ IDX_3C('p','r','o'),    "Professional (pro)",               0,0,0 },
+{ IDX_3C('t','e','l'),    "Globální adresáø kontaktù (tel)",  0,0,0 },
+{ IDX_4C('a','e','r','o'),"Letecký prùmysl (aero)",           0,0,0 },
+{ IDX_4C('a','s','i','a'),"Asijsko/pacifická komunita (asia)",0,0,0 },
+{ IDX_4C('c','o','o','p'),"Dru¾stva (coop)",                  0,0,0 },
+{ IDX_4C('i','n','f','o'),"Obecné TLD (info)",                0,0,0 },
+{ IDX_4C('j','o','b','s'),"Lidské zdroje (jobs)",             0,0,0 },
+{ IDX_4C('m','o','b','i'),"Obecné mobilní TLD (mobi)",        0,0,0 },
+{ IDX_4C('n','a','m','e'),"Osobní (name)",                    0,0,0 },
+{ IDX_4C('a','r','p','a'),"Pùvodní Arpanet (arpa)",           0,0,0 },
+{ IDX_4C('n','a','t','o'),"NATO (nato)",                      0,0,0 },
+{ IDX_6C('m','u','s','e','u','m'), "Muzea (museum)",          0,0,0 },
+{ IDX_6C('t','r','a','v','e','l'), "Cestovní ruch (travel)",  0,0,0 },
+{ IDX_2C('a','c'),        "Ostrov Ascension",                 0,0,0 },
+{ IDX_2C('a','d'),        "Andorra",                          0,0,0 },
+{ IDX_2C('a','e'),        "Spojené arabské emiráty",          0,0,0 },
+{ IDX_2C('a','f'),        "Afghánistán",                      0,0,0 },
+{ IDX_2C('a','g'),        "Antigua a Barbuda",                0,0,0 },
+{ IDX_2C('a','i'),        "Anguilla",                         0,0,0 },
+{ IDX_2C('a','l'),        "Albánie",                          0,0,0 },
+{ IDX_2C('a','m'),        "Arménie",                          0,0,0 },
+{ IDX_2C('a','n'),        "Nizozemské Antily",                0,0,0 },
+{ IDX_2C('a','o'),        "Angola",                           0,0,0 },
+{ IDX_2C('a','q'),        "Antarktida",                       0,0,0 },
+{ IDX_2C('a','r'),        "Argentina",                        0,0,0 },
+{ IDX_2C('a','s'),        "Americká Samoa",                   0,0,0 },
+{ IDX_2C('a','t'),        "Rakousko",                         0,0,0 },
+{ IDX_2C('a','u'),        "Austrálie",                        0,0,0 },
+{ IDX_2C('a','w'),        "Aruba",                            0,0,0 },
+{ IDX_2C('a','x'),        "Alandy",                           0,0,0 },
+{ IDX_2C('a','z'),        "Azerbajd¾án",                      0,0,0 },
+{ IDX_2C('b','a'),        "Bosna a Hercegovina",              0,0,0 },
+{ IDX_2C('b','b'),        "Barbados",                         0,0,0 },
+{ IDX_2C('b','d'),        "Bangladé¹",                        0,0,0 },
+{ IDX_2C('b','e'),        "Belgie",                           0,0,0 },
+{ IDX_2C('b','f'),        "Burkina Faso",                     0,0,0 },
+{ IDX_2C('b','g'),        "Bulharsko",                        0,0,0 },
+{ IDX_2C('b','h'),        "Bahrajn",                          0,0,0 },
+{ IDX_2C('b','i'),        "Burundi",                          0,0,0 },
+{ IDX_2C('b','j'),        "Benin",                            0,0,0 },
+{ IDX_2C('b','l'),        "Svatý Bartolomìj",                 0,0,0 },
+{ IDX_2C('b','m'),        "Bermudy",                          0,0,0 },
+{ IDX_2C('b','n'),        "Brunej",                           0,0,0 },
+{ IDX_2C('b','o'),        "Bolívie",                          0,0,0 },
+{ IDX_2C('b','r'),        "Brazílie",                         0,0,0 },
+{ IDX_2C('b','s'),        "Bahamy",                           0,0,0 },
+{ IDX_2C('b','t'),        "Bhùtán",                           0,0,0 },
+{ IDX_2C('b','v'),        "Bouvet Island",                    0,0,0 },
+{ IDX_2C('b','w'),        "Botswana",                         0,0,0 },
+{ IDX_2C('b','y'),        "Bìlorusko",                        0,0,0 },
+{ IDX_2C('b','z'),        "Belize",                           0,0,0 },
+{ IDX_2C('c','a'),        "Kanada",                           0,0,0 },
+{ IDX_2C('c','c'),        "Kokosové (Keelingovy) ostrovy",    0,0,0 },
+{ IDX_2C('c','d'),        "Kongo",                            0,0,0 },
+{ IDX_2C('c','f'),        "Støedoafrická republika",          0,0,0 },
+{ IDX_2C('c','g'),        "Kongo",                            0,0,0 },
+{ IDX_2C('c','h'),        "©výcarsko",                        0,0,0 },
+{ IDX_2C('c','i'),        "Pobøe¾í slonoviny",                0,0,0 },
+{ IDX_2C('c','k'),        "Cookovy ostrovy",                  0,0,0 },
+{ IDX_2C('c','l'),        "Chile",                            0,0,0 },
+{ IDX_2C('c','m'),        "Kamerun",                          0,0,0 },
+{ IDX_2C('c','n'),        "Èína",                             0,0,0 },
+{ IDX_2C('c','o'),        "Kolumbie",                         0,0,0 },
+{ IDX_2C('c','r'),        "Kostarika",                        0,0,0 },
+{ IDX_2C('c','u'),        "Kuba",                             0,0,0 },
+{ IDX_2C('c','v'),        "Cape Verde",                       0,0,0 },
+{ IDX_2C('c','x'),        "Vánoèní ostrovy",                  0,0,0 },
+{ IDX_2C('c','y'),        "Kypr",                             0,0,0 },
+{ IDX_2C('c','z'),        "Èeská republika",                  0,0,0 },
+{ IDX_2C('d','e'),        "Nìmecko",                          0,0,0 },
+{ IDX_2C('d','j'),        "D¾ibuti",                          0,0,0 },
+{ IDX_2C('d','k'),        "Dánsko",                           0,0,0 },
+{ IDX_2C('d','m'),        "Dominica",                         0,0,0 },
+{ IDX_2C('d','o'),        "Dominikánská republika",           0,0,0 },
+{ IDX_2C('d','z'),        "Al¾írsko",                         0,0,0 },
+{ IDX_2C('e','c'),        "Ekvádor",                          0,0,0 },
+{ IDX_2C('e','e'),        "Estonsko",                         0,0,0 },
+{ IDX_2C('e','g'),        "Egypt",                            0,0,0 },
+{ IDX_2C('e','h'),        "Západní Sahara",                   0,0,0 },
+{ IDX_2C('e','r'),        "Eritrea",                          0,0,0 },
+{ IDX_2C('e','s'),        "©panìlsko",                        0,0,0 },
+{ IDX_2C('e','t'),        "Etiopie",                          0,0,0 },
+{ IDX_2C('e','u'),        "Evropská unie",                    0,0,0 },
+{ IDX_2C('f','i'),        "Finsko",                           0,0,0 },
+{ IDX_2C('f','j'),        "Fid¾i",                            0,0,0 },
+{ IDX_2C('f','k'),        "Falklandské ostrovy (Malvíny)",    0,0,0 },
+{ IDX_2C('f','m'),        "Mikronézie",                       0,0,0 },
+{ IDX_2C('f','o'),        "Faerské ostrovy",                  0,0,0 },
+{ IDX_2C('f','r'),        "Francie",                          0,0,0 },
+{ IDX_2C('g','a'),        "Gabun",                            0,0,0 },
+{ IDX_2C('g','b'),        "Velká Británie (GB)",              0,0,0 },
+{ IDX_2C('g','d'),        "Grenada",                          0,0,0 },
+{ IDX_2C('g','e'),        "Gruzie",                           0,0,0 },
+{ IDX_2C('g','f'),        "Francouzská Guajana",              0,0,0 },
+{ IDX_2C('g','g'),        "Guernsey",                         0,0,0 },
+{ IDX_2C('g','h'),        "Ghana",                            0,0,0 },
+{ IDX_2C('g','i'),        "Gibraltar",                        0,0,0 },
+{ IDX_2C('g','l'),        "Grónsko",                          0,0,0 },
+{ IDX_2C('g','m'),        "Gambie",                           0,0,0 },
+{ IDX_2C('g','n'),        "Guinea",                           0,0,0 },
+{ IDX_2C('g','p'),        "Guadeloupe",                       0,0,0 },
+{ IDX_2C('g','q'),        "Rovníková Guinea",                 0,0,0 },
+{ IDX_2C('g','r'),        "Øecko",                            0,0,0 },
+{ IDX_2C('g','s'),        "Ji¾ní Georgia a Ji¾ní Sandwichovy ostrovy", 0,0,0 },
+{ IDX_2C('g','t'),        "Guatemala",                        0,0,0 },
+{ IDX_2C('g','u'),        "Guam",                             0,0,0 },
+{ IDX_2C('g','w'),        "Guinea-Bissau",                    0,0,0 },
+{ IDX_2C('g','y'),        "Guyana",                           0,0,0 },
+{ IDX_2C('h','k'),        "Hongkong",                         0,0,0 },
+{ IDX_2C('h','m'),        "Heardovy a McDonaldovy ostrovy",   0,0,0 },
+{ IDX_2C('h','n'),        "Honduras",                         0,0,0 },
+{ IDX_2C('h','r'),        "Chorvatsko",                       0,0,0 },
+{ IDX_2C('h','t'),        "Haiti",                            0,0,0 },
+{ IDX_2C('h','u'),        "Maïarsko",                         0,0,0 },
+{ IDX_2C('i','d'),        "Indonésie",                        0,0,0 },
+{ IDX_2C('i','e'),        "Irsko",                            0,0,0 },
+{ IDX_2C('i','l'),        "Izrael",                           0,0,0 },
+{ IDX_2C('i','m'),        "Ostrov Man",                       0,0,0 },
+{ IDX_2C('i','n'),        "Indie",                            0,0,0 },
+{ IDX_2C('i','o'),        "Britské indickooceánské území",    0,0,0 },
+{ IDX_2C('i','q'),        "Irák",                             0,0,0 },
+{ IDX_2C('i','r'),        "Írán",                             0,0,0 },
+{ IDX_2C('i','s'),        "Island",                           0,0,0 },
+{ IDX_2C('i','t'),        "Itálie",                           0,0,0 },
+{ IDX_2C('j','e'),        "Jersey",                           0,0,0 },
+{ IDX_2C('j','m'),        "Jamajka",                          0,0,0 },
+{ IDX_2C('j','o'),        "Jordánsko",                        0,0,0 },
+{ IDX_2C('j','p'),        "Japonsko",                         0,0,0 },
+{ IDX_2C('k','e'),        "Keòa",                             0,0,0 },
+{ IDX_2C('k','g'),        "Kyrgyzstán",                       0,0,0 },
+{ IDX_2C('k','h'),        "Kambod¾a",                         0,0,0 },
+{ IDX_2C('k','i'),        "Kiribati",                         0,0,0 },
+{ IDX_2C('k','m'),        "Komory",                           0,0,0 },
+{ IDX_2C('k','n'),        "Svatý Kry¹tof a Nevis",            0,0,0 },
+{ IDX_2C('k','p'),        "Severní Korea",                    0,0,0 },
+{ IDX_2C('k','r'),        "Ji¾ní Korea",                      0,0,0 },
+{ IDX_2C('k','w'),        "Kuvajt",                           0,0,0 },
+{ IDX_2C('k','y'),        "Kajmanské ostrovy",                0,0,0 },
+{ IDX_2C('k','z'),        "Kazachstán",                       0,0,0 },
+{ IDX_2C('l','a'),        "Laos",                             0,0,0 },
+{ IDX_2C('l','b'),        "Libanon",                          0,0,0 },
+{ IDX_2C('l','c'),        "Svatá Lucie",                      0,0,0 },
+{ IDX_2C('l','i'),        "Lichten¹tejnsko",                  0,0,0 },
+{ IDX_2C('l','k'),        "Srí Lanka",                        0,0,0 },
+{ IDX_2C('l','r'),        "Libérie",                          0,0,0 },
+{ IDX_2C('l','s'),        "Lesotho",                          0,0,0 },
+{ IDX_2C('l','t'),        "Litva",                            0,0,0 },
+{ IDX_2C('l','u'),        "Lucembursko",                      0,0,0 },
+{ IDX_2C('l','v'),        "Loty¹sko",                         0,0,0 },
+{ IDX_2C('l','y'),        "Libye",                            0,0,0 },
+{ IDX_2C('m','a'),        "Maroko",                           0,0,0 },
+{ IDX_2C('m','c'),        "Monako",                           0,0,0 },
+{ IDX_2C('m','d'),        "Moldavsko",                        0,0,0 },
+{ IDX_2C('m','e'),        "Èerná hora",                       0,0,0 },
+{ IDX_2C('m','f'),        "Svatý Martin (francouzská èást)",  0,0,0 },
+{ IDX_2C('m','g'),        "Madagaskar",                       0,0,0 },
+{ IDX_2C('m','h'),        "Marshallovy ostrovy",              0,0,0 },
+{ IDX_2C('m','k'),        "Makedonie",                        0,0,0 },
+{ IDX_2C('m','l'),        "Mali",                             0,0,0 },
+{ IDX_2C('m','m'),        "Myanmar",                          0,0,0 },
+{ IDX_2C('m','n'),        "Mongolsko",                        0,0,0 },
+{ IDX_2C('m','o'),        "Macao",                            0,0,0 },
+{ IDX_2C('m','p'),        "Severní Mariany",                  0,0,0 },
+{ IDX_2C('m','q'),        "Martinik",                         0,0,0 },
+{ IDX_2C('m','r'),        "Mauretánie",                       0,0,0 },
+{ IDX_2C('m','s'),        "Montserrat",                       0,0,0 },
+{ IDX_2C('m','t'),        "Malta",                            0,0,0 },
+{ IDX_2C('m','u'),        "Mauricius",                        0,0,0 },
+{ IDX_2C('m','v'),        "Maledivy",                         0,0,0 },
+{ IDX_2C('m','w'),        "Malawi",                           0,0,0 },
+{ IDX_2C('m','x'),        "Mexiko",                           0,0,0 },
+{ IDX_2C('m','y'),        "Malajsie",                         0,0,0 },
+{ IDX_2C('m','z'),        "Mozambik",                         0,0,0 },
+{ IDX_2C('n','a'),        "Namibie",                          0,0,0 },
+{ IDX_2C('n','c'),        "Nová Kaledonie",                   0,0,0 },
+{ IDX_2C('n','e'),        "Niger",                            0,0,0 },
+{ IDX_2C('n','f'),        "Norfolk",                          0,0,0 },
+{ IDX_2C('n','g'),        "Nigérie",                          0,0,0 },
+{ IDX_2C('n','i'),        "Nikaragua",                        0,0,0 },
+{ IDX_2C('n','l'),        "Nizozemsko",                       0,0,0 },
+{ IDX_2C('n','o'),        "Norsko",                           0,0,0 },
+{ IDX_2C('n','p'),        "Nepál",                            0,0,0 },
+{ IDX_2C('n','r'),        "Nauru",                            0,0,0 },
+{ IDX_2C('n','u'),        "Niue",                             0,0,0 },
+{ IDX_2C('n','z'),        "Nový Zéland",                      0,0,0 },
+{ IDX_2C('o','m'),        "Omán",                             0,0,0 },
+{ IDX_2C('p','a'),        "Panama",                           0,0,0 },
+{ IDX_2C('p','e'),        "Peru",                             0,0,0 },
+{ IDX_2C('p','f'),        "Francouzská Polynésie",            0,0,0 },
+{ IDX_2C('p','g'),        "Papua-Nová Guinea",                0,0,0 },
+{ IDX_2C('p','h'),        "Filipíny",                         0,0,0 },
+{ IDX_2C('p','k'),        "Pákistán",                         0,0,0 },
+{ IDX_2C('p','l'),        "Polsko",                           0,0,0 },
+{ IDX_2C('p','m'),        "Saint-Pierre a Miquelon",          0,0,0 },
+{ IDX_2C('p','n'),        "Pitcairnovy ostrovy",              0,0,0 },
+{ IDX_2C('p','r'),        "Portoriko",                        0,0,0 },
+{ IDX_2C('p','s'),        "Palestinská autonomie",            0,0,0 },
+{ IDX_2C('p','t'),        "Portugalsko",                      0,0,0 },
+{ IDX_2C('p','w'),        "Palau",                            0,0,0 },
+{ IDX_2C('p','y'),        "Paraguay",                         0,0,0 },
+{ IDX_2C('q','a'),        "Katar",                            0,0,0 },
+{ IDX_2C('r','e'),        "Réunion",                          0,0,0 },
+{ IDX_2C('r','o'),        "Rumunsko",                         0,0,0 },
+{ IDX_2C('r','s'),        "Srbsko",                           0,0,0 },
+{ IDX_2C('r','u'),        "Ruská federace",                   0,0,0 },
+{ IDX_2C('r','w'),        "Rwanda",                           0,0,0 },
+{ IDX_2C('s','a'),        "Saúdská Arábie",                   0,0,0 },
+{ IDX_2C('s','b'),        "©alamounovy ostrovy",              0,0,0 },
+{ IDX_2C('s','c'),        "Seychely",                         0,0,0 },
+{ IDX_2C('s','d'),        "Súdán",                            0,0,0 },
+{ IDX_2C('s','e'),        "©védsko",                          0,0,0 },
+{ IDX_2C('s','g'),        "Singapur",                         0,0,0 },
+{ IDX_2C('s','h'),        "Sv. Helena",                       0,0,0 },
+{ IDX_2C('s','i'),        "Slovinsko",                        0,0,0 },
+{ IDX_2C('s','j'),        "©picberky a ostrov Jan Mayen",     0,0,0 },
+{ IDX_2C('s','k'),        "Slovenská republika",              0,0,0 },
+{ IDX_2C('s','l'),        "Sierra Leone",                     0,0,0 },
+{ IDX_2C('s','m'),        "San Marino",                       0,0,0 },
+{ IDX_2C('s','n'),        "Senegal",                          0,0,0 },
+{ IDX_2C('s','o'),        "Somálsko",                         0,0,0 },
+{ IDX_2C('s','r'),        "Surinam",                          0,0,0 },
+{ IDX_2C('s','t'),        "Svatý Tomá¹ a Princùv ostrov",     0,0,0 },
+{ IDX_2C('s','u'),        "Sovìtský svaz",                    0,0,0 },
+{ IDX_2C('s','v'),        "Salvádor",                         0,0,0 },
+{ IDX_2C('s','y'),        "Sýrie",                            0,0,0 },
+{ IDX_2C('s','z'),        "Svazijsko",                        0,0,0 },
+{ IDX_2C('t','c'),        "Turks a Caicos",                   0,0,0 },
+{ IDX_2C('t','d'),        "Èad",                              0,0,0 },
+{ IDX_2C('t','f'),        "Francouzská ji¾ní teritoria-Antarktida", 0,0,0 },
+{ IDX_2C('t','g'),        "Togo",                             0,0,0 },
+{ IDX_2C('t','h'),        "Thajsko",                          0,0,0 },
+{ IDX_2C('t','j'),        "Tád¾ikistán",                      0,0,0 },
+{ IDX_2C('t','k'),        "Tokelau",                          0,0,0 },
+{ IDX_2C('t','l'),        "Východní Timor",                   0,0,0 },
+{ IDX_2C('t','m'),        "Turkmenistán",                     0,0,0 },
+{ IDX_2C('t','n'),        "Tunisko",                          0,0,0 },
+{ IDX_2C('t','o'),        "Tongo",                            0,0,0 },
+{ IDX_2C('t','p'),        "Východní Timor",                   0,0,0 },
+{ IDX_2C('t','r'),        "Turecko",                          0,0,0 },
+{ IDX_2C('t','t'),        "Trinidad a Tobago",                0,0,0 },
+{ IDX_2C('t','v'),        "Tuvalu",                           0,0,0 },
+{ IDX_2C('t','w'),        "Taiwan",                           0,0,0 },
+{ IDX_2C('t','z'),        "Tanzánie",                         0,0,0 },
+{ IDX_2C('u','a'),        "Ukrajina",                         0,0,0 },
+{ IDX_2C('u','g'),        "Uganda",                           0,0,0 },
+{ IDX_2C('u','k'),        "Velká Británie (UK)",              0,0,0 },
+{ IDX_2C('u','m'),        "Men¹í odlehlé ostrovy USA",        0,0,0 },
+{ IDX_2C('u','s'),        "USA (US)",                         0,0,0 },
+{ IDX_2C('u','y'),        "Uruguay",                          0,0,0 },
+{ IDX_2C('u','z'),        "Uzbekistán",                       0,0,0 },
+{ IDX_2C('v','a'),        "Vatikán",                          0,0,0 },
+{ IDX_2C('v','c'),        "Svatý Vincenc a Grenadiny",        0,0,0 },
+{ IDX_2C('v','e'),        "Venezuela",                        0,0,0 },
+{ IDX_2C('v','g'),        "Britské Panenské ostrovy",         0,0,0 },
+{ IDX_2C('v','i'),        "Americké Panenské ostrovy",        0,0,0 },
+{ IDX_2C('v','n'),        "Vietnam",                          0,0,0 },
+{ IDX_2C('v','u'),        "Vanuatu",                          0,0,0 },
+{ IDX_2C('w','f'),        "Wallis a Futuna",                  0,0,0 },
+{ IDX_2C('w','s'),        "Samoa",                            0,0,0 },
+{ IDX_2C('y','e'),        "Jemen",                            0,0,0 },
+{ IDX_2C('y','t'),        "Mayotte",                          0,0,0 },
+{ IDX_2C('y','u'),        "Jugoslávie",                       0,0,0 },
+{ IDX_2C('z','a'),        "Jihoafrická republika",            0,0,0 },
+{ IDX_2C('z','m'),        "Zambie",                           0,0,0 },
+{ IDX_2C('z','w'),        "Zimbabwe",                         0,0,0 },
+{ IDX_2C('a','1'),        "Anonymní proxy",                   0,0,0 },
+{ IDX_2C('a','2'),        "Satelitní poskytovatelé",          0,0,0 },
+{ IDX_2C('o','1'),        "Ostatní",                          0,0,0 },
+{ IDX_2C('a','p'),        "Asijskopacifický region",          0,0,0 },
+{ IDX_3C('l','a','n'),    "Lokální sí» (lan)",                0,0,0 },
+{ 0,                      NULL,                               0,0,0 }};

@@ -1,0 +1,26 @@
+Begin3
+Title:         The Webalizer 
+Version:       2.20
+Entered-date:  01JUN2008
+Description:   A fast, free web server log file analysis program.  Produces
+               HTML output for viewing with a web browser.  Written in C on
+               a Linux platform, however designed to be as ANSI/POSIX
+               compliant as possible so porting to other UNIX platforms should
+               be painless.  Binary distributions for most popular platforms
+               are available.  Features multiple language support, incremental
+               processing capabilities, reverse DNS lookup support, native
+               geolocation support as well as geolocation support via the
+               optional GeoIP library and database from MaxMind Inc., data
+               export via tab delimited ASCII files to popular databases and
+               spreadsheets, and much more.  Supports all standard CLF and
+               combined web logs, wu-ftpd xferlog, squid proxy and extended
+               W3C format logs, all of which can be either in standard text
+               format or compressed using gzip or bzip2.
+Keywords:      Web Analysis, Log Analysis, Linux, Unix, apache, wcmgr, GeoDB
+Author:        Bradford L. Barrett 
+Maintained-by: Bradford L. Barrett 
+Primary-site:  http://www.webalizer.org/
+Original-site: ftp://ftp.webalizer.org/pub/webalizer/
+Platforms:     Linux/Unix, OS/2, Win32, MacOSX, POSIX
+Copying-policy: GPL
+End

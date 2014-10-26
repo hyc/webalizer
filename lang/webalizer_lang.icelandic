@@ -1,0 +1,640 @@
+/*
+   webalizer_lang.icelandic
+
+   Webalizer V2.0x Language Support file for Icelandic.
+   15-May-1998 by Bradford L. Barrett (brad@mrunix.net)
+   31-May-1998 Modified for level 1.1 support (brad@mrunix.net)
+   23-Jul-1998 Modified for level 1.2 support (brad@mrunix.net)
+   08-Mar-1999 Updated HTTP 1.1 response codes by Yves Lafon (ylafon@w3.org)
+   28-Jun-1999 Modified for level 1.3 support (brad@mrunix.net)
+   16-Feb-2000 Modified for level 2.0 support (brad@mrunix.net)
+   15-Dec-2000 Translated to icelandic (isak@snerpa.is]
+   26-Mar-2008 Updated to current IANA TLDs (brad@mrunix.net)
+   26-May-2008 Modified for level 2.2 support (brad@mrunix.net)
+   
+   I used as a guide an older file that Kristofer & Veigar had 
+   Translated for 1.3.
+   This was originally the english version...i just translated it.
+   Still a few lines i didn't have time do dig up translations on maybe 
+   i'll do it later...or maybe someone else will? ;)
+
+
+   Language files are named using the following convention:
+
+   webalizer_lang.LANGUAGE
+
+   where 'LANGUAGE' is the name of the language the file is
+   translated into (ie: webalizer_lang.russian for russian).
+   Either copy the desired language file to webalizer_lang.h
+   or create a symbolic link, then re-compile.
+
+   If you translate this file into a different language, please
+   send a copy to brad@mrunix.net.
+
+*/
+
+/***********************************************************************/
+/* DEFINE LANGUAGE NAME here                                           */
+/***********************************************************************/
+
+char *language  = "Icelandic";
+char *langcode  = "is";
+
+/***********************************************************************/
+/*                                                                     */
+/* Informational messages                                              */
+/*                                                                     */
+/* These messages are only displayed while The Webalizer is being run, */
+/* usually to the screen, and are not part of the HTML output.         */
+/*                                                                     */
+/***********************************************************************/
+
+/* these are only used in timing totals */
+/* Format:   XXX records (XXX ignored, XXX bad) in X.XX seconds        */
+char *msg_records = "skráningar";
+char *msg_addresses="frá";
+char *msg_ignored = "hunsaðar";
+char *msg_bad     = "gallaðar";
+char *msg_in      = "á";
+char *msg_seconds = "sekúndum";
+
+/* progress and setup error messages */
+char *msg_log_err = "Villa: Get ekki opnað annála";
+char *msg_log_use = "Nota annála";
+char *msg_dir_err = "Villa: Get ekki farið í möppuna:";
+char *msg_dir_use = "Bý til úttak í";
+char *msg_cur_dir = "Núverandi mappa";
+char *msg_hostname= "Nafn þjóns fyrir skýrslur er:";
+char *msg_ign_hist= "Hunsa fyrri atburði...";
+char *msg_no_hist = "Finn ekki atburðaskrá...";
+char *msg_get_hist= "Les atburðaskrá...";
+char *msg_put_hist= "Vista atburðaskrá...";
+char *msg_hist_err= "Villa: Get ekki skrifað í atburðaskrá";
+char *msg_bad_hist= "Villa: Gölluð atburðaskráning";
+char *msg_bad_conf= "Villa: Get ekki opnað stillingaskrá";
+char *msg_bad_key = "Varúð: Rangt lykilorð";
+char *msg_bad_date= "Villa: Sleppi skráningu, gölluð dagsetning";
+char *msg_ign_nscp= "Sleppi Netscape hausskráningu";
+char *msg_bad_rec = "Sleppi gallaðri skráningu";
+char *msg_no_vrec = "Engar skráningar fundnar í lagi!";
+char *msg_gen_rpt = "Bý til skráningu fyrir";
+char *msg_gen_sum = "Bý til stutta skráningu";
+char *msg_get_data= "Les eldri gögn..";
+char *msg_put_data= "Vista núverandi gögn...";
+char *msg_no_data = "Eldri gögn fundust ekki...";
+char *msg_bad_data= "Villa: Get ekki endurheimt gögn";
+char *msg_data_err= "Villa: Get ekki vistað núverandi gögn";
+char *msg_dup_data= "Aðvörun: Möguleiki á tvískráðum gögnum";
+
+/* DNS Stuff */
+char *msg_dns_nocf= "Enginn cache skrá skilgreind, hætti við...";
+char *msg_dns_nodb= "Villa: Get ekki opnað DNS cache skrá";
+char *msg_dns_nolk= "Villa: Get get ekki læsta DNS cache skrá";
+char *msg_dns_usec= "Nota DNS cache skrá";
+char *msg_dns_rslv= "DNS Lookup";
+char *msg_dns_none= "Enginn til að vinna";
+char *msg_dns_abrt= "DNS support not present, aborting...";
+
+/* Geolocation stuff */
+char *msg_geo_open= "Error opening file";
+char *msg_geo_use = "Using";
+char *msg_geo_nolu= "lookups disabled";
+char *msg_geo_dflt= "default";
+
+/* memory allocation errors */
+char *msg_nomem_ts= "Get ekki fundið nóg minni, sleppi Top Sites!";
+char *msg_nomem_tr= "Get ekki fundið nóg minni, Top Referrers!";
+char *msg_nomem_tu= "Get ekki fundið nóg minni, Top URLs!";
+char *msg_nomem_tc= "Get ekki fundið nóg minni, Top Countries!";
+char *msg_nomem_ta= "Get ekki fundið nóg minni, Top User Agents!";
+char *msg_nomem_tsr="Get ekki fundið nóg minni, Top Search Strings!";
+char *msg_nomem_ti= "Get ekki fundið nóg minni, Top Usernames!";
+char *msg_nomem_dh= "Error adding host node (daily), skipping";
+char *msg_nomem_mh= "Error adding host node (monthly), skipping";
+char *msg_nomem_u = "Error adding URL node, skipping";
+char *msg_nomem_a = "Error adding User Agent node, skipping";
+char *msg_nomem_r = "Error adding Referrer node, skipping";
+char *msg_nomem_sc= "Error adding Search String Node, skipping";
+char *msg_nomem_i = "Error adding Username node, skipping";
+
+/* log record errors */
+char *msg_big_rec = "Villa: Sleppi of stórum annálum";
+char *msg_big_host= "Aðvörun: Minnka of stórt host nafn";
+char *msg_big_date= "Aðvörun: Minnka of stóra dags. línu";
+char *msg_big_req = "Aðvörun: Minnka of stóra request línu";
+char *msg_big_ref = "Aðvörun: Minnka of stóra referrer línu";
+char *msg_big_user= "Aðvörun: Minnka of stórt notandanafn";
+char *msg_big_one = "Aðvörun: Strengur er stærri en geymslupláss";
+
+/* misc errors */
+char *msg_no_open = "Villa: Get ekki opnað skrá";
+
+/* Help display... */
+char *h_usage1 = "notkun";
+char *h_usage2 = "[rofar] [log file]";
+char *h_msg[]= {
+         "-h        = prentar þessa hjálp"                 ,
+         "-V        = prentar útgáfu upplýsingar"          ,
+         "-v        = be verbose"                          ,
+         "-d        = print additional debug info"         ,
+         "-F tegund = Annála tegund.  tegund= (clf | ftp | squid | w3c)",
+         "-f        = Fold sequence errors"                ,
+         "-i        = hunsa history skrá"                  ,
+         "-p        = preserve state (incremental)"        ,
+         "-b        = ignore state (incremental)"          ,
+         "-q        = supress informational messages"      ,
+         "-Q        = supress _ALL_ messages"              ,
+         "-Y        = supress country graph"               ,
+         "-G        = supress hourly graph"                ,
+         "-H        = supress hourly stats"                ,
+         "-L        = supress color coded graph legends"   ,
+         "-l num    = use num background lines on graph"   ,
+         "-m num    = Visit timout value (seconds)"        ,
+         "-T        = print timing information"            ,
+         "-c file   = use configuration file 'file'"       ,
+         "-n name   = hostname to use"                     ,
+         "-o dir    = output directory to use"             ,
+         "-t name   = report title 'name'"                 ,
+         "-a name   = hide user agent 'name'"              ,
+         "-r name   = hide referrer 'name'"                ,
+         "-s name   = hide site 'name'"                    ,
+         "-u name   = hide URL 'name'"                     ,
+         "-x name   = Use filename extension 'name'"       ,
+         "-O name   = Omit page 'name'"                    ,
+         "-P name   = Page type extension 'name'"          ,
+         "-I name   = Index alias 'name'"                  ,
+         "-K num    = num months in summary table"         ,
+         "-k num    = num months in summary graph"         ,
+         "-A num    = Display num top agents"              ,
+         "-C num    = Display num top countries"           ,
+         "-R num    = Display num top referrers"           ,
+         "-S num    = Display num top sites"               ,
+         "-U num    = Display num top URLs"                ,
+         "-e num    = Display num top Entry Pages"         ,
+         "-E num    = Display num top Exit Pages"          ,
+         "-g num    = Group Domains to 'num' levels"       ,
+         "-X        = Hide individual sites"               ,
+         "-z dir    = Use country flags in 'dir'"          ,
+#ifdef USE_DNS
+         "-D name   = Use DNS Cache file 'name'"           ,
+         "-N num    = Number of DNS processes (0=disable)" ,
+         "-j        = Enable native GeoDB lookups"         ,
+         "-J name   = Use GeoDB database 'name'"           ,
+#endif
+#ifdef USE_GEOIP
+         "-w        = Enable GeoIP lookups"                ,
+         "-W name   = Use GeoIP database 'name'"           ,
+#endif
+         NULL};
+
+/***********************************************************************/
+/*                                                                     */
+/* HTML strings                                                        */
+/*                                                                     */
+/* These strings are used as part of the HTML output generated by The  */
+/* Webalizer.                                                          */ 
+/*                                                                     */
+/***********************************************************************/
+
+/* header strings */
+char *msg_hhdr_sp = "Tímabil";
+char *msg_hhdr_gt = "Skýrsla gerð";
+
+/* main index strings */
+char *msg_main_us = "Yfirlit heimsókn fyrir";
+/* char *msg_main_per= "Síðustu 12 mánuðir "; */
+char *msg_main_per= "Yfirlit eftir mánuðum";
+char *msg_main_sum= "Yfirlit eftir mánuðum";
+char *msg_main_da = "Dags meðaltal";
+char *msg_main_mt = "Samtals á mánuði";
+
+/* month HTML page strings */
+char *msg_hmth_du = "Notkun á dag fyrir";
+char *msg_hmth_hu = "Notkun á klukkustund fyrir";
+
+/* table header strings */
+char *msg_h_by    = "By";
+char *msg_h_avg   = "Meðaltal";
+char *msg_h_max   = "Mest";
+char *msg_h_total = "Samtals";
+char *msg_h_totals= "Samtals";
+char *msg_h_day   = "Dagur";
+char *msg_h_mth   = "Mánuður";
+char *msg_h_hour  = "Klukkustund";
+char *msg_h_hits  = "Beiðnir";
+char *msg_h_pages = "Síður";
+char *msg_h_visits= "Heimsóknir";
+char *msg_h_files = "Skrár";
+char *msg_h_sites = "Sites";
+char *msg_h_xfer  = "KBæti";
+char *msg_h_hname = "Host nafn";
+char *msg_h_url   = "Slóð";
+char *msg_h_agent = "User Agent";
+char *msg_h_ref   = "Referrer";
+char *msg_h_ctry  = "Land";
+char *msg_h_search= "Leitarstrengur";
+char *msg_h_uname = "Notandanafn";
+
+/* links along top of page */
+char *msg_hlnk_ds = "Daglegar samtölur";
+char *msg_hlnk_hs = "Klukkustundar samtölur";
+char *msg_hlnk_u  = "Slóðir";
+char *msg_hlnk_s  = "Síður";
+char *msg_hlnk_a  = "Agents";
+char *msg_hlnk_c  = "Lönd";
+char *msg_hlnk_r  = "Referrers";
+char *msg_hlnk_en = "Byrjunar";
+char *msg_hlnk_ex = "loka";
+char *msg_hlnk_sr = "Leita";
+char *msg_hlnk_i  = "Notendur";
+
+/* monthly total table */
+char *msg_mtot_ms = "Mánaðar Samtölur fyrir";
+char *msg_mtot_th = "Samtals Beiðnir";
+char *msg_mtot_tf = "Samtals Skrár";
+char *msg_mtot_tx = "Samtals KBæti";
+char *msg_mtot_us = "Samtals Einstakar Síður";
+char *msg_mtot_ur = "Samtals Unique Referrers";
+char *msg_mtot_ua = "Samtals Unique User Agents";
+char *msg_mtot_uu = "Samtals Einstakar Slóðir";
+char *msg_mtot_ui = "Samtals Einstök Notandanöfn";
+char *msg_mtot_mhd= "Beiðnir á Dag";
+char *msg_mtot_mhh= "Beiðnir á Klukkustund";
+char *msg_mtot_mfd= "Skrár á Dag";
+char *msg_mtot_mpd= "Síður á Dag";
+char *msg_mtot_msd= "Síður (sites) á Dag";
+char *msg_mtot_mvd= "Heimsóknir á Dag";
+char *msg_mtot_mkd= "KBæti á Dag";
+char *msg_mtot_rc = "Hits by Response Code";
+
+/* daily total table */
+char *msg_dtot_ds = "Daglegar Samtölur fyrir";
+
+/* hourly total table */
+char *msg_htot_hs = "Klukkustundar Samtölur fyrir";
+
+/* country pie chart */
+char *msg_ctry_use= "Notkun eftir Landi fyrir";
+
+/* top tables */
+/* Formatted as "Top xxx of xxx Total something" */
+char *msg_top_top = "Efstu";
+char *msg_top_of  = "af";
+char *msg_top_s   = "Heildar Síður";
+char *msg_top_u   = "Heildar slóðir";
+char *msg_top_r   = "Heildar Referrers";
+char *msg_top_a   = "Heildar User Agents";
+char *msg_top_c   = "Heildar Lönd";
+char *msg_top_en  = "Heildar Byrjunarsíðum";
+char *msg_top_ex  = "Heildar Lokasíðum";
+char *msg_top_sr  = "Heildar Leitarstrengir";
+char *msg_top_i   = "Heildar Notendanöfn";
+char *msg_v_sites = "Skoða Allar síður";
+char *msg_v_urls  = "Skoða Allar Slóðir";
+char *msg_v_refs  = "Skoða Allar Referrers";
+char *msg_v_agents= "Skoða Alla User Agents";
+char *msg_v_search= "Skoða Alla Leitarstrengi";
+char *msg_v_users = "Skoða Öll Notandanöfn";
+
+/* short month names MUST BE 3 CHARS in size... pad if needed*/
+char *s_month[12]={ "Jan", "Feb", "Mar",
+                    "Apr", "Maí", "Jún",
+                    "Júl", "Agú", "Sep",
+                    "Okt", "Nóv", "Des"};
+
+/* long month names - can be any length */
+char *l_month[12]={ "Janúar",  "Febrúar", "Mars",   "Apríl",
+                    "Maí",      "Júní",     "Júlý",    "Ágúst",
+                    "September","Október",  "Nóvember","Desember"};
+
+/* response code descriptions... order IS important!      */
+struct response_code response[] =
+       { { "Undefined response code",                    0 },
+         { "Code 100 - Áfram",                           0 },
+         { "Code 101 - Switching Protocols",             0 },
+         { "Code 200 - I Lagi",                          0 },
+         { "Code 201 - Búið til",                        0 },
+         { "Code 202 - Samþykkt",                        0 },
+         { "Code 203 - Non-Authoritative Information",   0 },
+         { "Code 204 - Ekkert Innihald",                 0 },
+         { "Code 205 - Reset Content",                   0 },
+         { "Code 206 - Partial Content",                 0 },
+         { "Code 300 - Margir Möguleikar",               0 },
+         { "Code 301 - Fært",                            0 },
+         { "Code 302 - Fundið",                          0 },
+         { "Code 303 - Sjá Annað",                       0 },
+         { "Code 304 - Ekki Breytt",                     0 },
+         { "Code 305 - Nota Proxy",                      0 },
+         { "Code 307 - Fært Um Stundarsakir",            0 },
+         { "Code 400 - Slæm Beiðni",                     0 },
+         { "Code 401 - Óleyfilegt",                      0 },
+         { "Code 402 - Greiðslu Krafist",                0 },
+         { "Code 403 - Óleyfilegt",                      0 },
+         { "Code 404 - Fannst Ekki",                     0 },
+         { "Code 405 - Aðferð Ekki Leyfð",               0 },
+         { "Code 406 - Ekki Ásættanlegt",                0 },
+         { "Code 407 - Proxy Auðkenning Nauðsynleg",     0 },
+         { "Code 408 - Request Timeout",                 0 },
+         { "Code 409 - Árekstur",                        0 },
+         { "Code 410 - Gone",                            0 },
+         { "Code 411 - Length Required",                 0 },
+         { "Code 412 - Precondition Failed",             0 },
+         { "Code 413 - Request Entity Of Stórt",         0 },
+         { "Code 414 - Request-URI Of Langt",            0 },
+         { "Code 415 - Óstudd Media Tegund",             0 },
+         { "Code 416 - Umbeðið svæði Ekki Ásættanlegt",  0 },
+         { "Code 417 - Expectation Failed",              0 },
+         { "Code 500 - Innlæg þjóna villa",              0 },
+         { "Code 501 - Not Implemented",                 0 },
+         { "Code 502 - Rangur Gateway",                  0 },
+         { "Code 503 - Þjónusta Ekki Fyrir Hendi",       0 },
+         { "Code 504 - Gateway Timeout",                 0 },
+         { "Code 505 - HTTP Útgáfa Ekki Studd",          0 } };
+ 
+char *msg_title   = "Yfirlit Heimsókna fyrir";
+char *msg_h_other = "Annað";
+
+/* Country codes (previously in ctry.h header file) */
+
+struct  country_code ctry[] = {
+{ 0,                      "óþekkt",                           0,0,0 },
+{ IDX_3C('c','o','m'),    "Commercial (com)",                 0,0,0 },
+{ IDX_3C('e','d','u'),    "Menntanet (edu)",                  0,0,0 },
+{ IDX_3C('g','o','v'),    "US Ríkisnet (gov)",                0,0,0 },
+{ IDX_3C('i','n','t'),    "International (int)",              0,0,0 },
+{ IDX_3C('m','i','l'),    "US Her (mil)",                     0,0,0 },
+{ IDX_3C('n','e','t'),    "Network (net)",                    0,0,0 },
+{ IDX_3C('o','r','g'),    "Non-Profit (org)",                 0,0,0 },
+{ IDX_3C('b','i','z'),    "Generic Business (biz)",           0,0,0 },
+{ IDX_3C('c','a','t'),    "Catalan Community (cat)",          0,0,0 },
+{ IDX_3C('p','r','o'),    "Professional (pro)",               0,0,0 },
+{ IDX_3C('t','e','l'),    "Ind. Contact Data (tel)",          0,0,0 },
+{ IDX_4C('a','e','r','o'),"Air Transport Industry (aero)",    0,0,0 },
+{ IDX_4C('a','s','i','a'),"Asia Pacific Community (asia)",    0,0,0 },
+{ IDX_4C('c','o','o','p'),"Cooperative Association (coop)",   0,0,0 },
+{ IDX_4C('i','n','f','o'),"Generic TLD (info)",               0,0,0 },
+{ IDX_4C('j','o','b','s'),"Human Resources (jobs)",           0,0,0 },
+{ IDX_4C('m','o','b','i'),"Generic Mobile TLD (mobi)",        0,0,0 },
+{ IDX_4C('n','a','m','e'),"Individual (name)",                0,0,0 },
+{ IDX_4C('a','r','p','a'),"Gamla Arpanet (arpa)",             0,0,0 },
+{ IDX_4C('n','a','t','o'),"Nato (nato)",                      0,0,0 },
+{ IDX_6C('m','u','s','e','u','m'), "Museums (museum)",        0,0,0 },
+{ IDX_6C('t','r','a','v','e','l'), "Travel Ind. (travel)",    0,0,0 },
+{ IDX_2C('a','c'),        "Ascension Island",                 0,0,0 },
+{ IDX_2C('a','d'),        "Andorra",                          0,0,0 },
+{ IDX_2C('a','e'),        "Sameiginlegu Arabísku Furstadæmin",0,0,0 },
+{ IDX_2C('a','f'),        "Afganistan",                       0,0,0 },
+{ IDX_2C('a','g'),        "Antigua og Barbuda",               0,0,0 },
+{ IDX_2C('a','i'),        "Anguilla",                         0,0,0 },
+{ IDX_2C('a','l'),        "Albanía",                          0,0,0 },
+{ IDX_2C('a','m'),        "Armenía",                          0,0,0 },
+{ IDX_2C('a','n'),        "Holland",                          0,0,0 },
+{ IDX_2C('a','o'),        "Angóla",                           0,0,0 },
+{ IDX_2C('a','q'),        "Antarctica",                       0,0,0 },
+{ IDX_2C('a','r'),        "Argentína",                        0,0,0 },
+{ IDX_2C('a','s'),        "Amerísku Samoa",                   0,0,0 },
+{ IDX_2C('a','t'),        "Austurríki",                       0,0,0 },
+{ IDX_2C('a','u'),        "Ástralía",                         0,0,0 },
+{ IDX_2C('a','w'),        "Aruba",                            0,0,0 },
+{ IDX_2C('a','x'),        "Aland Islands",                    0,0,0 },
+{ IDX_2C('a','z'),        "Azerbaijan",                       0,0,0 },
+{ IDX_2C('b','a'),        "Bosnía and Herzegovina",           0,0,0 },
+{ IDX_2C('b','b'),        "Barbados",                         0,0,0 },
+{ IDX_2C('b','d'),        "Bangladesh",                       0,0,0 },
+{ IDX_2C('b','e'),        "Belgía",                           0,0,0 },
+{ IDX_2C('b','f'),        "Burkina Faso",                     0,0,0 },
+{ IDX_2C('b','g'),        "Búlgaría",                         0,0,0 },
+{ IDX_2C('b','h'),        "Bahrain",                          0,0,0 },
+{ IDX_2C('b','i'),        "Burundi",                          0,0,0 },
+{ IDX_2C('b','j'),        "Benin",                            0,0,0 },
+{ IDX_2C('b','l'),        "Saint Barthelemy",                 0,0,0 },
+{ IDX_2C('b','m'),        "Bermúda",                          0,0,0 },
+{ IDX_2C('b','n'),        "Brunei Darussalam",                0,0,0 },
+{ IDX_2C('b','o'),        "Bólivía",                          0,0,0 },
+{ IDX_2C('b','r'),        "Brasilía",                         0,0,0 },
+{ IDX_2C('b','s'),        "Bahamas",                          0,0,0 },
+{ IDX_2C('b','t'),        "Bhutan",                           0,0,0 },
+{ IDX_2C('b','v'),        "Bouvet Island",                    0,0,0 },
+{ IDX_2C('b','w'),        "Botswana",                         0,0,0 },
+{ IDX_2C('b','y'),        "Belarus",                          0,0,0 },
+{ IDX_2C('b','z'),        "Belize",                           0,0,0 },
+{ IDX_2C('c','a'),        "Kanada",                           0,0,0 },
+{ IDX_2C('c','c'),        "Kókos (Keeling) Eyjur",            0,0,0 },
+{ IDX_2C('c','d'),        "Congo, Democratic Republic",       0,0,0 },
+{ IDX_2C('c','f'),        "Mið Afríkulýðveldið ",             0,0,0 },
+{ IDX_2C('c','g'),        "Kongó",                            0,0,0 },
+{ IDX_2C('c','h'),        "Swiss",                            0,0,0 },
+{ IDX_2C('c','i'),        "Fílabeinsströndin (Ivory Coast)",  0,0,0 },
+{ IDX_2C('c','k'),        "Cook Islands",                     0,0,0 },
+{ IDX_2C('c','l'),        "Chile",                            0,0,0 },
+{ IDX_2C('c','m'),        "Kamerún",                          0,0,0 },
+{ IDX_2C('c','n'),        "Kína",                             0,0,0 },
+{ IDX_2C('c','o'),        "Kólumbía",                         0,0,0 },
+{ IDX_2C('c','r'),        "Kosta Rica",                       0,0,0 },
+{ IDX_2C('c','u'),        "Kúba",                             0,0,0 },
+{ IDX_2C('c','v'),        "Cape Verde",                       0,0,0 },
+{ IDX_2C('c','x'),        "Jólaeyja",                         0,0,0 },
+{ IDX_2C('c','y'),        "Kýpur",                            0,0,0 },
+{ IDX_2C('c','z'),        "Tékkneska Lýðveldið",              0,0,0 },
+{ IDX_2C('d','e'),        "Þýskaland",                        0,0,0 },
+{ IDX_2C('d','j'),        "Djibouti",                         0,0,0 },
+{ IDX_2C('d','k'),        "Danmörk",                          0,0,0 },
+{ IDX_2C('d','m'),        "Dóminíka",                         0,0,0 },
+{ IDX_2C('d','o'),        "Dóminíska Lýðveldið",              0,0,0 },
+{ IDX_2C('d','z'),        "Algeria",                          0,0,0 },
+{ IDX_2C('e','c'),        "Ecuador",                          0,0,0 },
+{ IDX_2C('e','e'),        "Estónía",                          0,0,0 },
+{ IDX_2C('e','g'),        "Egyptaland",                       0,0,0 },
+{ IDX_2C('e','h'),        "Vestur Sahara",                    0,0,0 },
+{ IDX_2C('e','r'),        "Eritrea",                          0,0,0 },
+{ IDX_2C('e','s'),        "Spánn",                            0,0,0 },
+{ IDX_2C('e','t'),        "Eþíópía",                          0,0,0 },
+{ IDX_2C('e','u'),        "European Union",                   0,0,0 },
+{ IDX_2C('f','i'),        "Finland",                          0,0,0 },
+{ IDX_2C('f','j'),        "Fíjí",                             0,0,0 },
+{ IDX_2C('f','k'),        "Fálkeyjur (Malvinas)",             0,0,0 },
+{ IDX_2C('f','m'),        "Míkrónesía",                       0,0,0 },
+{ IDX_2C('f','o'),        "Faroe Islands",                    0,0,0 },
+{ IDX_2C('f','r'),        "Frakkland",                        0,0,0 },
+{ IDX_2C('g','a'),        "Gabon",                            0,0,0 },
+{ IDX_2C('g','b'),        "Stóra Bretland (UK)",              0,0,0 },
+{ IDX_2C('g','d'),        "Grenada",                          0,0,0 },
+{ IDX_2C('g','e'),        "Georgía",                          0,0,0 },
+{ IDX_2C('g','f'),        "Franska Guiana",                   0,0,0 },
+{ IDX_2C('g','g'),        "Guernsey",                         0,0,0 },
+{ IDX_2C('g','h'),        "Ghana",                            0,0,0 },
+{ IDX_2C('g','i'),        "Gíbraltar",                        0,0,0 },
+{ IDX_2C('g','l'),        "Grænland",                         0,0,0 },
+{ IDX_2C('g','m'),        "Gambia",                           0,0,0 },
+{ IDX_2C('g','n'),        "Guinea",                           0,0,0 },
+{ IDX_2C('g','p'),        "Guadeloupe",                       0,0,0 },
+{ IDX_2C('g','q'),        "Equatorial Guinea",                0,0,0 },
+{ IDX_2C('g','r'),        "Grikkland",                        0,0,0 },
+{ IDX_2C('g','s'),        "S. Georgia og S. Samloku Eyjur.",  0,0,0 },
+{ IDX_2C('g','t'),        "Guatemala",                        0,0,0 },
+{ IDX_2C('g','u'),        "Guam",                             0,0,0 },
+{ IDX_2C('g','w'),        "Guinea-Bissau",                    0,0,0 },
+{ IDX_2C('g','y'),        "Guyana",                           0,0,0 },
+{ IDX_2C('h','k'),        "Hong Kong",                        0,0,0 },
+{ IDX_2C('h','m'),        "Heard og McDonald Eyjur",          0,0,0 },
+{ IDX_2C('h','n'),        "Hondúras",                         0,0,0 },
+{ IDX_2C('h','r'),        "Króatía",                          0,0,0 },
+{ IDX_2C('h','t'),        "Haítí",                            0,0,0 },
+{ IDX_2C('h','u'),        "Ungverjaland",                     0,0,0 },
+{ IDX_2C('i','d'),        "Indónesía",                        0,0,0 },
+{ IDX_2C('i','e'),        "Írland",                           0,0,0 },
+{ IDX_2C('i','l'),        "Ísrael",                           0,0,0 },
+{ IDX_2C('i','m'),        "Isle of Man",                      0,0,0 },
+{ IDX_2C('i','n'),        "Indía",                            0,0,0 },
+{ IDX_2C('i','o'),        "British Indian Ocean Territory",   0,0,0 },
+{ IDX_2C('i','q'),        "Írak",                             0,0,0 },
+{ IDX_2C('i','r'),        "Íran",                             0,0,0 },
+{ IDX_2C('i','s'),        "Ísland",                           0,0,0 },
+{ IDX_2C('i','t'),        "Ítalía",                           0,0,0 },
+{ IDX_2C('j','e'),        "Jersey",                           0,0,0 },
+{ IDX_2C('j','m'),        "Jamaica",                          0,0,0 },
+{ IDX_2C('j','o'),        "Jordan",                           0,0,0 },
+{ IDX_2C('j','p'),        "Japan",                            0,0,0 },
+{ IDX_2C('k','e'),        "Kenya",                            0,0,0 },
+{ IDX_2C('k','g'),        "Kyrgyzstan",                       0,0,0 },
+{ IDX_2C('k','h'),        "Kambódía",                         0,0,0 },
+{ IDX_2C('k','i'),        "Kiribati",                         0,0,0 },
+{ IDX_2C('k','m'),        "Comoros",                          0,0,0 },
+{ IDX_2C('k','n'),        "Saint Kitts and Nevis",            0,0,0 },
+{ IDX_2C('k','p'),        "Kórea (Norður)",                   0,0,0 },
+{ IDX_2C('k','r'),        "Kórea (Suður)",                    0,0,0 },
+{ IDX_2C('k','w'),        "Kúweit",                           0,0,0 },
+{ IDX_2C('k','y'),        "Cayman Eyjur",                     0,0,0 },
+{ IDX_2C('k','z'),        "Kazakhstan",                       0,0,0 },
+{ IDX_2C('l','a'),        "Laos",                             0,0,0 },
+{ IDX_2C('l','b'),        "Lebanon",                          0,0,0 },
+{ IDX_2C('l','c'),        "Saint Lucia",                      0,0,0 },
+{ IDX_2C('l','i'),        "Liechtenstein",                    0,0,0 },
+{ IDX_2C('l','k'),        "Sri Lanka",                        0,0,0 },
+{ IDX_2C('l','r'),        "Liberia",                          0,0,0 },
+{ IDX_2C('l','s'),        "Lesotho",                          0,0,0 },
+{ IDX_2C('l','t'),        "Lithuania",                        0,0,0 },
+{ IDX_2C('l','u'),        "Lúxembourg",                       0,0,0 },
+{ IDX_2C('l','v'),        "Lettland",                         0,0,0 },
+{ IDX_2C('l','y'),        "Libýa",                            0,0,0 },
+{ IDX_2C('m','a'),        "Marokko",                          0,0,0 },
+{ IDX_2C('m','c'),        "Mónakó",                           0,0,0 },
+{ IDX_2C('m','d'),        "Moldóvía",                         0,0,0 },
+{ IDX_2C('m','e'),        "Montenegro",                       0,0,0 },
+{ IDX_2C('m','f'),        "Saint Martin (French part)",       0,0,0 },
+{ IDX_2C('m','g'),        "Madagaskar",                       0,0,0 },
+{ IDX_2C('m','h'),        "Marshall Eyjur",                   0,0,0 },
+{ IDX_2C('m','k'),        "Makedónía",                        0,0,0 },
+{ IDX_2C('m','l'),        "Mali",                             0,0,0 },
+{ IDX_2C('m','m'),        "Myanmar",                          0,0,0 },
+{ IDX_2C('m','n'),        "Mongólía",                         0,0,0 },
+{ IDX_2C('m','o'),        "Macau",                            0,0,0 },
+{ IDX_2C('m','p'),        "Norður Mariana eyjur",             0,0,0 },
+{ IDX_2C('m','q'),        "Martinique",                       0,0,0 },
+{ IDX_2C('m','r'),        "Mauritanía",                       0,0,0 },
+{ IDX_2C('m','s'),        "Montserrat",                       0,0,0 },
+{ IDX_2C('m','t'),        "Malta",                            0,0,0 },
+{ IDX_2C('m','u'),        "Mauritius",                        0,0,0 },
+{ IDX_2C('m','v'),        "Maldives",                         0,0,0 },
+{ IDX_2C('m','w'),        "Malawi",                           0,0,0 },
+{ IDX_2C('m','x'),        "Mexíko",                           0,0,0 },
+{ IDX_2C('m','y'),        "Malasía",                          0,0,0 },
+{ IDX_2C('m','z'),        "Mozambík",                         0,0,0 },
+{ IDX_2C('n','a'),        "Namibía",                          0,0,0 },
+{ IDX_2C('n','c'),        "Nýja Caledonia",                   0,0,0 },
+{ IDX_2C('n','e'),        "Niger",                            0,0,0 },
+{ IDX_2C('n','f'),        "Norfolk Island",                   0,0,0 },
+{ IDX_2C('n','g'),        "Nigería",                          0,0,0 },
+{ IDX_2C('n','i'),        "Nicaragua",                        0,0,0 },
+{ IDX_2C('n','l'),        "Netherlands",                      0,0,0 },
+{ IDX_2C('n','o'),        "Noregur",                          0,0,0 },
+{ IDX_2C('n','p'),        "Nepal",                            0,0,0 },
+{ IDX_2C('n','r'),        "Nauru",                            0,0,0 },
+{ IDX_2C('n','u'),        "Niue",                             0,0,0 },
+{ IDX_2C('n','z'),        "Nýja Sjáland",                     0,0,0 },
+{ IDX_2C('o','m'),        "Óman",                             0,0,0 },
+{ IDX_2C('p','a'),        "Panama",                           0,0,0 },
+{ IDX_2C('p','e'),        "Peru",                             0,0,0 },
+{ IDX_2C('p','f'),        "Franska Pólýnesía",                0,0,0 },
+{ IDX_2C('p','g'),        "Papua Nýja Guinea",                0,0,0 },
+{ IDX_2C('p','h'),        "Filippseyjar",                     0,0,0 },
+{ IDX_2C('p','k'),        "Pakistan",                         0,0,0 },
+{ IDX_2C('p','l'),        "Pólland",                          0,0,0 },
+{ IDX_2C('p','m'),        "St. Pierre og Miquelon",           0,0,0 },
+{ IDX_2C('p','n'),        "Pitcairn",                         0,0,0 },
+{ IDX_2C('p','r'),        "Púerto Ríko",                      0,0,0 },
+{ IDX_2C('p','s'),        "Palestinian Territory, Occupied",  0,0,0 },
+{ IDX_2C('p','t'),        "Portúgal",                         0,0,0 },
+{ IDX_2C('p','w'),        "Palau",                            0,0,0 },
+{ IDX_2C('p','y'),        "Paraguay",                         0,0,0 },
+{ IDX_2C('q','a'),        "Qatar",                            0,0,0 },
+{ IDX_2C('r','e'),        "Reunion",                          0,0,0 },
+{ IDX_2C('r','o'),        "Rúmenía",                          0,0,0 },
+{ IDX_2C('r','s'),        "Serbia",                           0,0,0 },
+{ IDX_2C('r','u'),        "Rússneska Sambandið",              0,0,0 },
+{ IDX_2C('r','w'),        "Rúanda",                           0,0,0 },
+{ IDX_2C('s','a'),        "Saudi Arabía",                     0,0,0 },
+{ IDX_2C('s','b'),        "Solomon Eyjur",                    0,0,0 },
+{ IDX_2C('s','c'),        "Seychelles",                       0,0,0 },
+{ IDX_2C('s','d'),        "Súdan",                            0,0,0 },
+{ IDX_2C('s','e'),        "Svíþjóð",                          0,0,0 },
+{ IDX_2C('s','g'),        "Singapúr",                         0,0,0 },
+{ IDX_2C('s','h'),        "St. Helena",                       0,0,0 },
+{ IDX_2C('s','i'),        "Slóvenía",                         0,0,0 },
+{ IDX_2C('s','j'),        "Svalbarði og Jan Mayen Eyjarnar",  0,0,0 },
+{ IDX_2C('s','k'),        "Slóvenska lýðveldið",              0,0,0 },
+{ IDX_2C('s','l'),        "Síerra Léone",                     0,0,0 },
+{ IDX_2C('s','m'),        "San Marinó",                       0,0,0 },
+{ IDX_2C('s','n'),        "Senegal",                          0,0,0 },
+{ IDX_2C('s','o'),        "Sómalía",                          0,0,0 },
+{ IDX_2C('s','r'),        "Suriname",                         0,0,0 },
+{ IDX_2C('s','t'),        "Sao Tome og Principe",             0,0,0 },
+{ IDX_2C('s','u'),        "USSR (fyrrverandi)",               0,0,0 },
+{ IDX_2C('s','v'),        "El Salvador",                      0,0,0 },
+{ IDX_2C('s','y'),        "Sýrland",                          0,0,0 },
+{ IDX_2C('s','z'),        "Swaziland",                        0,0,0 },
+{ IDX_2C('t','c'),        "Turks and Caicos Eyjurnar",        0,0,0 },
+{ IDX_2C('t','d'),        "Chad",                             0,0,0 },
+{ IDX_2C('t','f'),        "French Southern Territories",      0,0,0 },
+{ IDX_2C('t','g'),        "Togo",                             0,0,0 },
+{ IDX_2C('t','h'),        "Taíland",                          0,0,0 },
+{ IDX_2C('t','j'),        "Tajikistan",                       0,0,0 },
+{ IDX_2C('t','k'),        "Tokelau",                          0,0,0 },
+{ IDX_2C('t','l'),        "Timor-Leste",                      0,0,0 },
+{ IDX_2C('t','m'),        "Túrkmenistan",                     0,0,0 },
+{ IDX_2C('t','n'),        "Túnis",                            0,0,0 },
+{ IDX_2C('t','o'),        "Tonga",                            0,0,0 },
+{ IDX_2C('t','p'),        "Portuguese Timor",                 0,0,0 },
+{ IDX_2C('t','r'),        "Tyrkland",                         0,0,0 },
+{ IDX_2C('t','t'),        "Trinídad og Tobago",               0,0,0 },
+{ IDX_2C('t','v'),        "Tuvalu",                           0,0,0 },
+{ IDX_2C('t','w'),        "Taíwan",                           0,0,0 },
+{ IDX_2C('t','z'),        "Tanzania",                         0,0,0 },
+{ IDX_2C('u','a'),        "Úkraíne",                          0,0,0 },
+{ IDX_2C('u','g'),        "Úganda",                           0,0,0 },
+{ IDX_2C('u','k'),        "Bretland",                         0,0,0 },
+{ IDX_2C('u','m'),        "US Minor Outlying Islands",        0,0,0 },
+{ IDX_2C('u','s'),        "USA",                              0,0,0 },
+{ IDX_2C('u','y'),        "Uruguay",                          0,0,0 },
+{ IDX_2C('u','z'),        "Úsbekistan",                       0,0,0 },
+{ IDX_2C('v','a'),        "Vatikanið (Holy See)",             0,0,0 },
+{ IDX_2C('v','c'),        "Saint Vincent og Grenadines",      0,0,0 },
+{ IDX_2C('v','e'),        "Venesúela",                        0,0,0 },
+{ IDX_2C('v','g'),        "Jómfreyjar-eyjar (Bresku)",        0,0,0 },
+{ IDX_2C('v','i'),        "Jómfreyjar-eyjar (U.S.)",          0,0,0 },
+{ IDX_2C('v','n'),        "Víet Nam",                         0,0,0 },
+{ IDX_2C('v','u'),        "Vanuatu",                          0,0,0 },
+{ IDX_2C('w','f'),        "Wallis og Futuna Islands",         0,0,0 },
+{ IDX_2C('w','s'),        "Samóa",                            0,0,0 },
+{ IDX_2C('y','e'),        "Yemen",                            0,0,0 },
+{ IDX_2C('y','t'),        "Mayotte",                          0,0,0 },
+{ IDX_2C('y','u'),        "júgóslavía",                       0,0,0 },
+{ IDX_2C('z','a'),        "Suður Africa",                     0,0,0 },
+{ IDX_2C('z','m'),        "Zambía",                           0,0,0 },
+{ IDX_2C('z','w'),        "Zimbabwe",                         0,0,0 },
+{ IDX_2C('a','1'),        "Anonymous Proxy",                  0,0,0 },
+{ IDX_2C('a','2'),        "Satellite Provider",               0,0,0 },
+{ IDX_2C('o','1'),        "Other",                            0,0,0 },
+{ IDX_2C('a','p'),        "Asia/Pacific Region",              0,0,0 },
+{ IDX_3C('l','a','n'),    "Local Network (lan)",              0,0,0 },
+{ 0              ,        NULL,                               0,0,0 }};

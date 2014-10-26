@@ -1,0 +1,616 @@
+/*
+   webalizer_lang.albanian
+
+   Kartelë Mbulimi Gjuhësor për Shqipen për Webalizer V2.0x.
+   06-Mar-2006 nga Besnik Bleta besnik@programeshqip.org)
+   12-May-2008 Updated to current IANA TLDs (brad@mrunix.net)
+   26-May-2008 Modified for level 2.2 support (brad@mrunix.net)
+
+*/
+
+/***********************************************************************/
+/* DEFINE LANGUAGE NAME here                                           */
+/***********************************************************************/
+
+/* char *language  = "Shqip"; */
+char *language  = "Albanian";
+char *langcode  = "sq";
+
+/***********************************************************************/
+/*                                                                     */
+/* Informational messages                                              */
+/*                                                                     */
+/* These messages are only displayed while The Webalizer is being run, */
+/* usually to the screen, and are not part of the HTML output.         */
+/*                                                                     */
+/***********************************************************************/
+
+/* these are only used in timing totals */
+/* Format:   XXX records (XXX ignored, XXX bad) in X.XX seconds        */
+char *msg_records = "regjistrime";
+char *msg_addresses="vendndodhje";
+char *msg_ignored = "shpërfillur";
+char *msg_bad     = "i dëmtuar";
+char *msg_in      = "në";
+char *msg_seconds = "sekonda";
+
+/* mesazhi gabimi gjatë rregullimit dhe ecurisë */
+char *msg_log_err = "Gabim: S'hap dot kartelë regjistrimesh";
+char *msg_log_use = "Po përdor kartelë regjistrimesh";
+char *msg_dir_err = "Gabim: S'ndryshoj dot drejtorinë në";
+char *msg_dir_use = "Po krijoj përfundimet në";
+char *msg_cur_dir = "drejtorinë e çastit";
+char *msg_hostname= "Strehëemri për raportime është";
+char *msg_ign_hist= "Po shpërfill historikun e mëparshëm...";
+char *msg_no_hist = "Nuk u gjet kartelë historiku...";
+char *msg_get_hist= "Po lexoj kartelë historiku...";
+char *msg_put_hist= "Po ruaj të dhëna historiku...";
+char *msg_hist_err= "Gabim: I pazoti të shkruaj kartelë historiku";
+char *msg_bad_hist= "Gabim: Po shpërfill regjistrime të pavlefshëm historiku";
+char *msg_bad_conf= "Gabim: I pazoti të hap kartelë formësimi";
+char *msg_bad_key = "Kujdes: Fjalëkyç i pavlefshëm";
+char *msg_bad_date= "Gabim: Po anashkaloj regjistrime (datë e gabuar)";
+char *msg_ign_nscp= "Po anashkaloj regjistrim titujsh Netscape";
+char *msg_bad_rec = "Po anashkaloj regjistrim të dëmtuar";
+char *msg_no_vrec = "Nuk u gjetën regjistrime të vlefshëm!";
+char *msg_gen_rpt = "Po prodhoj raport për";
+char *msg_gen_sum = "Po prodhoj raport përmbledhës";
+char *msg_get_data= "Po lexoj të dhëna të mëparshme xhirimi..";
+char *msg_put_data= "Po ruaj të dhëna të tanishme xhirimi...";
+char *msg_no_data = "nuk u gjetën të dhëna të mëparshme xhirimi...";
+char *msg_bad_data= "Gabim: I pazoti të rikthej të dhëna xhirimi";
+char *msg_data_err= "Gabim: I pazoti të ruaj të dhëna të tanishme xhirimi";
+char *msg_dup_data= "Kujdes: Ka gjasa të jenë gjendur të dhëna të përsëritura";
+
+/* Gjëra DNS */
+char *msg_dns_nocf= "Nuk u tregua kartelë fshehtine, po e ndërpres...";
+char *msg_dns_nodb= "Error: I pazoti të hap kartelë fshehtine DNS";
+char *msg_dns_nolk= "Error: I pazoti të kyç kartelë fshehtine DNS";
+char *msg_dns_usec= "Po përdor kartelë fshehtine DNS";
+char *msg_dns_rslv= "Kërkim DNS";
+char *msg_dns_none= "Asnjë për t'u përpunuar";
+char *msg_dns_abrt= "DNS support not present, aborting...";
+
+/* Geolocation stuff */
+char *msg_geo_open= "Error opening file";
+char *msg_geo_use = "Using";
+char *msg_geo_nolu= "lookups disabled";
+char *msg_geo_dflt= "default";
+
+/* gabime sigurimi kujtese */
+char *msg_nomem_ts= "Nuk siguroj dot kujtesë të mjaftueshme, U çaktivizua \"Site\"-e Kryesues!";
+char *msg_nomem_tr= "Nuk siguroj dot kujtesë të mjaftueshme, U çaktivizua Përmendësa Kryesues!";
+char *msg_nomem_tu= "Nuk siguroj dot kujtesë të mjaftueshme, U çaktivizua URL-ra Kryesuese!";
+char *msg_nomem_tc= "Nuk siguroj dot kujtesë të mjaftueshme, U çaktivizua Vende Kryesues!";
+char *msg_nomem_ta= "Nuk siguroj dot kujtesë të mjaftueshme, U çaktivizua Agjentë Kryesues Përdoruesi!";
+char *msg_nomem_tsr="Nuk siguroj dot kujtesë të mjaftueshme, U çaktivizua Vargje Kryesuese Kërkimi!";
+char *msg_nomem_ti= "Nuk siguroj dot kujtesë të mjaftueshme, U çaktivizua Emra Kryesues Përdoruesi!";
+char *msg_nomem_dh= "Gabim gjatë shtimit të nyjes për strehë (përditë), po e anashkaloj";
+char *msg_nomem_mh= "Gabim gjatë shtimit të nyjes për strehë (çdo muaj), po e anashkaloj";
+char *msg_nomem_u = "Gabim gjatë shtimit të nyjes për URL, po e anashkaloj";
+char *msg_nomem_a = "Gabim gjatë shtimit të nyjes për Agjent Përdoruesi, po e anashkaloj";
+char *msg_nomem_r = "Gabim gjatë shtimit të nyjes për Përmendës, po e anashkaloj";
+char *msg_nomem_sc= "Gabim gjatë shtimit të nyjes për Varg Kërkimi, po e anashkaloj";
+char *msg_nomem_i = "Gabim gjatë shtimit të nyjes për Emër përdoruesi, po e anashkaloj";
+
+/* gabime zërash regjistrimi */
+char *msg_big_rec = "Gabim: Po anashkolaj regjistrim më të madh se ç'duhet";
+char *msg_big_host= "Kujdes: Po cungoj emër strehe më të madh se ç'duhet";
+char *msg_big_date= "Kujdes: Po cungoj kuti date më të madhe se ç'duhet";
+char *msg_big_req = "Kujdes: Po cungoj kuti kërkese më të madhe se ç'duhet";
+char *msg_big_ref = "Kujdes: Po cungoj kuti përmendësi më të madhe se ç'duhet";
+char *msg_big_user= "Kujdes: Po cungoj emër përdoruesi më të madh se ç'duhet";
+char *msg_big_one = "Kujdes: Vargu tejkalon masën e lejuar";
+
+/* gabime të ndryshëm */
+char *msg_no_open = "Gabim: I pazoti të hap kartelën";
+
+/* Shfaqje e ndihmës... */
+char *h_usage1 = "Përdorimi";
+char *h_usage2 = "[mundësi] [kartelë regjistrimi]";
+char *h_msg[]= {
+         "-h        = shtyp këtë mesazh ndihme"            ,
+         "-V        = shtyp të dhëna versioni"             ,
+         "-v        = be verbose"                          ,
+         "-d        = shtyp të dhëna shtesë diagnostikimi" ,
+         "-F type   = Tip regjistrimi.  tipi= (clf | ftp | squid | w3c)",
+         "-f        = Fold sequence errors"                ,
+         "-i        = shpërfill kartelë historiku"         ,
+         "-p        = ruaj gjendje (shtues)"               ,
+         "-b        = ignore state (incremental)"          ,
+         "-q        = pa mesazhe informues"                ,
+         "-Q        = pa _ASNJË_ mesazh"                   ,
+         "-Y        = pa graf vendesh"                     ,
+         "-G        = pa graf të përorshëm"                ,
+         "-H        = pa statistika të përorshme"          ,
+         "-L        = pa legjenda me ngjyra për grafin"    ,
+         "-l num    = përdor në graf rreshta sfondi numrash",
+         "-m num    = Vlerë skadimi vizite (sekonda)"      ,
+         "-T        = print timing information"            ,
+         "-c file   = përdor kartelën e formësimit 'kartelë'",
+         "-n name   = emër strehe për t'u përdorur"        ,
+         "-o dir    = drejtori për t'u përdorur për përfundime",
+         "-t name   = titull raporti 'emër'"               ,
+         "-a name   = fshih agjentin e përdoruesi 'emër'"  ,
+         "-r name   = fshih përmendësin 'emër'"            ,
+         "-s name   = fshih \"site\"-in 'emër'"            ,
+         "-u name   = fshih URL-në 'emër'"                 ,
+         "-x name   = Përdor zgjerim emër kartelash 'emër'",
+         "-O name   = Omit page 'name'"                    ,
+         "-P name   = Zgjerim tipi faqesh 'emër'"          ,
+         "-I name   = Alias treguesi 'emër'"               ,
+         "-K num    = num months in summary table"         ,
+         "-k num    = num months in summary graph"         ,
+         "-A num    = Shfaq num agjentësh kryesues"        ,
+         "-C num    = Shfaq num vendesh kryesuese"         ,
+         "-R num    = Shfaq num përmendësish kryesues"     ,
+         "-S num    = Shfaq num \"site\"-esh kryesues"     ,
+         "-U num    = Shfaq num URL-sh kryesuese"          ,
+         "-e num    = Shfaq num Faqesh Fillimi kryesuese"  ,
+         "-E num    = Shfaq num Faqesh Daljeje kryesues"   ,
+         "-g num    = Grupo Përkatësitë në 'num' nivele"   ,
+         "-X        = Fshih \"site\"-e individualë"        ,
+         "-z dir    = Use country flags in 'dir'"          ,
+#ifdef USE_DNS
+         "-D name   = Përdor kartelë fshehtine DNS 'emër'" ,
+         "-N num    = Numër procesesh DNS (0=çaktivizoje)" ,
+         "-j        = Enable native GeoDB lookups"         ,
+         "-J name   = Use GeoIP database 'emër'"           ,
+#endif
+#ifdef USE_GEOIP
+         "-w        = Enable GeoIP lookups"                ,
+         "-W name   = Use GeoIP database 'emër'"           ,
+#endif
+         NULL};
+
+/***********************************************************************/
+/*                                                                     */
+/* Vargje HTML                                                         */
+/*                                                                     */
+/* Këta vargje përdoren si pjesë e përfundimit HTML të prodhuar nga    */
+/* Webalizer-i.                                                        */ 
+/*                                                                     */
+/***********************************************************************/
+
+/* header strings */
+char *msg_hhdr_sp = "Periudhë Përmbledhëse";
+char *msg_hhdr_gt = "Prodhuar";
+
+/* main index strings */
+char *msg_main_us = "Përmbledhje përdorimi për";
+/* char *msg_main_per= "12 Muajt e Fundit"; */
+char *msg_main_per= "Përmbledhje sipas Muajsh";
+char *msg_main_sum= "Përmbledhje sipas Muajsh";
+char *msg_main_da = "Mes. Ditore";
+char *msg_main_mt = "Tërësi Përmujore";
+
+/* month HTML page strings */
+char *msg_hmth_du = "Përdorim ditor për";
+char *msg_hmth_hu = "Përdorim i përorshëm për";
+
+/* vargje titujsh tabelash */
+char *msg_h_by    = "Nga";
+char *msg_h_avg   = "Mes";
+char *msg_h_max   = "Maks";
+char *msg_h_total = "Gjithsej";
+char *msg_h_totals= "Tërësi";
+char *msg_h_day   = "Ditë";
+char *msg_h_mth   = "Muaj";
+char *msg_h_hour  = "Orë";
+char *msg_h_hits  = "Hapje";
+char *msg_h_pages = "Faqe";
+char *msg_h_visits= "Vizita";
+char *msg_h_files = "Kartela";
+char *msg_h_sites = "\"Site\"-e";
+char *msg_h_xfer  = "KBajt";
+char *msg_h_hname = "Emërstrehë";
+char *msg_h_url   = "URL";
+char *msg_h_agent = "Agjent Përdoruesi";
+char *msg_h_ref   = "Përmendës";
+char *msg_h_ctry  = "Vend";
+char *msg_h_search= "Varg Kërkimesh";
+char *msg_h_uname = "Emër Përdoruesi";
+
+/* lidhje përgjatë kryesh faqeje */
+char *msg_hlnk_ds = "Statistika Ditore";
+char *msg_hlnk_hs = "Statistika çdo Orë";
+char *msg_hlnk_u  = "URL-ra";
+char *msg_hlnk_s  = "\"Site\"-e";
+char *msg_hlnk_a  = "Agjentë";
+char *msg_hlnk_c  = "Vende";
+char *msg_hlnk_r  = "Përmendësa";
+char *msg_hlnk_en = "Hyrje";
+char *msg_hlnk_ex = "Dalje";
+char *msg_hlnk_sr = "Kërkim";
+char *msg_hlnk_i  = "Përdoruesa";
+
+/* tabelë tërësie mujore */
+char *msg_mtot_ms = "Statistika Mujore për";
+char *msg_mtot_th = "Hapje Gjithsej";
+char *msg_mtot_tf = "Kartela Gjithsej";
+char *msg_mtot_tx = "KBajt Gjithsej";
+char *msg_mtot_us = "\"Site\"-e Unikë Gjithsej";
+char *msg_mtot_ur = "Përmendësa Unikë Gjithsej";
+char *msg_mtot_ua = "Agjentë Unikë Përdoruesi Gjithsej";
+char *msg_mtot_uu = "URL Unike Gjithsej";
+char *msg_mtot_ui = "Emra Unikë përdoruesish Gjithsej";
+char *msg_mtot_mhd= "Hapje në Ditë";
+char *msg_mtot_mhh= "Hapje në Orë";
+char *msg_mtot_mfd= "Kartela në Ditë";
+char *msg_mtot_mpd= "Faqe në Ditë";
+char *msg_mtot_msd= "\"Site\"-e në Ditë";
+char *msg_mtot_mvd= "Vizita në Ditë";
+char *msg_mtot_mkd= "KBajt në Ditë";
+char *msg_mtot_rc = "Hapje sipas Kodi Përgjigjesh";
+
+/* tabelë tërësie ditore */
+char *msg_dtot_ds = "Statistika Ditore për";
+
+/* tabelë tërësie sipas orësh */
+char *msg_htot_hs = "Statistika të Përorshme për";
+
+/* grafik sipas vendesh */
+char *msg_ctry_use= "Përdorim sipas Vendesh për";
+
+/* tabela kryesimesh */
+/* Formatuar si "xxx kryesues e xxx Tërësisë së diçkaje" */
+char *msg_top_top = "Kryesues";
+char *msg_top_of  = "për";
+char *msg_top_s   = "\"Site\"-e Gjithsej";
+char *msg_top_u   = "URL-ra Gjithsej";
+char *msg_top_r   = "Përmendësa Gjithsej";
+char *msg_top_a   = "Agjentë Përdoruesish Gjithsej";
+char *msg_top_c   = "Vende Gjithsej";
+char *msg_top_en  = "Faqe Hyrjesh Gjithsej";
+char *msg_top_ex  = "Faqe Daljesh Gjithsej";
+char *msg_top_sr  = "Vargje Kërkimesh Gjithsej";
+char *msg_top_i   = "Emra përdoruesish Gjithsej";
+char *msg_v_sites = "Shihni Tërë \"Site\"-et";
+char *msg_v_urls  = "Shihni Tërë URL-tës";
+char *msg_v_refs  = "Shihni Tërë Përmendësit";
+char *msg_v_agents= "Shihni Tërë Agjentët e Përdoruesve";
+char *msg_v_search= "Shihni Tërë Vargjet e Kërkimeve";
+char *msg_v_users = "Shihni Tërë Emrat e përdoruesve";
+
+/* emrat e shkurtër për muajt DUHET TË JENË 3 SHENJA si madhësi... pad if needed*/
+char *s_month[12]={ "Jan", "Shk", "Mar",
+                    "Pri", "Maj", "Qer",
+                    "Kor", "Gus", "Sht",
+                    "Tet", "Nën", "Dhj"};
+
+/* emra të gjatë muajsh - gjatësi çfarëdo */
+char *l_month[12]={ "Janar",  "Shkurt", "Mars",   "Prill",
+                    "Maj",      "Qershor",     "Korrik",    "Gusht",
+                    "Shtator","Tetor",  "Nëntor","Dhjetor"};
+
+/* përshkrim kode përgjigjesh... renditja ËSHTË e rëndësishme!      */
+struct response_code response[] =
+       { { "Kod përgjigjeje të papërcaktuar",                      0 },
+         { "Kod 100 - Vazhdo",                                     0 },
+         { "Kod 101 - Po këmbehen Protokolle",                     0 },
+         { "Kod 200 - OK",                                         0 },
+         { "Kod 201 - Krijuar",                                    0 },
+         { "Kod 202 - Pranuar",                                    0 },
+         { "Kod 203 - Informacion Jo Autoritativ",                 0 },
+         { "Kod 204 - Pa Përmbajtje",                              0 },
+         { "Kod 205 - Rimerr Përmbajtje",                          0 },
+         { "Kod 206 - Përmbajtje e Pjesshme",                      0 },
+         { "Kod 300 - Zgjedhje të Shumëfishta",                    0 },
+         { "Kod 301 - Ikur Përgjithmonë",                          0 },
+         { "Kod 302 - U gjet",                                     0 },
+         { "Kod 303 - Shih Tjetër",                                0 },
+         { "Kod 304 - Pa Ndryshim",                                0 },
+         { "Kod 305 - Përdor Proxy",                               0 },
+         { "Kod 307 - Ikur Përkohësisht",                          0 },
+         { "Kod 400 - Kërkesë e Fabuar",                           0 },
+         { "Kod 401 - I paautorizuar",                             0 },
+         { "Kod 402 - Lipset Pagesë",                              0 },
+         { "Kod 403 - E ndaluar",                                  0 },
+         { "Kod 404 - Nuk Gjendet",                                0 },
+         { "Kod 405 - Metodë e Palejuar",                          0 },
+         { "Kod 406 - E papranueshme",                             0 },
+         { "Kod 407 - Lipset Mirëfilltësim Proxy",                 0 },
+         { "Kod 408 - Skadim Kohe Kërkese",                        0 },
+         { "Kod 409 - Përplasje",                                  0 },
+         { "Kod 410 - Ikur",                                       0 },
+         { "Kod 411 - Gjatësi e Nevojshme",                        0 },
+         { "Kod 412 - Prakushti Dështoi",                          0 },
+         { "Kod 413 - Entitet Kërkese Shumë i Gjerë",              0 },
+         { "Kod 414 - URI Kërkese Shumë I gjatë",                  0 },
+         { "Kod 415 - Tip I pambuluar Media",                      0 },
+         { "Kod 416 - U kërkua interval që s'mund të kënaqet",     0 },
+         { "Kod 417 - Shpresa Nuk u Pwrmbush",                     0 },
+         { "Kod 500 - Gabim i Brendshëm Shërbyesi",                0 },
+         { "Kod 501 - I pa vënë ende në jetë",                     0 },
+         { "Kod 502 - \"Gateway\" i Gabuar",                       0 },
+         { "Kod 503 - Shërbim jo i mundshëm",                      0 },
+         { "Kod 504 - Skadim Kohe \"Gateway\"-i",                  0 },
+         { "Kod 505 - Version HTTP i Pambuluar",                   0 } };
+
+char *msg_title   = "Statistika Përdorimi për";
+char *msg_h_other = "Tjetër";
+
+/* Kode Vendesh (dikur te ctry.h header file) */
+
+struct  country_code ctry[] = {
+{ 0,                      "I paftilluar/I panjohur",                   0,0,0 },
+{ IDX_3C('c','o','m'),    "Tregtar (com)",                             0,0,0 },
+{ IDX_3C('e','d','u'),    "Edukativ (edu)",                            0,0,0 },
+{ IDX_3C('g','o','v'),    "US, Qeveritar (gov)",                       0,0,0 },
+{ IDX_3C('i','n','t'),    "Ndërkombëtar (int)",                        0,0,0 },
+{ IDX_3C('m','i','l'),    "US, Ushtarak (mil)",                        0,0,0 },
+{ IDX_3C('n','e','t'),    "Rrjet (net)",                               0,0,0 },
+{ IDX_3C('o','r','g'),    "Organizëm Jofitimprurës (org)",             0,0,0 },
+{ IDX_3C('b','i','z'),    "Generic Business (biz)",                    0,0,0 },
+{ IDX_3C('c','a','t'),    "Catalan Community (cat)",                   0,0,0 },
+{ IDX_3C('p','r','o'),    "Professional (pro)",                        0,0,0 },
+{ IDX_3C('t','e','l'),    "Ind. Contact Data (tel)",                   0,0,0 },
+{ IDX_4C('a','e','r','o'),"Air Transport Industry (aero)",             0,0,0 },
+{ IDX_4C('a','s','i','a'),"Asia Pacific Community (asia)",             0,0,0 },
+{ IDX_4C('c','o','o','p'),"Cooperative Association (coop)",            0,0,0 },
+{ IDX_4C('i','n','f','o'),"Generic TLD (info)",                        0,0,0 },
+{ IDX_4C('j','o','b','s'),"Human Resources (jobs)",                    0,0,0 },
+{ IDX_4C('m','o','b','i'),"Generic Mobile TLD (mobi)",                 0,0,0 },
+{ IDX_4C('n','a','m','e'),"Individual (name)",                         0,0,0 },
+{ IDX_4C('a','r','p','a'),"Arpanet stil i vjetër (arpa)",              0,0,0 },
+{ IDX_4C('n','a','t','o'),"Fushë Nato (nato)",                         0,0,0 },
+{ IDX_6C('m','u','s','e','u','m'), "Museums (museum)",                 0,0,0 },
+{ IDX_6C('t','r','a','v','e','l'), "Travel Ind. (travel)",             0,0,0 },
+{ IDX_2C('a','c'),        "Ascension Island",                          0,0,0 },
+{ IDX_2C('a','d'),        "Andorra",                                   0,0,0 },
+{ IDX_2C('a','e'),        "Emiratet e Bashkuar Arabë",                 0,0,0 },
+{ IDX_2C('a','f'),        "Afganistan",                                0,0,0 },
+{ IDX_2C('a','g'),        "Antigua dhe Barbuda",                       0,0,0 },
+{ IDX_2C('a','i'),        "Anguila",                                   0,0,0 },
+{ IDX_2C('a','l'),        "Shqipëri",                                  0,0,0 },
+{ IDX_2C('a','m'),        "Armeni",                                    0,0,0 },
+{ IDX_2C('a','n'),        "Antilet Holandeze",                         0,0,0 },
+{ IDX_2C('a','o'),        "Angola",                                    0,0,0 },
+{ IDX_2C('a','q'),        "Antarktidë",                                0,0,0 },
+{ IDX_2C('a','r'),        "Argjentinë",                                0,0,0 },
+{ IDX_2C('a','s'),        "Samoa Amerikane",                           0,0,0 },
+{ IDX_2C('a','t'),        "Austri",                                    0,0,0 },
+{ IDX_2C('a','u'),        "Australi",                                  0,0,0 },
+{ IDX_2C('a','w'),        "Aruba",                                     0,0,0 },
+{ IDX_2C('a','x'),        "Aland Islands",                             0,0,0 },
+{ IDX_2C('a','z'),        "Azerbaixhan",                               0,0,0 },
+{ IDX_2C('b','a'),        "Bosnjë dhe Hercegovinë",                    0,0,0 },
+{ IDX_2C('b','b'),        "Barbados",                                  0,0,0 },
+{ IDX_2C('b','d'),        "Bangladesh",                                0,0,0 },
+{ IDX_2C('b','e'),        "Belgjikë",                                  0,0,0 },
+{ IDX_2C('b','f'),        "Burkina Faso",                              0,0,0 },
+{ IDX_2C('b','g'),        "Bullgari",                                  0,0,0 },
+{ IDX_2C('b','h'),        "Bahrein",                                   0,0,0 },
+{ IDX_2C('b','i'),        "Burundi",                                   0,0,0 },
+{ IDX_2C('b','j'),        "Benin",                                     0,0,0 },
+{ IDX_2C('b','l'),        "Saint Barthelemy",                          0,0,0 },
+{ IDX_2C('b','m'),        "Bermuda",                                   0,0,0 },
+{ IDX_2C('b','n'),        "Brunei Darussalam",                         0,0,0 },
+{ IDX_2C('b','o'),        "Bolivi",                                    0,0,0 },
+{ IDX_2C('b','r'),        "Brazil",                                    0,0,0 },
+{ IDX_2C('b','s'),        "Bahamas",                                   0,0,0 },
+{ IDX_2C('b','t'),        "Butan",                                     0,0,0 },
+{ IDX_2C('b','v'),        "Ishulli Buve",                              0,0,0 },
+{ IDX_2C('b','w'),        "Botsvanë",                                  0,0,0 },
+{ IDX_2C('b','y'),        "Bjellorusi",                                0,0,0 },
+{ IDX_2C('b','z'),        "Belize",                                    0,0,0 },
+{ IDX_2C('c','a'),        "Kanada",                                    0,0,0 },
+{ IDX_2C('c','c'),        "Ishujt Kokos (Keeling)",                    0,0,0 },
+{ IDX_2C('c','d'),        "Congo, Democratic Republic",                0,0,0 },
+{ IDX_2C('c','f'),        "Republika e Afrikës Qendrore",              0,0,0 },
+{ IDX_2C('c','g'),        "Kongo",                                     0,0,0 },
+{ IDX_2C('c','h'),        "Zvicër",                                    0,0,0 },
+{ IDX_2C('c','i'),        "Bregu i Fildishtë",                         0,0,0 },
+{ IDX_2C('c','k'),        "Ishujt Kuk",                                0,0,0 },
+{ IDX_2C('c','l'),        "Kili",                                      0,0,0 },
+{ IDX_2C('c','m'),        "Kamerun",                                   0,0,0 },
+{ IDX_2C('c','n'),        "Kinë",                                      0,0,0 },
+{ IDX_2C('c','o'),        "Kolombi",                                   0,0,0 },
+{ IDX_2C('c','r'),        "Kosta Rika",                                0,0,0 },
+{ IDX_2C('c','u'),        "Kubë",                                      0,0,0 },
+{ IDX_2C('c','v'),        "Kepi i Gjelbër",                            0,0,0 },
+{ IDX_2C('c','x'),        "Ishulli i Krishtlindjes",                   0,0,0 },
+{ IDX_2C('c','y'),        "Qipro",                                     0,0,0 },
+{ IDX_2C('c','z'),        "Republika Çeke",                            0,0,0 },
+{ IDX_2C('d','e'),        "Gjermani",                                  0,0,0 },
+{ IDX_2C('d','j'),        "Xhibuti",                                   0,0,0 },
+{ IDX_2C('d','k'),        "Danimarkë",                                 0,0,0 },
+{ IDX_2C('d','m'),        "Dominika",                                  0,0,0 },
+{ IDX_2C('d','o'),        "Republika Dominikane",                      0,0,0 },
+{ IDX_2C('d','z'),        "Algjeri",                                   0,0,0 },
+{ IDX_2C('e','c'),        "Ekuador",                                   0,0,0 },
+{ IDX_2C('e','e'),        "Estoni",                                    0,0,0 },
+{ IDX_2C('e','g'),        "Egjipt",                                    0,0,0 },
+{ IDX_2C('e','h'),        "Sahara Perëndimore",                        0,0,0 },
+{ IDX_2C('e','r'),        "Eritrea",                                   0,0,0 },
+{ IDX_2C('e','s'),        "Spanjë",                                    0,0,0 },
+{ IDX_2C('e','t'),        "Etiopi",                                    0,0,0 },
+{ IDX_2C('e','u'),        "European Union",                            0,0,0 },
+{ IDX_2C('f','i'),        "Finlandë",                                  0,0,0 },
+{ IDX_2C('f','j'),        "Fixhi",                                     0,0,0 },
+{ IDX_2C('f','k'),        "Ishujt Folkland (Malvinas)",                0,0,0 },
+{ IDX_2C('f','m'),        "Mikronezi",                                 0,0,0 },
+{ IDX_2C('f','o'),        "Ishujt Faroe",                              0,0,0 },
+{ IDX_2C('f','r'),        "Francë",                                    0,0,0 },
+{ IDX_2C('g','a'),        "Gabon",                                     0,0,0 },
+{ IDX_2C('g','b'),        "Britani e Madhe (UK)",                      0,0,0 },
+{ IDX_2C('g','d'),        "Grenada",                                   0,0,0 },
+{ IDX_2C('g','e'),        "Gjeorgji",                                  0,0,0 },
+{ IDX_2C('g','f'),        "Guajana Franceze",                          0,0,0 },
+{ IDX_2C('g','g'),        "Guernsey",                                  0,0,0 },
+{ IDX_2C('g','h'),        "Gana",                                      0,0,0 },
+{ IDX_2C('g','i'),        "Gjibraltar",                                0,0,0 },
+{ IDX_2C('g','l'),        "Groenlanda",                                0,0,0 },
+{ IDX_2C('g','m'),        "Gambia",                                    0,0,0 },
+{ IDX_2C('g','n'),        "Guinea",                                    0,0,0 },
+{ IDX_2C('g','p'),        "Guadalupi",                                 0,0,0 },
+{ IDX_2C('g','q'),        "Guinea Ekuatoriale",                        0,0,0 },
+{ IDX_2C('g','r'),        "Greqi",                                     0,0,0 },
+{ IDX_2C('g','s'),        "Ishujt S. Jorgjia dhe S. Sandwich",         0,0,0 },
+{ IDX_2C('g','t'),        "Guatemala",                                 0,0,0 },
+{ IDX_2C('g','u'),        "Guam",                                      0,0,0 },
+{ IDX_2C('g','w'),        "Guinea-Bisau",                              0,0,0 },
+{ IDX_2C('g','y'),        "Gujanë",                                    0,0,0 },
+{ IDX_2C('h','k'),        "Hong Kong",                                 0,0,0 },
+{ IDX_2C('h','m'),        "Ishujt Heard dhe McDonald",                 0,0,0 },
+{ IDX_2C('h','n'),        "Honduras",                                  0,0,0 },
+{ IDX_2C('h','r'),        "Kroaci",                                    0,0,0 },
+{ IDX_2C('h','t'),        "Haiti",                                     0,0,0 },
+{ IDX_2C('h','u'),        "Hungari",                                   0,0,0 },
+{ IDX_2C('i','d'),        "Indonezi",                                  0,0,0 },
+{ IDX_2C('i','e'),        "Irlandë",                                   0,0,0 },
+{ IDX_2C('i','l'),        "Izrael",                                    0,0,0 },
+{ IDX_2C('i','m'),        "Isle of Man",                               0,0,0 },
+{ IDX_2C('i','n'),        "Indi",                                      0,0,0 },
+{ IDX_2C('i','o'),        "Territoret Britanike të Oqeanit Indian",    0,0,0 },
+{ IDX_2C('i','q'),        "Irak",                                      0,0,0 },
+{ IDX_2C('i','r'),        "Iran",                                      0,0,0 },
+{ IDX_2C('i','s'),        "Islandë",                                   0,0,0 },
+{ IDX_2C('i','t'),        "Itali",                                     0,0,0 },
+{ IDX_2C('j','e'),        "Jersey",                                    0,0,0 },
+{ IDX_2C('j','m'),        "Xhamaika",                                  0,0,0 },
+{ IDX_2C('j','o'),        "Jordani",                                   0,0,0 },
+{ IDX_2C('j','p'),        "Japoni",                                    0,0,0 },
+{ IDX_2C('k','e'),        "Kenia",                                     0,0,0 },
+{ IDX_2C('k','g'),        "Kirgizstan",                                0,0,0 },
+{ IDX_2C('k','h'),        "Kamboxhia",                                 0,0,0 },
+{ IDX_2C('k','i'),        "Kiribati",                                  0,0,0 },
+{ IDX_2C('k','m'),        "Komoros",                                   0,0,0 },
+{ IDX_2C('k','n'),        "Shën Kits dhe Nevis",                       0,0,0 },
+{ IDX_2C('k','p'),        "Korea (e Veriut)",                          0,0,0 },
+{ IDX_2C('k','r'),        "Korea (e Jugut)",                           0,0,0 },
+{ IDX_2C('k','w'),        "Kuvajt",                                    0,0,0 },
+{ IDX_2C('k','y'),        "Ishujt Kajman",                             0,0,0 },
+{ IDX_2C('k','z'),        "Kazakistan",                                0,0,0 },
+{ IDX_2C('l','a'),        "Laos",                                      0,0,0 },
+{ IDX_2C('l','b'),        "Liban",                                     0,0,0 },
+{ IDX_2C('l','c'),        "Shën Luçia",                                0,0,0 },
+{ IDX_2C('l','i'),        "Lihtenshtejn",                              0,0,0 },
+{ IDX_2C('l','k'),        "Sri Lanka",                                 0,0,0 },
+{ IDX_2C('l','r'),        "Liberia",                                   0,0,0 },
+{ IDX_2C('l','s'),        "Lesoto",                                    0,0,0 },
+{ IDX_2C('l','t'),        "Lituani",                                   0,0,0 },
+{ IDX_2C('l','u'),        "Luksemburg",                                0,0,0 },
+{ IDX_2C('l','v'),        "Latvia",                                    0,0,0 },
+{ IDX_2C('l','y'),        "Libia",                                     0,0,0 },
+{ IDX_2C('m','a'),        "Marok",                                     0,0,0 },
+{ IDX_2C('m','c'),        "Monako",                                    0,0,0 },
+{ IDX_2C('m','d'),        "Moldavi",                                   0,0,0 },
+{ IDX_2C('m','e'),        "Montenegro",                                0,0,0 },
+{ IDX_2C('m','f'),        "Saint Martin (French part)",                0,0,0 },
+{ IDX_2C('m','g'),        "Madagaskar",                                0,0,0 },
+{ IDX_2C('m','h'),        "Ishujt Marshall",                           0,0,0 },
+{ IDX_2C('m','k'),        "Maqedoni",                                  0,0,0 },
+{ IDX_2C('m','l'),        "Mali",                                      0,0,0 },
+{ IDX_2C('m','m'),        "Mianmar",                                   0,0,0 },
+{ IDX_2C('m','n'),        "Mongoli",                                   0,0,0 },
+{ IDX_2C('m','o'),        "Makao",                                     0,0,0 },
+{ IDX_2C('m','p'),        "Ishujt e Marianës Veriore",                 0,0,0 },
+{ IDX_2C('m','q'),        "Martinikë",                                 0,0,0 },
+{ IDX_2C('m','r'),        "Mauritani",                                 0,0,0 },
+{ IDX_2C('m','s'),        "Montserrat",                                0,0,0 },
+{ IDX_2C('m','t'),        "Malta",                                     0,0,0 },
+{ IDX_2C('m','u'),        "Mauricius",                                 0,0,0 },
+{ IDX_2C('m','v'),        "Maldive",                                   0,0,0 },
+{ IDX_2C('m','w'),        "Malaui",                                    0,0,0 },
+{ IDX_2C('m','x'),        "Meksikë",                                   0,0,0 },
+{ IDX_2C('m','y'),        "Malajzia",                                  0,0,0 },
+{ IDX_2C('m','z'),        "Mozambik",                                  0,0,0 },
+{ IDX_2C('n','a'),        "Namibi",                                    0,0,0 },
+{ IDX_2C('n','c'),        "Kaledonia e Re",                            0,0,0 },
+{ IDX_2C('n','e'),        "Niger",                                     0,0,0 },
+{ IDX_2C('n','f'),        "Ishulli Norfolk",                           0,0,0 },
+{ IDX_2C('n','g'),        "Nigeria",                                   0,0,0 },
+{ IDX_2C('n','i'),        "Nikaragua",                                 0,0,0 },
+{ IDX_2C('n','l'),        "Holandë",                                   0,0,0 },
+{ IDX_2C('n','o'),        "Norvegji",                                  0,0,0 },
+{ IDX_2C('n','p'),        "Nepal",                                     0,0,0 },
+{ IDX_2C('n','r'),        "Nauru",                                     0,0,0 },
+{ IDX_2C('n','u'),        "Niue",                                      0,0,0 },
+{ IDX_2C('n','z'),        "Zelandë e Re",                              0,0,0 },
+{ IDX_2C('o','m'),        "Oman",                                      0,0,0 },
+{ IDX_2C('p','a'),        "Panama",                                    0,0,0 },
+{ IDX_2C('p','e'),        "Peru",                                      0,0,0 },
+{ IDX_2C('p','f'),        "Polinezia Franceze",                        0,0,0 },
+{ IDX_2C('p','g'),        "Papua New Guinea",                          0,0,0 },
+{ IDX_2C('p','h'),        "Filipine",                                  0,0,0 },
+{ IDX_2C('p','k'),        "Pakistan",                                  0,0,0 },
+{ IDX_2C('p','l'),        "Poloni",                                    0,0,0 },
+{ IDX_2C('p','m'),        "St. Pier dhe Mikelon",                      0,0,0 },
+{ IDX_2C('p','n'),        "Pitkern",                                   0,0,0 },
+{ IDX_2C('p','r'),        "Porto Riko",                                0,0,0 },
+{ IDX_2C('p','s'),        "Palestinian Territory, Occupied",           0,0,0 },
+{ IDX_2C('p','t'),        "Portugali",                                 0,0,0 },
+{ IDX_2C('p','w'),        "Palau",                                     0,0,0 },
+{ IDX_2C('p','y'),        "Paraguaj",                                  0,0,0 },
+{ IDX_2C('q','a'),        "Katar",                                     0,0,0 },
+{ IDX_2C('r','e'),        "Reunion",                                   0,0,0 },
+{ IDX_2C('r','o'),        "Rumani",                                    0,0,0 },
+{ IDX_2C('r','s'),        "Serbia",                                    0,0,0 },
+{ IDX_2C('r','u'),        "Federata Ruse",                             0,0,0 },
+{ IDX_2C('r','w'),        "Ruanda",                                    0,0,0 },
+{ IDX_2C('s','a'),        "Arabia Saudite",                            0,0,0 },
+{ IDX_2C('s','b'),        "Ishujt Solomon",                            0,0,0 },
+{ IDX_2C('s','c'),        "Sejshelle",                                 0,0,0 },
+{ IDX_2C('s','d'),        "Sudan",                                     0,0,0 },
+{ IDX_2C('s','e'),        "Suedi",                                     0,0,0 },
+{ IDX_2C('s','g'),        "Singapor",                                  0,0,0 },
+{ IDX_2C('s','h'),        "St. Helena",                                0,0,0 },
+{ IDX_2C('s','i'),        "Sloveni",                                   0,0,0 },
+{ IDX_2C('s','j'),        "Ishujt Svalbard dhe Jan Mayen",             0,0,0 },
+{ IDX_2C('s','k'),        "Republika Slovake",                         0,0,0 },
+{ IDX_2C('s','l'),        "Sierra Leone",                              0,0,0 },
+{ IDX_2C('s','m'),        "San Marino",                                0,0,0 },
+{ IDX_2C('s','n'),        "Senegal",                                   0,0,0 },
+{ IDX_2C('s','o'),        "Somali",                                    0,0,0 },
+{ IDX_2C('s','r'),        "Surinam",                                   0,0,0 },
+{ IDX_2C('s','t'),        "Sao Tome dhe Principe",                     0,0,0 },
+{ IDX_2C('s','u'),        "USSR (të dikurshëm)",                       0,0,0 },
+{ IDX_2C('s','v'),        "Salvador",                                  0,0,0 },
+{ IDX_2C('s','y'),        "Siri",                                      0,0,0 },
+{ IDX_2C('s','z'),        "Svaziland",                                 0,0,0 },
+{ IDX_2C('t','c'),        "Ishujt Turq dhe Kaiko",                     0,0,0 },
+{ IDX_2C('t','d'),        "Çad",                                       0,0,0 },
+{ IDX_2C('t','f'),        "Territoret Franceze Jugore",                0,0,0 },
+{ IDX_2C('t','g'),        "Togo",                                      0,0,0 },
+{ IDX_2C('t','h'),        "Tailandë",                                  0,0,0 },
+{ IDX_2C('t','j'),        "Taxhikistan",                               0,0,0 },
+{ IDX_2C('t','k'),        "Tokelau",                                   0,0,0 },
+{ IDX_2C('t','l'),        "Timor-Leste",                               0,0,0 },
+{ IDX_2C('t','m'),        "Turkmenistan",                              0,0,0 },
+{ IDX_2C('t','n'),        "Tunizi",                                    0,0,0 },
+{ IDX_2C('t','o'),        "Tonga",                                     0,0,0 },
+{ IDX_2C('t','p'),        "Timori Lindor",                             0,0,0 },
+{ IDX_2C('t','r'),        "Turqi",                                     0,0,0 },
+{ IDX_2C('t','t'),        "Trinidad dhe Tobago",                       0,0,0 },
+{ IDX_2C('t','v'),        "Tuvalu",                                    0,0,0 },
+{ IDX_2C('t','w'),        "Taivan",                                    0,0,0 },
+{ IDX_2C('t','z'),        "Tanzani",                                   0,0,0 },
+{ IDX_2C('u','a'),        "Ukrainë",                                   0,0,0 },
+{ IDX_2C('u','g'),        "Ugandë",                                    0,0,0 },
+{ IDX_2C('u','k'),        "Mbretëri e Bashkuar",                       0,0,0 },
+{ IDX_2C('u','m'),        "Ishujt e Vegjël jashtë US",                 0,0,0 },
+{ IDX_2C('u','s'),        "Shtetet e Bashkuar",                        0,0,0 },
+{ IDX_2C('u','y'),        "Uruguaj",                                   0,0,0 },
+{ IDX_2C('u','z'),        "Uzbekistan"         ,                       0,0,0 },
+{ IDX_2C('v','a'),        "Qytet Shteti i Vatikanit (Holy See)",       0,0,0 },
+{ IDX_2C('v','c'),        "Saint Vincent dhe Grenadinet",              0,0,0 },
+{ IDX_2C('v','e'),        "Venezuelë",                                 0,0,0 },
+{ IDX_2C('v','g'),        "Ishujt Virgjini (Britanikë)",               0,0,0 },
+{ IDX_2C('v','i'),        "Ishujt Virgjini (U.S.)",                    0,0,0 },
+{ IDX_2C('v','n'),        "Viet Nam",                                  0,0,0 },
+{ IDX_2C('v','u'),        "Vanuatu",                                   0,0,0 },
+{ IDX_2C('w','f'),        "Ishujt Vallis dhe Futuna",                  0,0,0 },
+{ IDX_2C('w','s'),        "Samoa",                                     0,0,0 },
+{ IDX_2C('y','e'),        "Jemen",                                     0,0,0 },
+{ IDX_2C('y','t'),        "Majote",                                    0,0,0 },
+{ IDX_2C('y','u'),        "FSMZ",                                      0,0,0 },
+{ IDX_2C('z','a'),        "Afrikë e Jugut",                            0,0,0 },
+{ IDX_2C('z','m'),        "Zambia",                                    0,0,0 },
+{ IDX_2C('z','w'),        "Zimbabue",                                  0,0,0 },
+{ IDX_2C('a','1'),        "Anonymous Proxy",                           0,0,0 },
+{ IDX_2C('a','2'),        "Satellite Provider",                        0,0,0 },
+{ IDX_2C('o','1'),        "Other",                                     0,0,0 },
+{ IDX_2C('a','p'),        "Asia/Pacific Region",                       0,0,0 },
+{ IDX_3C('l','a','n'),    "Local Network (lan)",                       0,0,0 },
+{ 0              ,        NULL,                                        0,0,0 }};

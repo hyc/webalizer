@@ -1,0 +1,628 @@
+/*
+   webalizer_lang.lithuanian
+
+   Webalizer V2.0x Language Support file for Lithuanian.
+   24-Sep-2004 by Justas Butkus (justasbutkus@takas.lt)
+   26-Mar-2008 Updated to current IANA TLDs (brad@mrunix.net)
+   26-May-2008 Modified for level 2.2 support (brad@mrunix.net)
+
+
+   Language files are named using the following convention:
+
+   webalizer_lang.LANGUAGE
+
+   where 'LANGUAGE' is the name of the language the file is
+   translated into (ie: webalizer_lang.russian for russian).
+   Either copy the desired language file to webalizer_lang.h
+   or create a symbolic link, then re-compile.
+
+   If you translate this file into a different language, please
+   send a copy to brad@mrunix.net.
+
+*/
+
+/***********************************************************************/
+/* DEFINE LANGUAGE NAME here                                           */
+/***********************************************************************/
+
+char *language  = "Lithuanian";
+char *langcode  = "lt";
+
+/***********************************************************************/
+/*                                                                     */
+/* Informational messages                                              */
+/*                                                                     */
+/* These messages are only displayed while The Webalizer is being run, */
+/* usually to the screen, and are not part of the HTML output.         */
+/*                                                                     */
+/***********************************************************************/
+
+/* these are only used in timing totals */
+/* Format:   XXX records (XXX ignored, XXX bad) in X.XX seconds        */
+char *msg_records = "áraðai";
+char *msg_addresses="adresai";
+char *msg_ignored = "ignoruojami";
+char *msg_bad     = "blogi";
+char *msg_in      = "per";
+char *msg_seconds = "sekundes";
+
+/* progress and setup error messages */
+char *msg_log_err = "Klaida: Nepavyko atidaryti áraðø failo";
+char *msg_log_use = "Naudojamas áraðø failas";
+char *msg_dir_err = "Klaida: Nepavyko pereiti á katalogà";
+char *msg_dir_use = "Kuriama iðvestis";
+char *msg_cur_dir = "dabartinis katalogas";
+char *msg_hostname= "Áraðai apie tarnybinæ stotá pavadinimu";
+char *msg_ign_hist= "Ignoruojami ankstesni istorijos áraðai...";
+char *msg_no_hist = "Nerastas istorijos failas...";
+char *msg_get_hist= "Skaitomas istorijos failas...";
+char *msg_put_hist= "Iðsaugomi istorijos áraðai...";
+char *msg_hist_err= "Klaida: Nepavyko áraðyti istorijos failo";
+char *msg_bad_hist= "Klaida: Ignoruojamas klaidingas istorijos áraðas";
+char *msg_bad_conf= "Klaida: Nepavyko atverti nuostatø failo";
+char *msg_bad_key = "Perspëjimas: Neteisingas raktaþodis";
+char *msg_bad_date= "Klaida: Praleidþiamas áraðas (neteisinga data)";
+char *msg_ign_nscp= "Praleidþiami Netscape antraðèiø áraðai";
+char *msg_bad_rec = "Praleidþiami blogi áraðai";
+char *msg_no_vrec = "Taisyklingi áraðai nerasti!";
+char *msg_gen_rpt = "Kuriamas áraðas";
+char *msg_gen_sum = "Kuriamas áraðo sàvadas";
+char *msg_get_data= "Nuskaitomi ankstesnio veikimo laikotarpiu sukurti duomenys..";
+char *msg_put_data= "Iðsaugomi ðio veikimo laikotarpiu sukurti duomenys...";
+char *msg_no_data = "Ankstesnio veikimo duomenys nerasti...";
+char *msg_bad_data= "Klaida: Nepavyko atstatyti veikimo duomenø";
+char *msg_data_err= "Klaida: Nepavyko iðsaugoti ðio veikimo duomenø";
+char *msg_dup_data= "Perspëjimas: Spëjama, jog rasti pasikartojantys duomenys";
+
+/* DNS Stuff */
+char *msg_dns_nocf= "Nenurodytas spartinanèiosios atmintinës failas, atðaukiama...";
+char *msg_dns_nodb= "Klaida: Nepavyko atverti DNS spartinanèiosios atmintinës failo";
+char *msg_dns_nolk= "Klaida: Nepavyko uþrakinti DNS spartinanèiosios atmintinës failo";
+char *msg_dns_usec= "Naudojamas DNS spartinanèiosios atmintinës failas";
+char *msg_dns_rslv= "DNS paieðka";
+char *msg_dns_none= "Nëra kà vykdyti";
+char *msg_dns_abrt= "DNS support not present, aborting...";
+
+/* Geolocation stuff */
+char *msg_geo_open= "Error opening file";
+char *msg_geo_use = "Using";
+char *msg_geo_nolu= "lookups disabled";
+char *msg_geo_dflt= "default";
+
+/* memory allocation errors */
+char *msg_nomem_ts= "Nepavyksta paskirti pakankamai atminties, Populiariausi Puslapiai uþdrausti!";
+char *msg_nomem_tr= "Nepavyksta paskirti pakankamai atminties, Daþniausi Nukreipëjai uþdrausti!";
+char *msg_nomem_tu= "Nepavyksta paskirti pakankamai atminties, Daþniausi URL uþdrausti!";
+char *msg_nomem_tc= "Nepavyksta paskirti pakankamai atminties, Daþniausios Valstybës uþdraustos!";
+char *msg_nomem_ta= "Nepavyksta paskirti pakankamai atminties, Daþniausios Klientø Programos uþdraustos!";
+char *msg_nomem_tsr="Nepavyksta paskirti pakankamai atminties, Daþniausios Paieðkos uþdraustos!";
+char *msg_nomem_ti= "Nepavyksta paskirti pakankamai atminties, Daþniausi Vartotojø Vardai uþdrausti!";
+char *msg_nomem_dh= "Klaida pridedant kompiuterio vardo jungtá (kasdiená), praleidþiama";
+char *msg_nomem_mh= "Klaida pridedant kompiuterio vardo jungtá (kas mënesiná), praleidþiama";
+char *msg_nomem_u = "Klaida pridedant URL jungtá, praleidþiama";
+char *msg_nomem_a = "Klaida pridedant Kliento Programos jungtá, praleidþiama";
+char *msg_nomem_r = "Klaida pridedant Nukreipëjo jungtá, praleidþiama";
+char *msg_nomem_sc= "Klaida pridedant Paieðkos jungtá, praleidþiama";
+char *msg_nomem_i = "Klaida pridedant Vartotojo Vardo jungtá, praleidþiama";
+
+/* log record errors */
+char *msg_big_rec = "Klaida: Praleidþiamas virðijæs dydþio limità áraðas";
+char *msg_big_host= "Perspëjimas: Trumpinamas  per ilgas kompiuterio vardas";
+char *msg_big_date= "Perspëjimas: Trumpinamas per ilgas datos laukas";
+char *msg_big_req = "Perspëjimas: Trumpinamas per ilgas uþklausos laukas";
+char *msg_big_ref = "Perspëjimas: Trumpinamas per ilgas nukreipëjo laukas";
+char *msg_big_user= "Perspëjimas: Trumpinamas per ilgas vartotojo vardas";
+char *msg_big_one = "Perspëjimas: Áraðo reikðmë yra didesnë nei ámanoma vieta";
+
+/* misc errors */
+char *msg_no_open = "Klaida: Nepavyko atidaryti failo";
+
+/* Help display... */
+char *h_usage1 = "Naudojimas";
+char *h_usage2 = "[pasirinktys] [áraðo failas]";
+char *h_msg[]= {
+         "-h        = atvaizduoti ðià pagalbos þinutæ"                ,
+         "-V        = atvaizduoti versijos informacijà"               ,
+         "-v        = be verbose"                                     ,
+         "-d        = atvaizduoti papildomà derinimo informacijà"     ,
+         "-F type   = Áraðo tipas.  tipas= (clf | ftp | squid | w3c)" ,
+         "-f        = Eilës nuoseklumo klaida"                        ,
+         "-i        = ignoruoti istorijos failà"                      ,
+         "-p        = iðlaikyti bûsenà (didëjanèià)"                  ,
+         "-b        = ignore state (incremental)"                     ,
+         "-q        = atidëti informacines þinutes"                   ,
+         "-Q        = atidëti _VISAS_ þinutes"                        ,
+         "-Y        = atidëti ðaliø grafikà"                          ,
+         "-G        = atidëti valandiná grafikà"                      ,
+         "-H        = atidëti valandinæ statistikà"                   ,
+         "-L        = atidëti spalvomis koduotà grafikø legendà"      ,
+         "-l num    = rodyti numeruotas fono linijas grafikuose"      ,
+         "-m num    = Apsilankymo laiko limito reikðmë (sekundëmis)"  ,
+         "-T        = iðvesti laiko matavimo informacijà"             ,
+         "-c file   = naudoti pasirinkèiø failà 'failas'"             ,
+         "-n pavadinimas   = vartotinas kompiuterio vardas"           ,
+         "-o dir           = iðvesties katalogas"                     ,
+         "-t pavadinimas   = ataskaitos pavadinimas 'pavadinimas'"    ,
+         "-a pavadinimas   = slëpti kliento programà 'pavadinimas'"   ,
+         "-r pavadinimas   = slëpti nukreipëjà 'pavadinimas'"         ,
+         "-s pavadinimas   = slëpti puslapá 'pavadinimas'"            ,
+         "-u pavadinimas   = slëpti URL 'pavadinimas'"                ,
+         "-x pavadinimas   = Naudoti rinkmenos plëtiná 'pavadinimas'" ,
+         "-O pavadinimas   = Omit page 'pavadinimas'"                 ,
+         "-P pavadinimas   = Puslapio tipo plëtinys 'pavadinimas'"    ,
+         "-I pavadinimas   = Indekso pavadinimas 'pavadinimas'"       ,
+         "-K num    = num months in summary table"                    ,
+         "-k num    = num months in summary graph"                    ,
+         "-A num    = Rodyti daþniausiø programø (kiekis)"            ,
+         "-C num    = Rodyti daþniausiø ðaliø (kiekis)"               ,
+         "-R num    = Rodyti daþniausiø nukreipëjø (kiekis)"          ,
+         "-S num    = Rodyti daþniausiø puslapiø (kiekis)"            ,
+         "-U num    = Rodyti daþniausiø URL (kiekis)"                 ,
+         "-e num    = Rodyti daþniausiø Áëjimo Puslapiø (kiekis)"     ,
+         "-E num    = Rodyti daþniausiø Iðëjimo puslapiø (kiekis)"    ,
+         "-g num    = Grupuoti adresø sritis á 'kieká' lygiø"         ,
+         "-X        = Slëpti asmeninius puslapius"                    ,
+         "-z dir    = Use country flags in 'dir'"                     ,
+#ifdef USE_DNS
+         "-D pavadinimas   = Naudoti DNS Spartinanèiosios atmintinës failà 'pavadinimas'"           ,
+         "-N num           = DNS procesø kiekis (0=iðjungta)"         ,
+         "-j               = Enable native GeoDB lookups"             ,
+         "-J pavadinimas   = Use GeoDB database 'pavadinimas'"        ,
+#endif
+#ifdef USE_GEOIP
+         "-w               = Enable GeoIP lookups"                    ,
+         "-W pavadinimas   = Use GeoIP database 'pavadinimas'"        ,
+#endif
+         NULL};
+
+/***********************************************************************/
+/*                                                                     */
+/* HTML strings                                                        */
+/*                                                                     */
+/* These strings are used as part of the HTML output generated by The  */
+/* Webalizer.                                                          */ 
+/*                                                                     */
+/***********************************************************************/
+
+/* header strings */
+char *msg_hhdr_sp = "Sàvado periodas";
+char *msg_hhdr_gt = "Sugeneruota";
+
+/* main index strings */
+char *msg_main_us = "Naudojimo sàvadas";
+/* char *msg_main_per= "Paskutinius 12 mënesiø"; */
+char *msg_main_per= "Sàvadas pagal mënesius";
+char *msg_main_sum= "Sàvadas pagal mënesius";
+char *msg_main_da = "Dieninis vidurkis";
+char *msg_main_mt = "Mënesio suminis";
+
+/* month HTML page strings */
+char *msg_hmth_du = "Dieninis naudojimas";
+char *msg_hmth_hu = "Valandinis naudojimas";
+
+/* table header strings */
+char *msg_h_by    = "Pagal";
+char *msg_h_avg   = "Vidurkis";
+char *msg_h_max   = "Didþiausias";
+char *msg_h_total = "Bendras";
+char *msg_h_totals= "Suminiai";
+char *msg_h_day   = "DIena";
+char *msg_h_mth   = "Mënesis";
+char *msg_h_hour  = "Valanda";
+char *msg_h_hits  = "Jungèiø";
+char *msg_h_pages = "Puslapiø";
+char *msg_h_visits= "Apsilankymø";
+char *msg_h_files = "Rinkmenø";
+char *msg_h_sites = "Tinklalapiø";
+char *msg_h_xfer  = "KBaitø";
+char *msg_h_hname = "Kompiuterio vardas";
+char *msg_h_url   = "URL";
+char *msg_h_agent = "Kliento programa";
+char *msg_h_ref   = "Nukreipëjas";
+char *msg_h_ctry  = "Ðalis";
+char *msg_h_search= "Paieðka";
+char *msg_h_uname = "Vartotojo vardas";
+
+/* links along top of page */
+char *msg_hlnk_ds = "Dieninë statistika";
+char *msg_hlnk_hs = "Valandinë statistika";
+char *msg_hlnk_u  = "URL";
+char *msg_hlnk_s  = "Puslapiai";
+char *msg_hlnk_a  = "Klientø programos";
+char *msg_hlnk_c  = "Ðalys";
+char *msg_hlnk_r  = "Nukreipëjai";
+char *msg_hlnk_en = "Áëjimai";
+char *msg_hlnk_ex = "Iðëjimai";
+char *msg_hlnk_sr = "Paieðka";
+char *msg_hlnk_i  = "Vartotojø vardai";
+
+/* monthly total table */
+char *msg_mtot_ms = "Mënesinë statistika";
+char *msg_mtot_th = "Viso jungèiø";
+char *msg_mtot_tf = "Viso rinkmenø";
+char *msg_mtot_tx = "Viso KBaitø";
+char *msg_mtot_us = "Viso unikaliø puslapiø";
+char *msg_mtot_ur = "Viso unikaliø nukreipëjø";
+char *msg_mtot_ua = "Viso unikaliø klientø programø";
+char *msg_mtot_uu = "Viso unikaliø URL";
+char *msg_mtot_ui = "Viso unikaliø vartotojø vardø";
+char *msg_mtot_mhd= "Jungèiø per dienà";
+char *msg_mtot_mhh= "Jungèiø per valandà";
+char *msg_mtot_mfd= "Failø per dienà";
+char *msg_mtot_mpd= "Puslapiø per dienà";
+char *msg_mtot_msd= "Puslapiø (sites) per dienà";
+char *msg_mtot_mvd= "Apsilankymø per dienà";
+char *msg_mtot_mkd= "KBaitø per dienà";
+char *msg_mtot_rc = "Jungèiø pagal atsako kodà";
+
+/* daily total table */
+char *msg_dtot_ds = "Dieninë statistika";
+
+/* hourly total table */
+char *msg_htot_hs = "Valandinë statistika";
+
+/* country pie chart */
+char *msg_ctry_use= "Vartojimas pagal ðalá";
+
+/* top tables */
+/* Formatted as "Top xxx of xxx Total something" */
+char *msg_top_top = "Daþniausiai";
+char *msg_top_of  = "ið";
+char *msg_top_s   = "Viso puslapiø";
+char *msg_top_u   = "Viso URL";
+char *msg_top_r   = "Viso Nukreipëjø";
+char *msg_top_a   = "Viso Vartotojø programø";
+char *msg_top_c   = "Viso Ðaliø";
+char *msg_top_en  = "Viso Áëjimo puslapiø";
+char *msg_top_ex  = "Viso Iðëjimo puslapiø";
+char *msg_top_sr  = "Viso Paieðkø";
+char *msg_top_i   = "Viso Vartotojø vardø";
+char *msg_v_sites = "Perþiûrëti visus Puslapius";
+char *msg_v_urls  = "Perþiûrëti visus URL";
+char *msg_v_refs  = "Perþiûrëti visus Nukreipëjus";
+char *msg_v_agents= "Perþiûrëti visus Vartotojø programas";
+char *msg_v_search= "Perþiûrëti visus Paieðkas";
+char *msg_v_users = "Perþiûrëti visus Vartotojø vardus";
+
+/* short month names MUST BE 3 CHARS in size... pad if needed*/
+char *s_month[12]={ "Sau", "Vas", "Kov",
+                    "Bal", "Geg", "Bir",
+                    "Lie", "Rgp", "Rgs",
+                    "Spa", "Lap", "Gru"};
+
+/* long month names - can be any length */
+char *l_month[12]={ "Sausis",  "Vasaris", "Kovas",   "Balandis",
+                    "Geguþë",      "Birþelis",     "Liepa",    "Rugpjûtis",
+                    "Rugsëjis","Spalis",  "Lapkritis","Gruodis"};
+
+/* response code descriptions... order IS important!      */
+struct response_code response[] =
+       { { "Neapibrëþtas atsako kodas",                    0 },
+         { "Kodas 100 - Tæsiama",                        0 },
+         { "Kodas 101 - Keièiami protokolai",             0 },
+         { "Kodas 200 - Gerai",                              0 },
+         { "Kodas 201 - Sukurta",                         0 },
+         { "Kodas 202 - Priimta",                        0 },
+         { "Kodas 203 - Ne autorizuojamoji informacija",   0 },
+         { "Kodas 204 - Nëra turinio",                      0 },
+         { "Kodas 205 - Perkrauti turiná",                   0 },
+         { "Kodas 206 - Dalinis turinys",                 0 },
+         { "Kodas 300 - Keli pasirinkimai",                0 },
+         { "Kodas 301 - Perkelta ilgam",               0 },
+         { "Kodas 302 - Rasta",                           0 },
+         { "Kodas 303 - Mato kiti",                       0 },
+         { "Kodas 304 - Nepakeista",                    0 },
+         { "Kodas 305 - Naudojamas proxy",                       0 },
+         { "Kodas 307 - Perkelta laikinai",               0 },
+         { "Kodas 400 - Bloga uþklausa",                     0 },
+         { "Kodas 401 - Neautorizuota",                    0 },
+         { "Kodas 402 - Reikalingas apmokëjimas",                0 },
+         { "Kodas 403 - Uþdrausta",                       0 },
+         { "Kodas 404 - Nerasta",                       0 },
+         { "Kodas 405 - Metodas neleistas",              0 },
+         { "Kodas 406 - Nepriimtina",                  0 },
+         { "Kodas 407 - Bûtina proxy autentifikacija",   0 },
+         { "Kodas 408 - Baigësi uþklausai skirtas laikas",                 0 },
+         { "Kodas 409 - Konfliktas",                        0 },
+         { "Kodas 410 - Perkeltas",                            0 },
+         { "Kodas 411 - Ilgis bûtinas",                 0 },
+         { "Kodas 412 - Prieð-parengtis nepavyko",             0 },
+         { "Kodas 413 - Per ilga uþklausa",        0 },
+         { "Kodas 414 - Uþklausos-URI per ilgas",            0 },
+         { "Kodas 415 - Nepalaikomas terpës tipas",          0 },
+         { "Kodas 416 - Uþklausos ribos nepatenkinamos", 0 },
+         { "Kodas 417 - Laukimas nepavyko",              0 },
+         { "Kodas 500 - Vidinë serverio klaida",           0 },
+         { "Kodas 501 - Neádiegta",                 0 },
+         { "Kodas 502 - Neteisingas ðliuzas",                     0 },
+         { "Kodas 503 - Paslauga neprieinama",             0 },
+         { "Kodas 504 - Ðliuzas neatsakë per paskirtà laiko intervalà",                 0 },
+         { "Kodas 505 - HTTP versija nepalaikoma",      0 } };
+
+char *msg_title   = "Naudojimo statistika";
+char *msg_h_other = "Kitkas";
+
+/* Country codes (previously in ctry.h header file) */
+
+struct  country_code ctry[] = {
+{ 0,                      "Neapspræsta/Neþinoma",             0,0,0 },
+{ IDX_3C('c','o','m'),    "Komercinë (com)",                  0,0,0 },
+{ IDX_3C('e','d','u'),    "Mokomoji (edu)",                   0,0,0 },
+{ IDX_3C('g','o','v'),    "US Valstybinë (gov)",              0,0,0 },
+{ IDX_3C('i','n','t'),    "Tarptautinë (int)",                0,0,0 },
+{ IDX_3C('m','i','l'),    "US Karinë",                        0,0,0 },
+{ IDX_3C('n','e','t'),    "Tinklo (net)",                     0,0,0 },
+{ IDX_3C('o','r','g'),    "Ne pelno siekianèiø organizacijø", 0,0,0 },
+{ IDX_3C('b','i','z'),    "Generic Business (biz)",           0,0,0 },
+{ IDX_3C('c','a','t'),    "Catalan Community (cat)",          0,0,0 },
+{ IDX_3C('p','r','o'),    "Professional (pro)",               0,0,0 },
+{ IDX_3C('t','e','l'),    "Ind. Contact Data (tel)",          0,0,0 },
+{ IDX_4C('a','e','r','o'),"Air Transport Industry (aero)",    0,0,0 },
+{ IDX_4C('a','s','i','a'),"Asia Pacific Community (asia)",    0,0,0 },
+{ IDX_4C('c','o','o','p'),"Cooperative Association (coop)",   0,0,0 },
+{ IDX_4C('i','n','f','o'),"Generic TLD (info)",               0,0,0 },
+{ IDX_4C('j','o','b','s'),"Human Resources (jobs)",           0,0,0 },
+{ IDX_4C('m','o','b','i'),"Generic Mobile TLD (mobi)",        0,0,0 },
+{ IDX_4C('n','a','m','e'),"Individual (name)",                0,0,0 },
+{ IDX_4C('a','r','p','a'),"Seno stiliaus Arpaneto (arpa)",    0,0,0 },
+{ IDX_4C('n','a','t','o'),"Nato lauko (nato)",                0,0,0 },
+{ IDX_6C('m','u','s','e','u','m'), "Museums (museum)",        0,0,0 },
+{ IDX_6C('t','r','a','v','e','l'), "Travel Ind. (travel)",    0,0,0 },
+{ IDX_2C('a','c'),        "Ascension Island",                 0,0,0 },
+{ IDX_2C('a','d'),        "Andora",                           0,0,0 },
+{ IDX_2C('a','e'),        "Jungitniai arabø emiratai",        0,0,0 },
+{ IDX_2C('a','f'),        "Afganistanas",                     0,0,0 },
+{ IDX_2C('a','g'),        "Antigva ir Barbadua",              0,0,0 },
+{ IDX_2C('a','i'),        "Angila",                           0,0,0 },
+{ IDX_2C('a','l'),        "Albanija",                         0,0,0 },
+{ IDX_2C('a','m'),        "Armënija",                         0,0,0 },
+{ IDX_2C('a','n'),        "Nyderlandø Antilø salos",          0,0,0 },
+{ IDX_2C('a','o'),        "Angola",                           0,0,0 },
+{ IDX_2C('a','q'),        "Antarktika",                       0,0,0 },
+{ IDX_2C('a','r'),        "Argentina",                        0,0,0 },
+{ IDX_2C('a','s'),        "Amerikos Samoa",                   0,0,0 },
+{ IDX_2C('a','t'),        "Austrija",                         0,0,0 },
+{ IDX_2C('a','u'),        "Australija",                       0,0,0 },
+{ IDX_2C('a','w'),        "Aruba",                            0,0,0 },
+{ IDX_2C('a','x'),        "Aland Islands",                    0,0,0 },
+{ IDX_2C('a','z'),        "Azerbaidþanas",                    0,0,0 },
+{ IDX_2C('b','a'),        "Bosnija ir Hercogovina",           0,0,0 },
+{ IDX_2C('b','b'),        "Barbadosas",                       0,0,0 },
+{ IDX_2C('b','d'),        "Bangladeðas",                      0,0,0 },
+{ IDX_2C('b','e'),        "Beglija",                          0,0,0 },
+{ IDX_2C('b','f'),        "Burkina Fasas",                    0,0,0 },
+{ IDX_2C('b','g'),        "Bulgarija",                        0,0,0 },
+{ IDX_2C('b','h'),        "Bahreinas",                        0,0,0 },
+{ IDX_2C('b','i'),        "Burundis",                         0,0,0 },
+{ IDX_2C('b','j'),        "Beninai",                          0,0,0 },
+{ IDX_2C('b','l'),        "Saint Barthelemy",                 0,0,0 },
+{ IDX_2C('b','m'),        "Bermudai",                         0,0,0 },
+{ IDX_2C('b','n'),        "Brunëjus Daruslamas",              0,0,0 },
+{ IDX_2C('b','o'),        "Bolivija",                         0,0,0 },
+{ IDX_2C('b','r'),        "Brazilija",                        0,0,0 },
+{ IDX_2C('b','s'),        "Bahamai",                          0,0,0 },
+{ IDX_2C('b','t'),        "Bhutanas",                         0,0,0 },
+{ IDX_2C('b','v'),        "Buveto salos",                     0,0,0 },
+{ IDX_2C('b','w'),        "Botsvana",                         0,0,0 },
+{ IDX_2C('b','y'),        "Gudija",                           0,0,0 },
+{ IDX_2C('b','z'),        "Belizija",                         0,0,0 },
+{ IDX_2C('c','a'),        "Kanada",                           0,0,0 },
+{ IDX_2C('c','c'),        "Kokoso (Kylingo) salos",           0,0,0 },
+{ IDX_2C('c','d'),        "Congo, Democratic Republic",       0,0,0 },
+{ IDX_2C('c','f'),        "Centrinës Afrikos respublika",     0,0,0 },
+{ IDX_2C('c','g'),        "Kongas",                           0,0,0 },
+{ IDX_2C('c','h'),        "Ðveicarija",                       0,0,0 },
+{ IDX_2C('c','i'),        "Cote D'Ivoire (Dramblio kaulo kranto)", 0,0,0 },
+{ IDX_2C('c','k'),        "Kuko salos",                       0,0,0 },
+{ IDX_2C('c','l'),        "Èilë",                             0,0,0 },
+{ IDX_2C('c','m'),        "Kemrûnas",                         0,0,0 },
+{ IDX_2C('c','n'),        "Kinija",                           0,0,0 },
+{ IDX_2C('c','o'),        "Kolumbija",                        0,0,0 },
+{ IDX_2C('c','r'),        "Kosta Rika",                       0,0,0 },
+{ IDX_2C('c','u'),        "Kuba",                             0,0,0 },
+{ IDX_2C('c','v'),        "Þaliasis Kyðulys (Cape Verde)",    0,0,0 },
+{ IDX_2C('c','x'),        "Kalëdø salos",                     0,0,0 },
+{ IDX_2C('c','y'),        "Kipras",                           0,0,0 },
+{ IDX_2C('c','z'),        "Èekijos respublika",               0,0,0 },
+{ IDX_2C('d','e'),        "Vokietija",                        0,0,0 },
+{ IDX_2C('d','j'),        "Dþibutis",                         0,0,0 },
+{ IDX_2C('d','k'),        "Danija",                           0,0,0 },
+{ IDX_2C('d','m'),        "Dominika",                         0,0,0 },
+{ IDX_2C('d','o'),        "Dominikos respublika",             0,0,0 },
+{ IDX_2C('d','z'),        "Alþyras",                          0,0,0 },
+{ IDX_2C('e','c'),        "Ekvadoras",                        0,0,0 },
+{ IDX_2C('e','e'),        "Estija",                           0,0,0 },
+{ IDX_2C('e','g'),        "Egiptas",                          0,0,0 },
+{ IDX_2C('e','h'),        "Vakarø sahara",                    0,0,0 },
+{ IDX_2C('e','r'),        "Eritrëja",                         0,0,0 },
+{ IDX_2C('e','s'),        "Ispanija",                         0,0,0 },
+{ IDX_2C('e','t'),        "Etiopija",                         0,0,0 },
+{ IDX_2C('e','u'),        "European Union",                   0,0,0 },
+{ IDX_2C('f','i'),        "Suomija",                          0,0,0 },
+{ IDX_2C('f','j'),        "Fijis",                            0,0,0 },
+{ IDX_2C('f','k'),        "Falklando salos (Malvinas)",       0,0,0 },
+{ IDX_2C('f','m'),        "Mikronezija",                      0,0,0 },
+{ IDX_2C('f','o'),        "Farerø salos",                     0,0,0 },
+{ IDX_2C('f','r'),        "Prancûzija",                       0,0,0 },
+{ IDX_2C('g','a'),        "Gabonas",                          0,0,0 },
+{ IDX_2C('g','b'),        "Didþioji Britanija (JK)",          0,0,0 },
+{ IDX_2C('g','d'),        "Grenada",                          0,0,0 },
+{ IDX_2C('g','e'),        "Gruzija",                          0,0,0 },
+{ IDX_2C('g','f'),        "Prancûzijos Gviana",               0,0,0 },
+{ IDX_2C('g','g'),        "Guernsey",                         0,0,0 },
+{ IDX_2C('g','h'),        "Ghana",                            0,0,0 },
+{ IDX_2C('g','i'),        "Gibraltaras",                      0,0,0 },
+{ IDX_2C('g','l'),        "Grenlandija",                      0,0,0 },
+{ IDX_2C('g','m'),        "Gambija",                          0,0,0 },
+{ IDX_2C('g','n'),        "Gvinëja",                          0,0,0 },
+{ IDX_2C('g','p'),        "Gvadelupë",                        0,0,0 },
+{ IDX_2C('g','q'),        "Ekvatorinë Gvinëja",               0,0,0 },
+{ IDX_2C('g','r'),        "Graikija",                         0,0,0 },
+{ IDX_2C('g','s'),        "Ðv. Dþordþijos ir Ðv. Sandvièiø salos.", 0,0,0 },
+{ IDX_2C('g','t'),        "Gvatemala",                        0,0,0 },
+{ IDX_2C('g','u'),        "Guama",                            0,0,0 },
+{ IDX_2C('g','w'),        "Gvinëja-Bisau",                    0,0,0 },
+{ IDX_2C('g','y'),        "Gujana",                           0,0,0 },
+{ IDX_2C('h','k'),        "Honkongas",                        0,0,0 },
+{ IDX_2C('h','m'),        "Herdo ir McDonaldo salos",         0,0,0 },
+{ IDX_2C('h','n'),        "Honduras",                         0,0,0 },
+{ IDX_2C('h','r'),        "Kroatija",                         0,0,0 },
+{ IDX_2C('h','t'),        "Haitis",                           0,0,0 },
+{ IDX_2C('h','u'),        "Vengrija",                         0,0,0 },
+{ IDX_2C('i','d'),        "Indonezija",                       0,0,0 },
+{ IDX_2C('i','e'),        "Airija",                           0,0,0 },
+{ IDX_2C('i','l'),        "Izraelis",                         0,0,0 },
+{ IDX_2C('i','m'),        "Isle of Man",                      0,0,0 },
+{ IDX_2C('i','n'),        "Indija",                           0,0,0 },
+{ IDX_2C('i','o'),        "Britø Indijos vandenyno teritorija", 0,0,0 },
+{ IDX_2C('i','q'),        "Irakas",                           0,0,0 },
+{ IDX_2C('i','r'),        "Iranas",                           0,0,0 },
+{ IDX_2C('i','s'),        "Islandija",                        0,0,0 },
+{ IDX_2C('i','t'),        "Italija",                          0,0,0 },
+{ IDX_2C('j','e'),        "Jersey",                           0,0,0 },
+{ IDX_2C('j','m'),        "Jamaika",                          0,0,0 },
+{ IDX_2C('j','o'),        "Jordanija",                        0,0,0 },
+{ IDX_2C('j','p'),        "Japonija",                         0,0,0 },
+{ IDX_2C('k','e'),        "Kenija",                           0,0,0 },
+{ IDX_2C('k','g'),        "Kirgiztanas",                      0,0,0 },
+{ IDX_2C('k','h'),        "Kambodþa",                         0,0,0 },
+{ IDX_2C('k','i'),        "Kiribatis",                        0,0,0 },
+{ IDX_2C('k','m'),        "Komorai",                          0,0,0 },
+{ IDX_2C('k','n'),        "Ðventas Kitsas ir Nevis",          0,0,0 },
+{ IDX_2C('k','p'),        "Korëja (Ðiaurës)",                 0,0,0 },
+{ IDX_2C('k','r'),        "Korëja (Pietø)",                   0,0,0 },
+{ IDX_2C('k','w'),        "Kuveitas",                         0,0,0 },
+{ IDX_2C('k','y'),        "Kaimanø salos",                    0,0,0 },
+{ IDX_2C('k','z'),        "Kazakstanas",                      0,0,0 },
+{ IDX_2C('l','a'),        "Laosas",                           0,0,0 },
+{ IDX_2C('l','b'),        "Lebanonas",                        0,0,0 },
+{ IDX_2C('l','c'),        "Ðventa Liucija",                   0,0,0 },
+{ IDX_2C('l','i'),        "Lichtenðteinas",                   0,0,0 },
+{ IDX_2C('l','k'),        "Ðri Lanka",                        0,0,0 },
+{ IDX_2C('l','r'),        "Liberija",                         0,0,0 },
+{ IDX_2C('l','s'),        "Lesotas",                          0,0,0 },
+{ IDX_2C('l','t'),        "Lietuva",                          0,0,0 },
+{ IDX_2C('l','u'),        "Liuksemburgas",                    0,0,0 },
+{ IDX_2C('l','v'),        "Latvija",                          0,0,0 },
+{ IDX_2C('l','y'),        "Libija",                           0,0,0 },
+{ IDX_2C('m','a'),        "Marokas",                          0,0,0 },
+{ IDX_2C('m','c'),        "Monakas",                          0,0,0 },
+{ IDX_2C('m','d'),        "Moldavija",                        0,0,0 },
+{ IDX_2C('m','e'),        "Montenegro",                       0,0,0 },
+{ IDX_2C('m','f'),        "Saint Martin (French part)",       0,0,0 },
+{ IDX_2C('m','g'),        "Madagaskaras",                     0,0,0 },
+{ IDX_2C('m','h'),        "Marðalo salos",                    0,0,0 },
+{ IDX_2C('m','k'),        "Makedojina",                       0,0,0 },
+{ IDX_2C('m','l'),        "Malis",                            0,0,0 },
+{ IDX_2C('m','m'),        "Mianmaras",                        0,0,0 },
+{ IDX_2C('m','n'),        "Mongolija",                        0,0,0 },
+{ IDX_2C('m','o'),        "Macau",                            0,0,0 },
+{ IDX_2C('m','p'),        "Ðiaurinës Marianos salos",         0,0,0 },
+{ IDX_2C('m','q'),        "Martinika",                        0,0,0 },
+{ IDX_2C('m','r'),        "Mauritanija",                      0,0,0 },
+{ IDX_2C('m','s'),        "Montseratis",                      0,0,0 },
+{ IDX_2C('m','t'),        "Malta",                            0,0,0 },
+{ IDX_2C('m','u'),        "Mauritis",                         0,0,0 },
+{ IDX_2C('m','v'),        "Maldivai",                         0,0,0 },
+{ IDX_2C('m','w'),        "Malavis",                          0,0,0 },
+{ IDX_2C('m','x'),        "Meksika",                          0,0,0 },
+{ IDX_2C('m','y'),        "Malaizija",                        0,0,0 },
+{ IDX_2C('m','z'),        "Mozambikas",                       0,0,0 },
+{ IDX_2C('n','a'),        "Namibija",                         0,0,0 },
+{ IDX_2C('n','c'),        "Naujoji Kaledonija",               0,0,0 },
+{ IDX_2C('n','e'),        "Nigerija",                         0,0,0 },
+{ IDX_2C('n','f'),        "Norfolko salos",                   0,0,0 },
+{ IDX_2C('n','g'),        "Nigerija",                         0,0,0 },
+{ IDX_2C('n','i'),        "Nikaragva",                        0,0,0 },
+{ IDX_2C('n','l'),        "Nyderlandai",                      0,0,0 },
+{ IDX_2C('n','o'),        "Norvegija",                        0,0,0 },
+{ IDX_2C('n','p'),        "Napalas",                          0,0,0 },
+{ IDX_2C('n','r'),        "Naurutis",                         0,0,0 },
+{ IDX_2C('n','u'),        "Nevis",                            0,0,0 },
+{ IDX_2C('n','z'),        "Naujoji Zelandija",                0,0,0 },
+{ IDX_2C('o','m'),        "Omanas",                           0,0,0 },
+{ IDX_2C('p','a'),        "Panama",                           0,0,0 },
+{ IDX_2C('p','e'),        "Peru",                             0,0,0 },
+{ IDX_2C('p','f'),        "Prancûzø Polinezija",              0,0,0 },
+{ IDX_2C('p','g'),        "Papua ir Naujoji Gvinëja",         0,0,0 },
+{ IDX_2C('p','h'),        "Filipinai",                        0,0,0 },
+{ IDX_2C('p','k'),        "Pakistanas",                       0,0,0 },
+{ IDX_2C('p','l'),        "Lenkija",                          0,0,0 },
+{ IDX_2C('p','m'),        "Ðv. Pieras ir Mikelonas",          0,0,0 },
+{ IDX_2C('p','n'),        "Pitkaimas",                        0,0,0 },
+{ IDX_2C('p','r'),        "Puerto Rikas",                     0,0,0 },
+{ IDX_2C('p','s'),        "Palestinian Territory, Occupied",  0,0,0 },
+{ IDX_2C('p','t'),        "Portugalija",                      0,0,0 },
+{ IDX_2C('p','w'),        "Palau",                            0,0,0 },
+{ IDX_2C('p','y'),        "Parugvajus",                       0,0,0 },
+{ IDX_2C('q','a'),        "Kataras",                          0,0,0 },
+{ IDX_2C('r','e'),        "Susijungimas",                     0,0,0 },
+{ IDX_2C('r','o'),        "Rumunija",                         0,0,0 },
+{ IDX_2C('r','s'),        "Serbia",                           0,0,0 },
+{ IDX_2C('r','u'),        "Rusijos federacija",               0,0,0 },
+{ IDX_2C('r','w'),        "Randa",                            0,0,0 },
+{ IDX_2C('s','a'),        "Saudo Arabija",                    0,0,0 },
+{ IDX_2C('s','b'),        "Solomono salos",                   0,0,0 },
+{ IDX_2C('s','c'),        "Seiðelai",                         0,0,0 },
+{ IDX_2C('s','d'),        "Sudanas",                          0,0,0 },
+{ IDX_2C('s','e'),        "Ðvedija",                          0,0,0 },
+{ IDX_2C('s','g'),        "Singapûras",                       0,0,0 },
+{ IDX_2C('s','h'),        "Ðv. Elena",                        0,0,0 },
+{ IDX_2C('s','i'),        "Slovënija",                        0,0,0 },
+{ IDX_2C('s','j'),        "Svalbardo ir Þano Majeno salos",   0,0,0 },
+{ IDX_2C('s','k'),        "Slovakijos respublika",            0,0,0 },
+{ IDX_2C('s','l'),        "Siera Leonë",                      0,0,0 },
+{ IDX_2C('s','m'),        "San Marinas",                      0,0,0 },
+{ IDX_2C('s','n'),        "Senegalas",                        0,0,0 },
+{ IDX_2C('s','o'),        "Somalis",                          0,0,0 },
+{ IDX_2C('s','r'),        "Surinamis",                        0,0,0 },
+{ IDX_2C('s','t'),        "Sao Tomë ir Principë",             0,0,0 },
+{ IDX_2C('s','u'),        "TSRS (buvusi)",                    0,0,0 },
+{ IDX_2C('s','v'),        "El Salvadoras",                    0,0,0 },
+{ IDX_2C('s','y'),        "Sirija",                           0,0,0 },
+{ IDX_2C('s','z'),        "Svazilandas",                      0,0,0 },
+{ IDX_2C('t','c'),        "Turkijos ir Kaikijos salos",       0,0,0 },
+{ IDX_2C('t','d'),        "Èadas",                            0,0,0 },
+{ IDX_2C('t','f'),        "Prancûzijos pietinës teritorijos", 0,0,0 },
+{ IDX_2C('t','g'),        "Togas",                            0,0,0 },
+{ IDX_2C('t','h'),        "Tailandas",                        0,0,0 },
+{ IDX_2C('t','j'),        "Tadþikistanas",                    0,0,0 },
+{ IDX_2C('t','k'),        "Tokelau",                          0,0,0 },
+{ IDX_2C('t','l'),        "Timor-Leste",                      0,0,0 },
+{ IDX_2C('t','m'),        "Turkmënistanas",                   0,0,0 },
+{ IDX_2C('t','n'),        "Tunisas",                          0,0,0 },
+{ IDX_2C('t','o'),        "Tonga",                            0,0,0 },
+{ IDX_2C('t','p'),        "Rytø Timoras",                     0,0,0 },
+{ IDX_2C('t','r'),        "Turkija",                          0,0,0 },
+{ IDX_2C('t','t'),        "Trinidadas ir Tobagas",            0,0,0 },
+{ IDX_2C('t','v'),        "Tuvalu",                           0,0,0 },
+{ IDX_2C('t','w'),        "Taivanas",                         0,0,0 },
+{ IDX_2C('t','z'),        "Tanzanija",                        0,0,0 },
+{ IDX_2C('u','a'),        "Ukraina",                          0,0,0 },
+{ IDX_2C('u','g'),        "Uganda",                           0,0,0 },
+{ IDX_2C('u','k'),        "Jungtinë Karalystë",               0,0,0 },
+{ IDX_2C('u','m'),        "US maþosios sàlos",                0,0,0 },
+{ IDX_2C('u','s'),        "Jungtinës Valstijos",              0,0,0 },
+{ IDX_2C('u','y'),        "Urugvajus",                        0,0,0 },
+{ IDX_2C('u','z'),        "Uzbekistanas",                     0,0,0 },
+{ IDX_2C('v','a'),        "Vatikano miestas-valstybë (Ðventasis Sostas)",0,0,0 },
+{ IDX_2C('v','c'),        "Ðventas Vincentas ir Grenadinai",  0,0,0 },
+{ IDX_2C('v','e'),        "Venesuela",                        0,0,0 },
+{ IDX_2C('v','g'),        "Mergelës salos (Britø)",           0,0,0 },
+{ IDX_2C('v','i'),        "Mergelës salos (JAV)",             0,0,0 },
+{ IDX_2C('v','n'),        "Vietnamas",                        0,0,0 },
+{ IDX_2C('v','u'),        "Vanuatu",                          0,0,0 },
+{ IDX_2C('w','f'),        "Valio ir Futunos salos",           0,0,0 },
+{ IDX_2C('w','s'),        "Samoa",                            0,0,0 },
+{ IDX_2C('y','e'),        "Jemenis",                          0,0,0 },
+{ IDX_2C('y','t'),        "Majotis",                          0,0,0 },
+{ IDX_2C('y','u'),        "Jugoslavija",                      0,0,0 },
+{ IDX_2C('z','a'),        "Pietø Afrika",                     0,0,0 },
+{ IDX_2C('z','m'),        "Zambija",                          0,0,0 },
+{ IDX_2C('z','w'),        "Zimbabvë",                         0,0,0 },
+{ IDX_2C('a','1'),        "Anonymous Proxy",                  0,0,0 },
+{ IDX_2C('a','2'),        "Satellite Provider",               0,0,0 },
+{ IDX_2C('o','1'),        "Other",                            0,0,0 },
+{ IDX_2C('a','p'),        "Asia/Pacific Region",              0,0,0 },
+{ IDX_3C('l','a','n'),    "Local Network (lan)",              0,0,0 },
+{ 0              ,        NULL,                               0,0,0 }};

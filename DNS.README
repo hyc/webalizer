@@ -1,0 +1,295 @@
+The Webalizer - A log file analysis program  -- DNS information
+
+The webalizer has the ability to perform reverse DNS lookups,  and
+fully supports both IPv4 and IPv6 addressing schemes.  This document
+attempts to explain how it works, and some things that you should be
+aware of when using the DNS lookup features.
+
+Note: The Reverse DNS feature may be enabled or disabled at compile
+      time.  DNS lookup code is enabled by default.  You can run The
+      Webalizer using the '-vV' command line options to determine what
+      options are enabled in the version you are using.
+
+
+How it works
+------------
+
+DNS lookups are made against a DNS cache file containing IP addresses
+and resolved names.  If the IP address is not found in the cache file,
+it will be left as an IP address.  In order for this to happen, a
+cache file MUST be specified when the Webalizer is run, either using
+the '-D' command line switch, or a "DNSCache" configuration file
+keyword.  If no cache file is specified, no attempts to perform DNS
+lookups will be done. The cache file can be made three different ways.
+
+1) You can have the Webalizer pre-process the specified log file at
+   run-time, creating the cache file before processing the log file
+   normally.  This is done by setting the number of DNS Children
+   processes to run, either by using the '-N' command line switch or
+   the "DNSChildren" configuration keyword.  This will cause the
+   Webalizer to spawn the specified number of processes which will
+   be used to do reverse DNS lookups.. generally, a larger number
+   of processes will result in faster resolution of the log, however
+   if set too high may cause overall system degradation.  A setting
+   of between 5 and 20 should be acceptable, and there is a maximum
+   limit of 100.   If used, a cache filename MUST be specified also,
+   using either the '-D' command line switch, or the "DNSCache"
+   configuration keyword.  Using this method, normal processing will
+   continue only after all IP addresses have been processed, and the
+   cache file is created/updated.
+
+2) You can pre-process the log file as a standalone process, creating
+   the cache file that will be used later by the Webalizer.  This is
+   done by running the Webalizer with a name of 'webazolver' (ie: the
+   name 'webazolver' is a symbolic link to 'webalizer') and specifying
+   the cache filename (either with '-D' or DNSCache).   If the number
+   of child processes is not given, the default of 5 will be used. In
+   this mode, the log will be read and processed, creating a DNS cache
+   file or updating an existing one, and the program will then exit
+   without any further processing.
+
+3) You can use The Webalizer (DNS) Cache file Manager program 'wcmgr'
+   to create and manipulate a cache file.  A blank cache file can be
+   created which would be later populated, or data for the cache file
+   can be imported using tab delimited text files.  See the wcmgr(1)
+   man page for usage information.
+
+
+Run-time DNS cache file creation/update
+---------------------------------------
+
+The creation/update of a DNS cache file at run-time occurs as follows:
+
+1) The log file is read, creating a list of all IP addresses that are
+   not already cached (or cached but expired) and need to be resolved.
+   Addresses are expired based on the TTL value specified using the
+   'CacheTTL' configuration option or after 7 days (default) if no TTL
+   is specified.
+
+2) The specified number of children processes are forked, and are used
+   to perform DNS lookups.
+
+3) Each IP address is given, one at a time, to the next available child
+   process until all IP addresses have been processed.  Each child will
+   update the cache file when a result is returned.  This may be either
+   a resolved name or a failed lookup, in which case the address will be
+   left unresolved.  Unresolved addresses are not normally cached, but
+   can be, if enabled using the 'CacheIPs' configuration file keyword.
+
+4) Once all IP addresses have been processed and the cache file updated,
+   the Webalizer will process the log normally.  Each record it finds
+   that has an unresolved IP address will be looked up in the cache file
+   to see if a hostname is available (ie: was previously found).
+
+Because there may be a significant amount of time between the initial
+unresolved IP list and normal processing, the Webalizer should not be
+run against live log files (ie: a log file that is actively being written
+to by a server), otherwise there may be additional records present that
+were not resolved.
+
+
+Stand-Alone DNS cache file creation/update
+------------------------------------------
+
+The creation/update of the DNS cache file, when run in stand-alone mode,
+occurs as follows:
+
+1) The log file is read, creating a list of all IP addresses that are
+   not already cached (or cached but expired) and need to be resolved.
+
+2) The specified number of children processes are forked, and are used
+   to perform DNS lookups. If the number of processes was not specified,
+   the default of 5 will be used.
+
+3) Each IP address is given, one at a time, to the next available child
+   process until all IP addresses have been processed.  Each child will
+   update the cache file when a result is returned.
+
+4) Once all IP addresses have been processed and the cache file updated,
+   the program will terminate without any further processing.
+
+
+Larger sites may prefer to use a stand-alone process to create the DNS
+cache file, and then run the Webalizer against the cache file.  This
+allows a single cache file to be used for many virtual hosts, and reduces
+the processing needed if many sites are being processed.  The Webalizer
+can be used in stand alone mode by running it as 'webazolver'.  When
+run in this fashion, it will only create the cache file and then exit
+without any further processing.  A cache filename MUST be specified,
+however unlike when running the Webalizer normally, the number of child
+processes does not have to be given (will default to 5).  All normal
+configuration and command line options are recognized, however, many
+of them will simply be ignored.. this allows the use of a standard
+configuration file for both normal use and stand alone use.
+
+
+Examples:
+---------
+
+webalizer -c test.conf -N 10 -D dns_cache.db /var/log/my_www_log
+
+   This will use the configuration file 'test.conf' to obtain normal
+   configuration options such as hostname and output directory.. it
+   will then either create or update the file 'dns_cache.db' in the
+   default output directory (using 10 child processes) based on the
+   IP addresses it finds in the log /var/lib/my_www_log, and then
+   process that log file normally.
+
+
+webalizer -o out -D dns_cache.db /var/log/my_www_log
+
+  This will process the log file /var/log/my_www_log, resolving IP
+  addresses from the cache file 'dns_cache.db' found in the default
+  output directory "out".  The cache file must be present as it will
+  not be created with this command.
+
+
+for i in /var/log/*/access_log; do
+  webazolver -N 20 -D /var/lib/dns_cache.db $i
+done
+
+  The above is an example of how to run through multiple log files
+  creating a single DNS cache file.. this might be typically used on
+  a larger site that has many virtual hosts, all keeping their log
+  files in a separate directory.  It will process each access_log it
+  finds in /var/log/* and create a cache file (var/lib/dns_cache.db).
+  This cache file can then be used to process the logs normally with
+  with the Webalizer in a read-only fashion (see next example).
+
+
+for i in /etc/webalizer/*.conf; do webalizer -c $i -D /etc/cache.db; done
+
+  This will process each configuration file found in /etc/webalizer,
+  using the DNS cache file /etc/cache.db.  This will also typically be
+  used on a larger site with multiple hosts..  Each configuration file
+  will specify a site specific log file, hostname, output directory, etc.
+  The cache file used will typically be created using a command similar
+  to the one previous to this example.
+
+
+Cache File Maintenance
+----------------------
+
+The Webalizer DNS cache files generally require very little or no
+special attention.  There are times though when some maintenance
+is required, such as occasional purging of very old cache entries.
+The Webalizer never removes a record once it's inserted into the
+cache.  If a record expires based on its timestamp, the next time
+that address is seen in a log, its name is looked up again and the
+timestamp is updated.  However, there will always be addresses that
+are never seen again, which will cause the cache files to continue
+to grow in size over time.  On extremely busy sites or sites that
+attract many one time visitors, the cache file may grow extremely
+large, yet only contain a small amount of valid entries.  Using
+The Webalizer (DNS) Cache file Manager ('wcmgr'), cache files can
+be purged, removing expired entries and shrinking the file size.
+A TTL (time to live) value can be specified, so the length of time
+an entry remains in the cache can be varied depending on individual
+site requirements.  In addition to purging cache files, 'wcmgr' can
+also be used to list cache file contents, import/export cache data,
+lookup/add/delete individual entries and gather overall statistics
+regarding the cache file (number of records, number expired, etc..).
+
+To purge a cache file using 'wcmgr', an example command would be:
+
+wcmgr -p31 /path/to/dns.cache
+
+This would purge the 'dns.cache' cache file of any records that are
+over 31 days old, and would reclaim the space that those records
+were using in the file.  If you would like to see the records that
+get purged, adding the command line option '-v' (verbose) will cause
+the program to print each entry and its age as they are removed.
+You can also use the 'wcmgr' to display statistics on cache files
+to aid in determining when a cache file should be purged.  See the
+'wcmgr' man page (wcmgr.1) for additional information on the various
+options available.
+
+
+Stupid Cache Tricks
+-------------------
+
+The DNS cache files used by The Webalizer allow for efficient IP address
+to name translations.  Resolved names are normally generated by using an
+existing DNS name server to query the address, either locally or over
+the Internet.  However, using The Webalizer (DNS) Cache file Manager,
+almost any IP address to Name translation can be included in the cache.
+One such example would be for mapping local network addresses to real
+names, even though those addresses may not have real DNS entries on the
+network (or may be 'local' addresses prohibited from use on the Internet).
+A simple tab delimited text file can be created and imported into a cache
+for use by The Webalizer,  which will then be used to convert the local
+IP addresses to real names.  Additional configuration options for The
+Webalizer can then be used as would be normally.  For example, consider
+a small business with 10 computers and a DSL router to the Internet.
+Each machine on the local network would use a private IP address that
+would not be resolved using an external (public) DNS server, so would
+always be reported by The Webalizer as 'unknown/unresolved'.  A simple
+cache file could be created to map those unresolved addresses into more
+meaningful names, which could then be further processed by the Webalizer.
+An example might look something like:
+
+# Local machines
+192.168.123.254	0	0	gw.widgetsareus.lan
+192.168.123.253	0	0	mail.widgetsareus.lan
+192.168.123.250	0	0	sales.widgetsareus.lan
+192.168.123.240	0	0	service.widgetsareus.lan
+192.168.123.237	0	0	mgr.widgetsareus.lan
+192.168.123.235	0	0	support1.widgetsareus.lan
+192.168.123.234	0	0	support2.widgetsareus.lan
+192.168.123.232	0	0	pres.widgetsareus.lan
+192.168.123.230	0	0	vp.widgetsareus.lan
+192.168.123.225	0	0	reception.widgetsareus.lan
+192.168.123.224	0	0	finance.widgetsareus.lan
+127.0.0.1	0	1	127.0.0.1
+
+
+There are a couple of things here that should be noted.  The first
+is that the timestamps (first zero on each line above) are set to
+zero.  This tells The Webalizer that these cached entries are to
+be considered 'permanent', and should never be expired (infinite
+TTL or time to live).  The second thing to note is that the resolved
+names are using a non-standard TLD (top level domain) of '.lan'.
+The Webalizer will map this special TLD to mean "Local Network" in
+its reports, which allows local traffic to be grouped separately
+from normal Internet traffic.  Lastly, you may notice that the
+last line of the file contains an entry with the same IP address
+where a name should be.  This entry will prevent the Webalizer
+from ever trying to lookup 127.0.0.1,  which is the 'localhost'
+address, when it is found in a log.  The second number after the IP
+address (1) tells the Webalizer that it is an unresolved entry, not
+a resolved hostname (ie: has no name).  Entries such as this one can
+be used to reduce DNS lookups on addresses that are known not to
+resolve.
+
+
+Considerations
+--------------
+
+Processing of live log files is discouraged, as the chances of log records
+being written between the time of DNS resolution and normal processing will
+cause problems.
+
+If you are using STDIN for the input stream (log file) and have run-time
+DNS cache file creation/update enabled.. the program will exit after the
+cache file has been created/updated and no output will be produced.  If
+you must use STDIN for the input log, you will need to process the stream
+twice, once to create/update the cache file, and again to produce the
+reports.  The reason for this is that stream inputs from STDIN cannot
+be 'rewound' to the beginning like files can, so must be given twice.
+
+Cached DNS addresses have a default TTL (time to live) of 7 days.  This
+may now be changed using the CacheTTL config file keyword to any value
+from 1 to 100 (days).  You may also now specify if unresolved addresses
+should be stored in the DNS cache.  Normally, unresolved IP addresses
+are NOT saved in the cache and are looked up each time the program is
+run.
+
+There is an absolute maximum of 100 child processes that may be created,
+however the actual number of children should be significantly less than
+the maximum.. typical usage should be between 5 and 20.
+
+Special thanks to Henning P. Schmiedehausen <hps@tanstaafl.de> for the
+original dns-resolver code he submitted,  which was the basis for this
+implementation.  Also thanks to Jose Carlos Medeiros for the inital IPv6
+support code.
+

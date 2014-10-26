@@ -1,0 +1,635 @@
+/*
+   webalizer_lang.italian
+
+   Webalizer V2.0x Language Support file for Italian.
+   31-May-1998 Modified for level 1.1 support (brad@mrunix.net)
+   12-Jun-1998 Translation Level 1.1 by Alberto Benati (a_benati@4net.com)
+   23-Jul-1998 Modified for level 1.2 support (brad@mrunix.net)
+   08-Mar-1999 Updated HTTP 1.1 response codes by Yves Lafon (ylafon@w3.org)
+   28-Jun-1999 Modified for level 1.3 support (brad@mrunix.net)
+   10-Jul-1999 Update for 1.3 by Massimiliano Masserelli (masserelli@interim.it)
+   22-Feb-2000 Modified for level 2.0 support (brad@mrunix.net)
+   25-Sep-2000 Total Rewrite by Mattia Coatti (xkaos@galactica.it)
+   26-Mar-2008 Updated to current IANA TLDs (brad@mrunix.net)
+   26-May-2008 Modified for level 2.2 support (brad@mrunix.net)
+
+
+   Language files are named using the following convention:
+
+   webalizer_lang.LANGUAGE
+
+   where 'LANGUAGE' is the name of the language the file is
+   translated into (ie: webalizer_lang.russian for russian).
+   Either copy the desired language file to webalizer_lang.h
+   or create a symbolic link, then re-compile.
+
+   If you translate this file into a different language, please
+   send a copy to brad@mrunix.net.
+
+*/
+
+/***********************************************************************/
+/* DEFINE LANGUAGE NAME here                                           */
+/***********************************************************************/
+
+char *language  = "Italian";
+char *langcode  = "it";
+
+/***********************************************************************/
+/*                                                                     */
+/* Informational messages                                              */
+/*                                                                     */
+/* These messages are only displayed while The Webalizer is being run, */
+/* usually to the screen, and are not part of the HTML output.         */
+/*                                                                     */
+/***********************************************************************/
+
+/* these are only used in timing totals */
+/* Format:   XXX records (XXX ignored, XXX bad) in X.XX seconds        */
+char *msg_records = "record";
+char *msg_addresses="indirizzi";
+char *msg_ignored = "ignorato/i";
+char *msg_bad     = "errato/i";
+char *msg_in      = "in";
+char *msg_seconds = "secondi";
+
+/* progress and setup error messages */
+char *msg_log_err = "Errore: Impossibile elaborare il file di log";
+char *msg_log_use = "Utilizzo il file di log";
+char *msg_dir_err = "Errore: Impossibile accedere alla directory";
+char *msg_dir_use = "Creo i file di output nella directory";
+char *msg_cur_dir = "Directory attuale";
+char *msg_hostname= "Il nome dell'host per il riepilogo e'";
+char *msg_ign_hist= "Ignoro il precedente file di history";
+char *msg_no_hist = "Impossibile trovare il file di history";
+char *msg_get_hist= "Elaboro il file di history";
+char *msg_put_hist= "Salvo le statistiche degli accessi nel file di history";
+char *msg_hist_err= "Errore: Impossibile modificare il file di history";
+char *msg_bad_hist= "Errore: Tralascio il record non valido nel file di history";
+char *msg_bad_conf= "Errore: Impossibile accedere al file di configurazione";
+char *msg_bad_key = "Attenzione: Keyword non valida";
+char *msg_bad_date= "Errore: Tralascio il record (data errata)";
+char *msg_ign_nscp= "Tralascio il record dell'header di Netscape";
+char *msg_bad_rec = "Tralascio il record errato";
+char *msg_no_vrec = "Nessun record valido rilevato";
+char *msg_gen_rpt = "Creo l'analisi statistica per";
+char *msg_gen_sum = "Creo il riassunto statistico";
+char *msg_get_data= "Elaboro i dati sull'esecuzione precedente";
+char *msg_put_data= "Salvo i dati sull'esecuzione attuale";
+char *msg_no_data = "Impossibile trovare i dati sull'esecuzione precedente";
+char *msg_bad_data= "Errore: Impossibile ripristinare i dati dell'esecuzione precedente";
+char *msg_data_err= "Errore: Impossibile salvare i dati dell'esecuzione attuale";
+char *msg_dup_data= "Attenzione: Possibile individuazione di dati duplicati";
+
+/* DNS Stuff */
+char *msg_dns_nocf= "Nessun file di cache specificato";
+char *msg_dns_nodb= "Errore: Impossibile accedere al file contenente la cache DNS";
+char *msg_dns_nolk= "Errore: Impossibile effettuare il locking del file contenente la cache DNS";
+char *msg_dns_usec= "Utilizzo il file di cache DNS";
+char *msg_dns_rslv= "Risoluzione DNS";
+char *msg_dns_none= "Nessun dato da elaborare";
+char *msg_dns_abrt= "DNS support not present, aborting...";
+
+/* Geolocation stuff */
+char *msg_geo_open= "Error opening file";
+char *msg_geo_use = "Using";
+char *msg_geo_nolu= "lookups disabled";
+char *msg_geo_dflt= "default";
+
+/* memory allocation errors */
+char *msg_nomem_ts= "Impossibile allocare abbastanza memoria, classifica degli host disabilitata";
+char *msg_nomem_tr= "Impossibile allocare abbastanza memoria, classifica dei referrer disabilitata";
+char *msg_nomem_tu= "Impossibile allocare abbastanza memoria, classifica degli URL disabilitata";
+char *msg_nomem_tc= "Impossibile allocare abbastanza memoria, classifica dei paesi disabilitata";
+char *msg_nomem_ta= "Impossibile allocare abbastanza memoria, classifica dei browser disabilitata";
+char *msg_nomem_tsr="Impossibile allocare abbastanza memoria, classifica dei termini di ricerca disabilitata";
+char *msg_nomem_ti= "Impossibile allocare abbastanza memoria, classifica degli username disabilitata";
+char *msg_nomem_dh= "Errore nell'aggiungere il nome dell'host (giornaliero), tralasciato";
+char *msg_nomem_mh= "Errore nell'aggiungere il nome dell'host (mensile), tralasciato";
+char *msg_nomem_u = "Errore nell'aggiungere l'URL, tralasciato";
+char *msg_nomem_a = "Errore nell'aggiungere il browser, tralasciato";
+char *msg_nomem_r = "Errore nell'aggiungere il referrer, tralasciato";
+char *msg_nomem_sc= "Errore nell'aggiungere la stringa di ricerca, tralasciato";
+char *msg_nomem_i = "Errore nell'aggiungere l'username, tralasciato";
+
+/* log record errors */
+char *msg_big_rec = "Attenzione: Tralascio il record di dimensione eccessiva";
+char *msg_big_host= "Attenzione: Troncato il record dell'hostname in quanto di dimensione eccessiva";
+char *msg_big_date= "Attenzione: Troncata il record della data in quanto di dimensione eccessiva";
+char *msg_big_req = "Attenzione: Troncato il record della richiesta in quanto di dimensione eccessiva";
+char *msg_big_ref = "Attenzione: Troncato il record del referrer in quanto di dimensione eccessiva";
+char *msg_big_user= "Attenzione: Troncato il record dell'username in quanto di dimensione eccessiva";
+char *msg_big_one = "Attenzione: La stringa e' di dimensione eccessiva";
+
+/* misc errors */
+char *msg_no_open = "Errore: Impossibile accedere al file";
+
+/* Help display... */
+char *h_usage1 = "Sintassi";
+char *h_usage2 = "[parametri] [file di log]";
+char *h_msg[]= {
+         "-h        = visualizza questa schermata"         ,
+         "-V        = mostra il numero di versione"        ,
+         "-v        = be verbose"                          ,
+         "-d        = visualizza informazioni di debug addizionali",
+         "-F tipo   = specifica il tipo di log (clf | ftp | squid | w3c)",
+         "-f        = elenca sequenzialmente gli errori"   ,
+         "-i        = tralascia il file di history"        ,
+         "-p        = conserva le statistiche (modalita' incrementale)",
+         "-b        = ignore state (incremental)"          ,
+         "-q        = non visualizza i messaggi informativi",
+         "-Q        = non visualizza alcun messaggio"      ,
+         "-Y        = non visualizza il grafico relativo ai paesi",
+         "-G        = non visualizza il grafico orario"    ,
+         "-H        = non visualizza le statistiche orarie",
+         "-L        = non visualizza le legende policromatiche nei grafici"   ,
+         "-l num    = utilizza num linee nello sfondo dei grafici",
+         "-m num    = valore di timeout per gli accessi (seconds)",
+         "-T        = visualizza informazioni sul tempo di esecuzione",
+         "-c file   = utilizza 'file' per le impostazioni di configurazione",
+         "-n nome   = nome dell'host da utilizzare"        ,
+         "-o dir    = directory in cui collocare i file di output",
+         "-t nome   = nome da utilizzare per il titolo del rapporto statistico",
+         "-a nome   = ignora il browser specificato"       ,
+         "-r nome   = ignora il referrer specificato"      ,
+         "-s nome   = ignora l'host specificato"           ,
+         "-u nome   = ignora l'URL specificato"            ,
+         "-x ext    = utilizza 'ext' come estensione per i file",
+         "-O nome   = Omit page 'nome'"                    ,
+         "-P ext    = utilizza 'ext' come estensione per le pagine",
+         "-I nome   = utilizza 'nome' come file di indice" ,
+         "-K num    = 'num' months in summary table"       , 
+         "-k num    = 'num' months in summary graph"       ,
+         "-A num    = visualizza 'num' browser nella classifica",
+         "-C num    = visualizza 'num' paesi nella classifica",
+         "-R num    = visualizza 'num' referrer nella classifica",
+         "-S num    = visualizza 'num' nomi di host nella classifica",
+         "-U num    = visualizza 'num' URL nella classifica",
+         "-e num    = visualizza 'num' pagine in ingresso nella classifica",
+         "-E num    = visualizza 'num' pagine in uscita nella classifica",
+         "-g num    = raggruppa i domini fino a 'num' livelli",
+         "-X        = non visualizza i singoli hostname"    ,
+         "-z dir    = Use country flags in 'dir'"          ,
+#ifdef USE_DNS
+         "-D nome   = utilizza 'nome' come file di cache DNS",
+         "-N num    = numero massimo di thread per la risoluzione DNS (0=non abilitata)",
+         "-j        = Enable native GeoDB lookups"         ,
+         "-J nome   = Use GeoDB database 'nome'"           ,
+#endif
+#ifdef USE_GEOIP
+         "-w        = Enable GeoIP lookups"                ,
+         "-W nome   = Use GeoIP database 'nome'"           ,
+#endif
+         NULL};
+
+/***********************************************************************/
+/*                                                                     */
+/* HTML strings                                                        */
+/*                                                                     */
+/* These strings are used as part of the HTML output generated by The  */
+/* Webalizer.                                                          */ 
+/*                                                                     */
+/***********************************************************************/
+
+/* header strings */
+char *msg_hhdr_sp = "Riepilogo per il periodo";
+char *msg_hhdr_gt = "Generato";
+
+/* main index strings */
+char *msg_main_us = "Riepilogo statistico per";
+/* char *msg_main_per= "Ultimi 12 mesi"; */
+char *msg_main_per= "Riepilogo mensile";
+char *msg_main_sum= "Riepilogo mensile";
+char *msg_main_da = "Media giornaliera";
+char *msg_main_mt = "Totale mensile";
+
+/* month HTML page strings */
+char *msg_hmth_du = "Contatti giornalieri per";
+char *msg_hmth_hu = "Contatti orari per";
+
+/* table header strings */
+char *msg_h_by    = "Per";
+char *msg_h_avg   = "Media";
+char *msg_h_max   = "Max";
+char *msg_h_total = "Totale";
+char *msg_h_totals= "Totali";
+char *msg_h_day   = "Giorno";
+char *msg_h_mth   = "Mese";
+char *msg_h_hour  = "Ora";
+char *msg_h_hits  = "Contatti";
+char *msg_h_pages = "Pagine";
+char *msg_h_visits= "Visite";
+char *msg_h_files = "File";
+char *msg_h_sites = "Siti";
+char *msg_h_xfer  = "KBytes";
+char *msg_h_hname = "Nomi di Host";
+char *msg_h_url   = "URL";
+char *msg_h_agent = "Browser";
+char *msg_h_ref   = "Referrer";
+char *msg_h_ctry  = "Paese";
+char *msg_h_search= "Termini di Ricerca";
+char *msg_h_uname = "Username";
+
+/* links along top of page */
+char *msg_hlnk_ds = "Statistiche Giornaliere";
+char *msg_hlnk_hs = "Statistiche Orarie";
+char *msg_hlnk_u  = "URL";
+char *msg_hlnk_s  = "Nomi di Host";
+char *msg_hlnk_a  = "Browser";
+char *msg_hlnk_c  = "Paesi";
+char *msg_hlnk_r  = "Referrer";
+char *msg_hlnk_en = "Ingressi";
+char *msg_hlnk_ex = "Uscite";
+char *msg_hlnk_sr = "Ricerca";
+char *msg_hlnk_i  = "Utenti";
+
+/* monthly total table */
+char *msg_mtot_ms = "Statistiche Mensili per";
+char *msg_mtot_th = "Contatti";
+char *msg_mtot_tf = "File";
+char *msg_mtot_tx = "KBytes";
+char *msg_mtot_us = "Nomi di Host";
+char *msg_mtot_ur = "Referrer";
+char *msg_mtot_ua = "Browser";
+char *msg_mtot_uu = "URL";
+char *msg_mtot_ui = "Username";
+char *msg_mtot_mhd= "Contatti Giornalieri";
+char *msg_mtot_mhh= "Contatti Orari";
+char *msg_mtot_mfd= "File Giornalieri";
+char *msg_mtot_mpd= "Pagine Giornaliere";
+char *msg_mtot_msd= "Host Giornaliere";
+char *msg_mtot_mvd= "Visite Giornaliere";
+char *msg_mtot_mkd= "KBytes Giornalieri";
+char *msg_mtot_rc = "Contatti per Codice di Risposta";
+
+/* daily total table */
+char *msg_dtot_ds = "Statistiche Giornaliere per";
+
+/* hourly total table */
+char *msg_htot_hs = "Statistiche Orarie per";
+
+/* country pie chart */
+char *msg_ctry_use= "Riepilogo dei Paesi per";
+
+/* top tables */
+/* Formatted as "Top xxx of xxx Total something" */
+char *msg_top_top = "Top";
+char *msg_top_of  = "di";
+char *msg_top_s   = "Nomi di Host Totali";
+char *msg_top_u   = "URL Totali";
+char *msg_top_r   = "Referrer Totali";
+char *msg_top_a   = "Browser Totali";
+char *msg_top_c   = "Paesi Totali";
+char *msg_top_en  = "Pagine in Ingresso Totali";
+char *msg_top_ex  = "Pagine in Uscita Totali";
+char *msg_top_sr  = "Total Search Strings";
+char *msg_top_i   = "Total Usernames";
+char *msg_v_sites = "Visualizza ogni Nome di Host";
+char *msg_v_urls  = "Visualizza ogni URL";
+char *msg_v_refs  = "Visualizza ogni Referrer";
+char *msg_v_agents= "Visualizza ogni Browser";
+char *msg_v_search= "Visualizza ogni Termine di Ricerca";
+char *msg_v_users = "Visualizza ogni Username";
+
+/* short month names MUST BE 3 CHARS in size... pad if needed*/
+char *s_month[12]={ "Gen", "Feb", "Mar",
+                    "Apr", "Mag", "Giu",
+                    "Lug", "Ago", "Set",
+                    "Ott", "Nov", "Dic"};
+
+/* long month names - can be any length */
+char *l_month[12]={ "Gennaio",  "Febbraio", "Marzo",   "Aprile",
+                    "Maggio",      "Giugno",     "Luglio",    "Agosto",
+                    "Settembre","Ottobre",  "Novembre","Dicembre"};
+
+/* response code descriptions... order IS important!      */
+struct response_code response[] =
+       { { "Undefined response code",                    0 },
+         { "Code 100 - Continua",                        0 },
+         { "Code 101 - Scambio di Protocollo",           0 },
+         { "Code 200 - OK",                              0 },
+         { "Code 201 - Creato",                          0 },
+         { "Code 202 - Accettato",                       0 },
+         { "Code 203 - Informazione non Autoritativa",   0 },
+         { "Code 204 - Nessun Contenuto",                0 },
+         { "Code 205 - Contenuto Reimpostato",           0 },
+         { "Code 206 - Contenuto Parziale",              0 },
+         { "Code 300 - Scelta Multipla",                 0 },
+         { "Code 301 - Spostato Permanentemente",        0 },
+         { "Code 302 - Trovato",                         0 },
+         { "Code 303 - Vedere Altro",                    0 },
+         { "Code 304 - Non Modificato",                  0 },
+         { "Code 305 - Utilizzare Proxy",                0 },
+         { "Code 307 - Spostato Temporaneamente",        0 },
+         { "Code 400 - Richiesta Errata",                0 },
+         { "Code 401 - Non Autorizzato",                 0 },
+         { "Code 402 - Richiesto Pagamento",             0 },
+         { "Code 403 - Proibito",                        0 },
+         { "Code 404 - Non Trovato",                     0 },
+         { "Code 405 - Metodo Non Permesso",             0 },
+         { "Code 406 - Non Accettabile",                 0 },
+         { "Code 407 - Il Proxy Richiede Autenticazione",0 },
+         { "Code 408 - Richiesta Scaduta",               0 },
+         { "Code 409 - Conflitto",                       0 },
+         { "Code 410 - Abbandonato",                     0 },
+         { "Code 411 - Lunghezza Richiesta",             0 },
+         { "Code 412 - Prerequisito Fallito",            0 },
+         { "Code 413 - Entita' Richiesta Troppo Estesa", 0 },
+         { "Code 414 - Indirizzo Richiesto Troppo Lungo",0 },
+         { "Code 415 - Media Non Supportato",            0 },
+         { "Code 416 - Intervallo di Richiesta Non Soddisfabile", 0 },
+         { "Code 417 - Aspettativa non Soddisfatta",     0 },
+         { "Code 500 - Errore Interno del Server",       0 },
+         { "Code 501 - Non Implementato",                0 },
+         { "Code 502 - Gateway Errato",                  0 },
+         { "Code 503 - Servizio non Disponibile",        0 },
+         { "Code 504 - Timeout nell'Accesso al Gateway", 0 },
+         { "Code 505 - Versione HTTP Non Supportata", 0 } };
+
+char *msg_title   = "Statistiche per";
+char *msg_h_other = "Altri";
+
+/* Country codes (previously in ctry.h header file) */
+
+struct  country_code ctry[] = {
+{ 0,                      "Non Risolto/Sconosciuto",          0,0,0 },
+{ IDX_3C('c','o','m'),    "Commerciali (.com)",               0,0,0 },
+{ IDX_3C('e','d','u'),    "Universita' (.edu)",               0,0,0 },
+{ IDX_3C('g','o','v'),    "Enti Governativo (.gov)",          0,0,0 },
+{ IDX_3C('i','n','t'),    "Enti Internazionali (.int)",       0,0,0 },
+{ IDX_3C('m','i','l'),    "Enti Militari (.mil)",             0,0,0 },
+{ IDX_3C('n','e','t'),    "Reti (.net)",                      0,0,0 },
+{ IDX_3C('o','r','g'),    "Organizzazioni Generiche (.org)",  0,0,0 },
+{ IDX_3C('b','i','z'),    "Generic Business (biz)",           0,0,0 },
+{ IDX_3C('c','a','t'),    "Catalan Community (cat)",          0,0,0 },
+{ IDX_3C('p','r','o'),    "Professional (pro)",               0,0,0 },
+{ IDX_3C('t','e','l'),    "Ind. Contact Data (tel)",          0,0,0 },
+{ IDX_4C('a','e','r','o'),"Air Transport Industry (aero)",    0,0,0 },
+{ IDX_4C('a','s','i','a'),"Asia Pacific Community (asia)",    0,0,0 },
+{ IDX_4C('c','o','o','p'),"Cooperative Association (coop)",   0,0,0 },
+{ IDX_4C('i','n','f','o'),"Generic TLD (info)",               0,0,0 },
+{ IDX_4C('j','o','b','s'),"Human Resources (jobs)",           0,0,0 },
+{ IDX_4C('m','o','b','i'),"Generic Mobile TLD (mobi)",        0,0,0 },
+{ IDX_4C('n','a','m','e'),"Individual (name)",                0,0,0 },
+{ IDX_4C('a','r','p','a'),"Arpanet (.arpa)",                  0,0,0 },
+{ IDX_4C('n','a','t','o'),"Nato (.nato)",                     0,0,0 },
+{ IDX_6C('m','u','s','e','u','m'), "Museums (museum)",        0,0,0 },
+{ IDX_6C('t','r','a','v','e','l'), "Travel Ind. (travel)",    0,0,0 },
+{ IDX_2C('a','c'),        "Ascension Island",                 0,0,0 },
+{ IDX_2C('a','d'),        "Andorra",                          0,0,0 },
+{ IDX_2C('a','e'),        "Emirati Arabi",                    0,0,0 },
+{ IDX_2C('a','f'),        "Afghanistan",                      0,0,0 },
+{ IDX_2C('a','g'),        "Antigua e Barbuda",                0,0,0 },
+{ IDX_2C('a','i'),        "Anguilla",                         0,0,0 },
+{ IDX_2C('a','l'),        "Albania",                          0,0,0 },
+{ IDX_2C('a','m'),        "Armenia",                          0,0,0 },
+{ IDX_2C('a','n'),        "Antille Olandesi",                 0,0,0 },
+{ IDX_2C('a','o'),        "Angola",                           0,0,0 },
+{ IDX_2C('a','q'),        "Antartica",                        0,0,0 },
+{ IDX_2C('a','r'),        "Argentina",                        0,0,0 },
+{ IDX_2C('a','s'),        "Samoa Americana",                  0,0,0 },
+{ IDX_2C('a','t'),        "Austria",                          0,0,0 },
+{ IDX_2C('a','u'),        "Australia",                        0,0,0 },
+{ IDX_2C('a','w'),        "Aruba",                            0,0,0 },
+{ IDX_2C('a','x'),        "Aland Islands",                    0,0,0 },
+{ IDX_2C('a','z'),        "Azerbaijan",                       0,0,0 },
+{ IDX_2C('b','a'),        "Bosnia e Herzegovina",             0,0,0 },
+{ IDX_2C('b','b'),        "Barbados",                         0,0,0 },
+{ IDX_2C('b','d'),        "Bangladesh",                       0,0,0 },
+{ IDX_2C('b','e'),        "Belgio",                           0,0,0 },
+{ IDX_2C('b','f'),        "Burkina Faso",                     0,0,0 },
+{ IDX_2C('b','g'),        "Bulgaria",                         0,0,0 },
+{ IDX_2C('b','h'),        "Bahrain",                          0,0,0 },
+{ IDX_2C('b','i'),        "Burundi",                          0,0,0 },
+{ IDX_2C('b','j'),        "Benin",                            0,0,0 },
+{ IDX_2C('b','l'),        "Saint Barthelemy",                 0,0,0 },
+{ IDX_2C('b','m'),        "Bermuda",                          0,0,0 },
+{ IDX_2C('b','n'),        "Sultanato del Brunei",             0,0,0 },
+{ IDX_2C('b','o'),        "Bolivia",                          0,0,0 },
+{ IDX_2C('b','r'),        "Brasile",                          0,0,0 },
+{ IDX_2C('b','s'),        "Bahamas",                          0,0,0 },
+{ IDX_2C('b','t'),        "Bhutan",                           0,0,0 },
+{ IDX_2C('b','v'),        "Isole Bouvet",                     0,0,0 },
+{ IDX_2C('b','w'),        "Botswana",                         0,0,0 },
+{ IDX_2C('b','y'),        "Belarus",                          0,0,0 },
+{ IDX_2C('b','z'),        "Belize",                           0,0,0 },
+{ IDX_2C('c','a'),        "Canada",                           0,0,0 },
+{ IDX_2C('c','c'),        "Isole Cocos",                      0,0,0 },
+{ IDX_2C('c','d'),        "Congo, Democratic Republic",       0,0,0 },
+{ IDX_2C('c','f'),        "Africa Centrale",                  0,0,0 },
+{ IDX_2C('c','g'),        "Congo",                            0,0,0 },
+{ IDX_2C('c','h'),        "Svizzera",                         0,0,0 },
+{ IDX_2C('c','i'),        "Costa D'Avorio",                   0,0,0 },
+{ IDX_2C('c','k'),        "Isole Cook",                       0,0,0 },
+{ IDX_2C('c','l'),        "Cile",                             0,0,0 },
+{ IDX_2C('c','m'),        "Camerun",                          0,0,0 },
+{ IDX_2C('c','n'),        "Cina",                             0,0,0 },
+{ IDX_2C('c','o'),        "Colombia",                         0,0,0 },
+{ IDX_2C('c','r'),        "Costa Rica",                       0,0,0 },
+{ IDX_2C('c','u'),        "Cuba",                             0,0,0 },
+{ IDX_2C('c','v'),        "Capo Verde",                       0,0,0 },
+{ IDX_2C('c','x'),        "Isola di Natale",                  0,0,0 },
+{ IDX_2C('c','y'),        "Cipro",                            0,0,0 },
+{ IDX_2C('c','z'),        "Repubblica Ceca",                  0,0,0 },
+{ IDX_2C('d','e'),        "Germania",                         0,0,0 },
+{ IDX_2C('d','j'),        "Djibouti",                         0,0,0 },
+{ IDX_2C('d','k'),        "Danimarca",                        0,0,0 },
+{ IDX_2C('d','m'),        "Dominica",                         0,0,0 },
+{ IDX_2C('d','o'),        "Repubblica Dominicana",            0,0,0 },
+{ IDX_2C('d','z'),        "Algeria",                          0,0,0 },
+{ IDX_2C('e','c'),        "Ecuador",                          0,0,0 },
+{ IDX_2C('e','e'),        "Estonia",                          0,0,0 },
+{ IDX_2C('e','g'),        "Egitto",                           0,0,0 },
+{ IDX_2C('e','h'),        "Sahara Occidentale",               0,0,0 },
+{ IDX_2C('e','r'),        "Eritrea",                          0,0,0 },
+{ IDX_2C('e','s'),        "Spagna",                           0,0,0 },
+{ IDX_2C('e','t'),        "Etiopia",                          0,0,0 },
+{ IDX_2C('e','u'),        "European Union",                   0,0,0 },
+{ IDX_2C('f','i'),        "Finlandia",                        0,0,0 },
+{ IDX_2C('f','j'),        "Fiji",                             0,0,0 },
+{ IDX_2C('f','k'),        "Isole Falkland (Malvine)",         0,0,0 },
+{ IDX_2C('f','m'),        "Micronesia",                       0,0,0 },
+{ IDX_2C('f','o'),        "Isole Faroe",                      0,0,0 },
+{ IDX_2C('f','r'),        "Francia",                          0,0,0 },
+{ IDX_2C('g','a'),        "Gabon",                            0,0,0 },
+{ IDX_2C('g','b'),        "Gran Bretagna",                    0,0,0 },
+{ IDX_2C('g','d'),        "Grenada",                          0,0,0 },
+{ IDX_2C('g','e'),        "Georgia",                          0,0,0 },
+{ IDX_2C('g','f'),        "Guiana Francese",                  0,0,0 },
+{ IDX_2C('g','g'),        "Guernsey",                         0,0,0 },
+{ IDX_2C('g','h'),        "Ghana",                            0,0,0 },
+{ IDX_2C('g','i'),        "Gibilterra",                       0,0,0 },
+{ IDX_2C('g','l'),        "Groenlandia",                      0,0,0 },
+{ IDX_2C('g','m'),        "Gambia",                           0,0,0 },
+{ IDX_2C('g','n'),        "Guinea",                           0,0,0 },
+{ IDX_2C('g','p'),        "Guadalupa",                        0,0,0 },
+{ IDX_2C('g','q'),        "Guinea Equatoriale",               0,0,0 },
+{ IDX_2C('g','r'),        "Grecia",                           0,0,0 },
+{ IDX_2C('g','s'),        "Isole di S. Georgia e S. Sandwich",0,0,0 },
+{ IDX_2C('g','t'),        "Guatemala",                        0,0,0 },
+{ IDX_2C('g','u'),        "Guam",                             0,0,0 },
+{ IDX_2C('g','w'),        "Guinea-Bissau",                    0,0,0 },
+{ IDX_2C('g','y'),        "Guyana",                           0,0,0 },
+{ IDX_2C('h','k'),        "Hong Kong",                        0,0,0 },
+{ IDX_2C('h','m'),        "Isole Heard e McDonald",           0,0,0 },
+{ IDX_2C('h','n'),        "Honduras",                         0,0,0 },
+{ IDX_2C('h','r'),        "Croazia",                          0,0,0 },
+{ IDX_2C('h','t'),        "Haiti",                            0,0,0 },
+{ IDX_2C('h','u'),        "Ungaria",                          0,0,0 },
+{ IDX_2C('i','d'),        "Indonesia",                        0,0,0 },
+{ IDX_2C('i','e'),        "Irlanda",                          0,0,0 },
+{ IDX_2C('i','l'),        "Israele",                          0,0,0 },
+{ IDX_2C('i','m'),        "Isle of Man",                      0,0,0 },
+{ IDX_2C('i','n'),        "India",                            0,0,0 },
+{ IDX_2C('i','o'),        "Territori Britannici nell'Oceano Indiano",0,0,0 },
+{ IDX_2C('i','q'),        "Iraq",                             0,0,0 },
+{ IDX_2C('i','r'),        "Iran",                             0,0,0 },
+{ IDX_2C('i','s'),        "Islanda",                          0,0,0 },
+{ IDX_2C('i','t'),        "Italia",                           0,0,0 },
+{ IDX_2C('j','e'),        "Jersey",                           0,0,0 },
+{ IDX_2C('j','m'),        "Jamaica",                          0,0,0 },
+{ IDX_2C('j','o'),        "Giordania",                        0,0,0 },
+{ IDX_2C('j','p'),        "Giappone",                         0,0,0 },
+{ IDX_2C('k','e'),        "Kenya",                            0,0,0 },
+{ IDX_2C('k','g'),        "Kyrgyzstan",                       0,0,0 },
+{ IDX_2C('k','h'),        "Cambodia",                         0,0,0 },
+{ IDX_2C('k','i'),        "Kiribati",                         0,0,0 },
+{ IDX_2C('k','m'),        "Comoros",                          0,0,0 },
+{ IDX_2C('k','n'),        "Saint Kitts e Nevis",              0,0,0 },
+{ IDX_2C('k','p'),        "Corea (Nord)",                     0,0,0 },
+{ IDX_2C('k','r'),        "Corea (Sud)",                      0,0,0 },
+{ IDX_2C('k','w'),        "Kuwait",                           0,0,0 },
+{ IDX_2C('k','y'),        "Isole Cayman",                     0,0,0 },
+{ IDX_2C('k','z'),        "Kazakhstan",                       0,0,0 },
+{ IDX_2C('l','a'),        "Laos",                             0,0,0 },
+{ IDX_2C('l','b'),        "Libano",                           0,0,0 },
+{ IDX_2C('l','c'),        "Santa Lucia",                      0,0,0 },
+{ IDX_2C('l','i'),        "Liechtenstein",                    0,0,0 },
+{ IDX_2C('l','k'),        "Sri Lanka",                        0,0,0 },
+{ IDX_2C('l','r'),        "Liberia",                          0,0,0 },
+{ IDX_2C('l','s'),        "Lesotho",                          0,0,0 },
+{ IDX_2C('l','t'),        "Lituania",                         0,0,0 },
+{ IDX_2C('l','u'),        "Lussemburgo",                      0,0,0 },
+{ IDX_2C('l','v'),        "Latvia",                           0,0,0 },
+{ IDX_2C('l','y'),        "Libia",                            0,0,0 },
+{ IDX_2C('m','a'),        "Marocco",                          0,0,0 },
+{ IDX_2C('m','c'),        "Monaco",                           0,0,0 },
+{ IDX_2C('m','d'),        "Moldova",                          0,0,0 },
+{ IDX_2C('m','e'),        "Montenegro",                       0,0,0 },
+{ IDX_2C('m','f'),        "Saint Martin (French part)",       0,0,0 },
+{ IDX_2C('m','g'),        "Madagascar",                       0,0,0 },
+{ IDX_2C('m','h'),        "Isole Marshall",                   0,0,0 },
+{ IDX_2C('m','k'),        "Macedonia",                        0,0,0 },
+{ IDX_2C('m','l'),        "Mali",                             0,0,0 },
+{ IDX_2C('m','m'),        "Myanmar",                          0,0,0 },
+{ IDX_2C('m','n'),        "Mongolia",                         0,0,0 },
+{ IDX_2C('m','o'),        "Macau",                            0,0,0 },
+{ IDX_2C('m','p'),        "Isole Mariana del Nord",           0,0,0 },
+{ IDX_2C('m','q'),        "Martinica",                        0,0,0 },
+{ IDX_2C('m','r'),        "Mauritania",                       0,0,0 },
+{ IDX_2C('m','s'),        "Montserrat",                       0,0,0 },
+{ IDX_2C('m','t'),        "Malta",                            0,0,0 },
+{ IDX_2C('m','u'),        "Mauritius",                        0,0,0 },
+{ IDX_2C('m','v'),        "Maldive",                          0,0,0 },
+{ IDX_2C('m','w'),        "Malawi",                           0,0,0 },
+{ IDX_2C('m','x'),        "Messico",                          0,0,0 },
+{ IDX_2C('m','y'),        "Malaysia",                         0,0,0 },
+{ IDX_2C('m','z'),        "Mozambico",                        0,0,0 },
+{ IDX_2C('n','a'),        "Namibia",                          0,0,0 },
+{ IDX_2C('n','c'),        "Nuova Caledonia",                  0,0,0 },
+{ IDX_2C('n','e'),        "Nigeria",                          0,0,0 },
+{ IDX_2C('n','f'),        "Isole Norfolk",                    0,0,0 },
+{ IDX_2C('n','g'),        "Nigeria",                          0,0,0 },
+{ IDX_2C('n','i'),        "Nicaragua",                        0,0,0 },
+{ IDX_2C('n','l'),        "Olanda",                           0,0,0 },
+{ IDX_2C('n','o'),        "Norvegia",                         0,0,0 },
+{ IDX_2C('n','p'),        "Nepal",                            0,0,0 },
+{ IDX_2C('n','r'),        "Nauru",                            0,0,0 },
+{ IDX_2C('n','u'),        "Niue",                             0,0,0 },
+{ IDX_2C('n','z'),        "Nuova Zealanda",                   0,0,0 },
+{ IDX_2C('o','m'),        "Oman",                             0,0,0 },
+{ IDX_2C('p','a'),        "Panama",                           0,0,0 },
+{ IDX_2C('p','e'),        "Peru",                             0,0,0 },
+{ IDX_2C('p','f'),        "Polinesia Francese",               0,0,0 },
+{ IDX_2C('p','g'),        "Papua e Nuova Guinea",             0,0,0 },
+{ IDX_2C('p','h'),        "Filippine",                        0,0,0 },
+{ IDX_2C('p','k'),        "Pakistan",                         0,0,0 },
+{ IDX_2C('p','l'),        "Polonia",                          0,0,0 },
+{ IDX_2C('p','m'),        "St. Pierre and Miquelon",          0,0,0 },
+{ IDX_2C('p','n'),        "Pitcairn",                         0,0,0 },
+{ IDX_2C('p','r'),        "Porto Rico",                       0,0,0 },
+{ IDX_2C('p','s'),        "Palestinian Territory, Occupied",  0,0,0 },
+{ IDX_2C('p','t'),        "Portogallo",                       0,0,0 },
+{ IDX_2C('p','w'),        "Palau",                            0,0,0 },
+{ IDX_2C('p','y'),        "Paraguay",                         0,0,0 },
+{ IDX_2C('q','a'),        "Qatar",                            0,0,0 },
+{ IDX_2C('r','e'),        "Reunion",                          0,0,0 },
+{ IDX_2C('r','o'),        "Romania",                          0,0,0 },
+{ IDX_2C('r','s'),        "Serbia",                           0,0,0 },
+{ IDX_2C('r','u'),        "Federazione Russa",                0,0,0 },
+{ IDX_2C('r','w'),        "Ruanda",                           0,0,0 },
+{ IDX_2C('s','a'),        "Arabia Saudita",                   0,0,0 },
+{ IDX_2C('s','b'),        "Isole Solomon",                    0,0,0 },
+{ IDX_2C('s','c'),        "Seychelles",                       0,0,0 },
+{ IDX_2C('s','d'),        "Sudan",                            0,0,0 },
+{ IDX_2C('s','e'),        "Svezia",                           0,0,0 },
+{ IDX_2C('s','g'),        "Singapore",                        0,0,0 },
+{ IDX_2C('s','h'),        "St. Helena",                       0,0,0 },
+{ IDX_2C('s','i'),        "Slovenia",                         0,0,0 },
+{ IDX_2C('s','j'),        "Isole Svalbard e Jan Mayen",       0,0,0 },
+{ IDX_2C('s','k'),        "Repubblica Slovacca",              0,0,0 },
+{ IDX_2C('s','l'),        "Sierra Leone",                     0,0,0 },
+{ IDX_2C('s','m'),        "San Marino",                       0,0,0 },
+{ IDX_2C('s','n'),        "Senegal",                          0,0,0 },
+{ IDX_2C('s','o'),        "Somalia",                          0,0,0 },
+{ IDX_2C('s','r'),        "Suriname",                         0,0,0 },
+{ IDX_2C('s','t'),        "Sao Tome e Principe",              0,0,0 },
+{ IDX_2C('s','u'),        "Ex USSR",                          0,0,0 },
+{ IDX_2C('s','v'),        "El Salvador",                      0,0,0 },
+{ IDX_2C('s','y'),        "Syrian Arab Republic",             0,0,0 },
+{ IDX_2C('s','z'),        "Swaziland",                        0,0,0 },
+{ IDX_2C('t','c'),        "Isole Turks e Caicos",             0,0,0 },
+{ IDX_2C('t','d'),        "Chad",                             0,0,0 },
+{ IDX_2C('t','f'),        "Territori Francesi Meridionali",   0,0,0 },
+{ IDX_2C('t','g'),        "Togo",                             0,0,0 },
+{ IDX_2C('t','h'),        "Thailandia",                       0,0,0 },
+{ IDX_2C('t','j'),        "Tajikistan",                       0,0,0 },
+{ IDX_2C('t','k'),        "Tokelau",                          0,0,0 },
+{ IDX_2C('t','l'),        "Timor-Leste",                      0,0,0 },
+{ IDX_2C('t','m'),        "Turkmenistan",                     0,0,0 },
+{ IDX_2C('t','n'),        "Tunisia",                          0,0,0 },
+{ IDX_2C('t','o'),        "Tonga",                            0,0,0 },
+{ IDX_2C('t','p'),        "Portuguese Timor",                 0,0,0 },
+{ IDX_2C('t','r'),        "Turchia",                          0,0,0 },
+{ IDX_2C('t','t'),        "Trinidad e Tobago",                0,0,0 },
+{ IDX_2C('t','v'),        "Tuvalu",                           0,0,0 },
+{ IDX_2C('t','w'),        "Taiwan",                           0,0,0 },
+{ IDX_2C('t','z'),        "Tanzania",                         0,0,0 },
+{ IDX_2C('u','a'),        "Ucraina",                          0,0,0 },
+{ IDX_2C('u','g'),        "Uganda",                           0,0,0 },
+{ IDX_2C('u','k'),        "Regno Unito",                      0,0,0 },
+{ IDX_2C('u','m'),        "Isole US Minori",                  0,0,0 },
+{ IDX_2C('u','s'),        "Stati Uniti",                      0,0,0 },
+{ IDX_2C('u','y'),        "Uruguay",                          0,0,0 },
+{ IDX_2C('u','z'),        "Uzbekistan",                       0,0,0 },
+{ IDX_2C('v','a'),        "Citta' del Vaticano",              0,0,0 },
+{ IDX_2C('v','c'),        "Saint Vincent e Grenadines",       0,0,0 },
+{ IDX_2C('v','e'),        "Venezuela",                        0,0,0 },
+{ IDX_2C('v','g'),        "Isole Vergini (Britanniche)",      0,0,0 },
+{ IDX_2C('v','i'),        "Isole Vergini (Statunitensi)",     0,0,0 },
+{ IDX_2C('v','n'),        "Vietnam",                          0,0,0 },
+{ IDX_2C('v','u'),        "Vanuatu",                          0,0,0 },
+{ IDX_2C('w','f'),        "Isole Wallis e Futuna",            0,0,0 },
+{ IDX_2C('w','s'),        "Samoa",                            0,0,0 },
+{ IDX_2C('y','e'),        "Yemen",                            0,0,0 },
+{ IDX_2C('y','t'),        "Mayotte",                          0,0,0 },
+{ IDX_2C('y','u'),        "Yugoslavia",                       0,0,0 },
+{ IDX_2C('z','a'),        "Sud Africa",                       0,0,0 },
+{ IDX_2C('z','m'),        "Zambia",                           0,0,0 },
+{ IDX_2C('z','w'),        "Zimbabwe",                         0,0,0 },
+{ IDX_2C('a','1'),        "Anonymous Proxy",                  0,0,0 },
+{ IDX_2C('a','2'),        "Satellite Provider",               0,0,0 },
+{ IDX_2C('o','1'),        "Other",                            0,0,0 },
+{ IDX_2C('a','p'),        "Asia/Pacific Region",              0,0,0 },
+{ IDX_3C('l','a','n'),    "Local Network (lan)",              0,0,0 },
+{ 0              ,        NULL,                               0,0,0 }};

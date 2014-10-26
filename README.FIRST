@@ -1,0 +1,21 @@
+Upgrade information for the Webalizer Version 2.2x
+
+This release is, for the most part, a drop-in replacement for all
+installations currently running 2.01, and all users are encouraged
+to upgrade.  See the 'CHANGES' file for a full list of changes
+since version 2.01-10.
+
+Note: The history file format has changed in v2.20 in order to keep
+more than 12 months.  Existing history files will be automatically
+converted to the new format the first time they are read.
+
+Note: This version redefines the '-v' command line switch to mean
+'verbose', which will cause the program to display additional
+informational and debugging messages at run-time.  This should not
+cause any major problems, as previously it would simply cause the
+program to display its version information and then exit.
+
+Report bugs to 'brad at mrunix dot net' with "Webalizer" somewhere
+in the subject. Please do not send HTML formatted e-mails or e-mail
+containing HTML tags as my mail server will reject them.  Thanks!
+

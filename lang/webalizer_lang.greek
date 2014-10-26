@@ -1,0 +1,631 @@
+/*
+   webalizer_lang.greek
+
+   Webalizer V2.0x Language Support file for Greek
+   19-Aug-1999 Translated in Greek by Christos Cheretakis (xalkina@otenet.gr)
+   22-Feb-2000 Modified for level 2.0x support (brad@mrunix.net)
+   26-Mar-2008 Updated to current IANA TLDs (brad@mrunix.net)
+   26-May-2008 Modified for level 2.2 support (brad@mrunix.net)
+
+
+   Language files are named using the following convention:
+
+   webalizer_lang.LANGUAGE
+
+   where 'LANGUAGE' is the name of the language the file is
+   translated into (ie: webalizer_lang.russian for russian).
+   Either copy the desired language file to webalizer_lang.h
+   or create a symbolic link, then re-compile.
+
+   If you translate this file into a different language, please
+   send a copy to brad@mrunix.net.
+
+*/
+
+/***********************************************************************/
+/* DEFINE LANGUAGE NAME here                                           */
+/***********************************************************************/
+
+char *language  = "Greek";
+char *langcode  = "el";
+
+/***********************************************************************/
+/*                                                                     */
+/* Informational messages                                              */
+/*                                                                     */
+/* These messages are only displayed while The Webalizer is being run, */
+/* usually to the screen, and are not part of the HTML output.         */
+/*                                                                     */
+/***********************************************************************/
+
+/* these are only used in timing totals */
+/* Format:   XXX records (XXX ignored, XXX bad) in X.XX seconds        */
+char *msg_records = "εγγραφές";
+char *msg_addresses="addresses";
+char *msg_ignored = "αγνοήθηκαν";
+char *msg_bad     = "λάθος";
+char *msg_in      = "σε";
+char *msg_seconds = "δευτερόλεπτα";
+
+/* progress and setup error messages */
+char *msg_log_err = "Error: Can't open log file";
+char *msg_log_use = "Using logfile";
+char *msg_dir_err = "Error: Can't change directory to";
+char *msg_dir_use = "Creating output in";
+char *msg_cur_dir = "current directory";
+char *msg_hostname= "Hostname for reports is";
+char *msg_ign_hist= "Ignoring previous history...";
+char *msg_no_hist = "History file not found...";
+char *msg_get_hist= "Reading history file...";
+char *msg_put_hist= "Saving history information...";
+char *msg_hist_err= "Error: Unable to write history file";
+char *msg_bad_hist= "Error: Ignoring invalid history record";
+char *msg_bad_conf= "Error: Unable to open configuration file";
+char *msg_bad_key = "Warning: Invalid keyword";
+char *msg_bad_date= "Error: Skipping record (bad date)";
+char *msg_ign_nscp= "Skipping Netscape header record";
+char *msg_bad_rec = "Skipping bad record";
+char *msg_no_vrec = "No valid records found!";
+char *msg_gen_rpt = "Generating report for";
+char *msg_gen_sum = "Generating summary report";
+char *msg_get_data= "Reading previous run data..";
+char *msg_put_data= "Saving current run data...";
+char *msg_no_data = "Previous run data not found...";
+char *msg_bad_data= "Error: Unable to restore run data";
+char *msg_data_err= "Error: Unable to save current run data";
+char *msg_dup_data= "Warning: Possible duplicate data found";
+
+/* DNS Stuff */
+char *msg_dns_nocf= "No cache file specified, aborting...";
+char *msg_dns_nodb= "Error: Unable to open DNS cache file";
+char *msg_dns_nolk= "Error: Unable to lock DNS cache file";
+char *msg_dns_usec= "Using DNS cache file";
+char *msg_dns_rslv= "DNS Lookup";
+char *msg_dns_none= "None to process";
+char *msg_dns_abrt= "DNS support not present, aborting...";
+
+/* Geolocation stuff */
+char *msg_geo_open= "Error opening file";
+char *msg_geo_use = "Using";
+char *msg_geo_nolu= "lookups disabled";
+char *msg_geo_dflt= "default";
+
+/* memory allocation errors */
+char *msg_nomem_ts= "Can't allocate enough memory, Top Sites disabled!";
+char *msg_nomem_tr= "Can't allocate enough memory, Top Referrers disabled!";
+char *msg_nomem_tu= "Can't allocate enough memory, Top URLs disabled!";
+char *msg_nomem_tc= "Can't allocate enough memory, Top Countries disabled!";
+char *msg_nomem_ta= "Can't allocate enough memory, Top User Agents disabled!";
+char *msg_nomem_tsr="Can't allocate enough memory, Top Search Strings disabled!";
+char *msg_nomem_ti= "Can't allocate enough memory, Top Usernames disabled!";
+char *msg_nomem_dh= "Error adding host node (daily), skipping";
+char *msg_nomem_mh= "Error adding host node (monthly), skipping";
+char *msg_nomem_u = "Error adding URL node, skipping";
+char *msg_nomem_a = "Error adding User Agent node, skipping";
+char *msg_nomem_r = "Error adding Referrer node, skipping";
+char *msg_nomem_sc= "Error adding Search String Node, skipping";
+char *msg_nomem_i = "Error adding Username node, skipping";
+
+/* log record errors */
+char *msg_big_rec = "Error: Skipping oversized log record";
+char *msg_big_host= "Warning: Truncating oversized hostname";
+char *msg_big_date= "Warning: Truncating oversized date field";
+char *msg_big_req = "Warning: Truncating oversized request field";
+char *msg_big_ref = "Warning: Truncating oversized referrer field";
+char *msg_big_user= "Warning: Truncating oversized username field";
+char *msg_big_one = "Warning: String exceeds storage size";
+
+/* misc errors */
+char *msg_no_open = "Error: Unable to open file";
+
+/* Help display... */
+char *h_usage1 = "Usage";
+char *h_usage2 = "[options] [log file]";
+char *h_msg[]= {
+         "-h        = print this help message"             ,
+         "-V        = print version information"           ,
+         "-v        = be verbose"                          ,
+         "-d        = print additional debug info"         ,
+         "-F        = Log type.  type= (clf | ftp | squid | w3c)",
+         "-f        = Fold sequence errors"                ,
+         "-i        = ignore history file"                 ,
+         "-p        = preserve state (incremental)"        ,
+         "-b        = ignore state (incremental)"          ,
+         "-q        = supress informational messages"      ,
+         "-Q        = supress _ALL_ messages"              ,
+         "-Y        = supress country graph"               ,
+         "-G        = supress hourly graph"                ,
+         "-H        = supress hourly stats"                ,
+         "-L        = supress color coded graph legends"   ,
+         "-l num    = use num background lines on graph"   ,
+         "-m num    = Visit timout value (seconds)"        ,
+         "-T        = print timing information"            ,
+         "-c file   = use configuration file 'file'"       ,
+         "-n name   = hostname to use"                     ,
+         "-o dir    = output directory to use"             ,
+         "-t name   = report title 'name'"                 ,
+         "-a name   = hide user agent 'name'"              ,
+         "-r name   = hide referrer 'name'"                ,
+         "-s name   = hide site 'name'"                    ,
+         "-u name   = hide URL 'name'"                     ,
+         "-x name   = Use filename extension 'name'"       ,
+         "-O name   = Omit page 'name'"                    ,
+         "-P name   = Page type extension 'name'"          ,
+         "-I name   = Index alias 'name'"                  ,
+         "-K num    = num months in summary table"         ,
+         "-k num    = num months in summary graph"         ,
+         "-A num    = Display num top agents"              ,
+         "-C num    = Display num top countries"           ,
+         "-R num    = Display num top referrers"           ,
+         "-S num    = Display num top sites"               ,
+         "-U num    = Display num top URLs"                ,
+         "-e num    = Display num top Entry Pages"         ,
+         "-E num    = Display num top Exit Pages"          ,
+         "-g num    = Group Domains to 'num' levels"       ,
+         "-X        = Hide individual sites"               ,
+         "-z dir    = Use country flags in 'dir'"          ,
+#ifdef USE_DNS
+         "-D name   = Use DNS Cache file 'name'"           ,
+         "-N num    = Number of DNS processes (0=disable)" ,
+         "-j        = Enable native GeoDB lookups"         ,
+         "-J name   = Use GeoDB database 'name'"           ,
+#endif
+#ifdef USE_GEOIP
+         "-w        = Enable GeoIP lookups"                ,
+         "-W name   = Use GeoIP database 'name'"           ,
+#endif
+         NULL};
+
+#define LAST_HLP_MSG (int)(sizeof(h_msg)/sizeof(char *))
+
+/***********************************************************************/
+/*                                                                     */
+/* HTML strings                                                        */
+/*                                                                     */
+/* These strings are used as part of the HTML output generated by The  */
+/* Webalizer.                                                          */ 
+/*                                                                     */
+/***********************************************************************/
+
+/* header strings */
+char *msg_hhdr_sp = "Περίοδος αναφοράς";
+char *msg_hhdr_gt = "Ημερομηνία παραγωγής";
+
+/* main index strings */
+char *msg_main_us = "Στατιστικά για το σύστημα";
+/* char *msg_main_per= "οι τελευταίοι 12 μήνες"; */
+char *msg_main_per= "Συγκεντρωτικά στοιχεία ανά μήνα";
+char *msg_main_sum= "Συγκεντρωτικά στοιχεία ανά μήνα";
+char *msg_main_da = "Μέσοι όροι ανά ημέρα";
+char *msg_main_mt = "Μηνιαία σύνολα";
+
+/* month HTML page strings */
+char *msg_hmth_du = "Στοιχεία ανά ημέρα για: ";
+char *msg_hmth_hu = "Στοιχεία ανά ώρα για: ";
+
+/* table header strings */
+char *msg_h_by    = "Ανά";
+char *msg_h_avg   = "Μέσο";
+char *msg_h_max   = "Μέγιστο";
+char *msg_h_total = "Σύνολο";
+char *msg_h_totals= "Σύνολα";
+char *msg_h_day   = "Ημέρα";
+char *msg_h_mth   = "Μήνας";
+char *msg_h_hour  = "Ώρα";
+char *msg_h_hits  = "Hits";
+char *msg_h_pages = "Σελίδες";
+char *msg_h_visits= "Επισκέψεις";
+char *msg_h_files = "Αρχεία";
+char *msg_h_sites = "Συστήματα";
+char *msg_h_xfer  = "KBytes";
+char *msg_h_hname = "Σύστημα";
+char *msg_h_url   = "URL";
+char *msg_h_agent = "Πρόγραμμα";
+char *msg_h_ref   = "Αναφέρων";
+char *msg_h_ctry  = "Χώρα";
+char *msg_h_search= "Αναζήτηση";
+char *msg_h_uname = "Username";
+
+/* links along top of page */
+char *msg_hlnk_ds = "Ανά ημέρα";
+char *msg_hlnk_hs = "Ανά ώρα";
+char *msg_hlnk_u  = "URLs";
+char *msg_hlnk_s  = "Συστήματα";
+char *msg_hlnk_a  = "Προγράμματα";
+char *msg_hlnk_c  = "Χώρες";
+char *msg_hlnk_r  = "Αναφέροντες";
+char *msg_hlnk_en = "Σημεία εισόδου";
+char *msg_hlnk_ex = "Σημεία εξόδου";
+char *msg_hlnk_sr = "Αναζητήσεις";
+char *msg_hlnk_i  = "Users";
+
+/* monthly total table */
+char *msg_mtot_ms = "Συγκεντρωτικά στοιχεία για το μήνα";
+char *msg_mtot_th = "Συνολικά Hits";
+char *msg_mtot_tf = "Σύνολο αρχείων";
+char *msg_mtot_tx = "Σύνολο KBytes";
+char *msg_mtot_us = "Σύνολο διαφορετικών συστημάτων";
+char *msg_mtot_ur = "Σύνολο διαφορετικών αναφερόντων";
+char *msg_mtot_ua = "Σύνολο διαφορετικών προγραμμάτων";
+char *msg_mtot_uu = "Σύνολο διαφορετικών URLs";
+char *msg_mtot_ui = "Total Unique Usernames";
+char *msg_mtot_mhd= "Hits ανά ημέρα";
+char *msg_mtot_mhh= "Hits ανά ώρα";
+char *msg_mtot_mfd= "Αρχεία ανά ημέρα";
+char *msg_mtot_mpd= "Σελίδες ανά ημέρα";
+char *msg_mtot_msd= "Sites per Day";
+char *msg_mtot_mvd= "Επισκέψεις ανά ημέρα";
+char *msg_mtot_mkd= "KBytes ανά ημέρα";
+char *msg_mtot_rc = "Hits από το αποτέλεσμα";
+
+/* daily total table */
+char *msg_dtot_ds = "Συγκεντρωτικά στοιχεία ανά ημέρα -";
+
+/* hourly total table */
+char *msg_htot_hs = "Συγκεντρωτικά στοιχεία ανά ώρα -";
+
+/* country pie chart */
+char *msg_ctry_use= "Συγκεντρωτικά στοιχεία ανά χώρα -";
+
+/* top tables */
+/* Formatted as "Top xxx of xxx Total something" */
+char *msg_top_top = "Πρώτα";
+char *msg_top_of  = "από";
+char *msg_top_s   = "συστήματα";
+char *msg_top_u   = "URLs";
+char *msg_top_r   = "αναφέροντες";
+char *msg_top_a   = "προγράμματα";
+char *msg_top_c   = "χώρες";
+char *msg_top_en  = "σημεία εισόδου";
+char *msg_top_ex  = "σημεία εξόδου";
+char *msg_top_sr  = "αναζητήσεις";
+char *msg_top_i   = "Total Usernames";
+char *msg_v_sites = "View All Sites";
+char *msg_v_urls  = "View All URLs";
+char *msg_v_refs  = "View All Referrers";
+char *msg_v_agents= "View All User Agents";
+char *msg_v_search= "View All Search Strings";
+char *msg_v_users = "View All Usernames";
+
+/* short month names MUST BE 3 CHARS in size... pad if needed*/
+char *s_month[12]={ "Ιαν", "Φεβ", "Μάρ",
+                    "Απρ", "Μάι", "Ιον",
+                    "Ιολ", "Αύγ", "Σεπ",
+                    "Οκτ", "Νοέ", "Δεκ"};
+
+/* long month names - can be any length */
+char *l_month[12]={ "Ιανουάριος",  "Φεβρουάριος", "Μάρτιος",   "Απρίλιος",
+                    "Μάιος",       "Ιούνιος",     "Ιούλιος",   "Αύγουστος",
+                    "Σεπτέμβριος", "Οκτώβριος",   "Νοέμβριος", "Δεκέμβριος"};
+
+/* response code descriptions... order IS important!      */
+struct response_code response[] =
+       { { "Undefined response code",                    0 },
+         { "Code 100 - Continue",                        0 },
+         { "Code 101 - Switching Protocols",             0 },
+         { "Code 200 - OK",                              0 },
+         { "Code 201 - Created",                         0 },
+         { "Code 202 - Accepted",                        0 },
+         { "Code 203 - Non-Authoritative Information",   0 },
+         { "Code 204 - No Content",                      0 },
+         { "Code 205 - Reset Content",                   0 },
+         { "Code 206 - Partial Content",                 0 },
+         { "Code 300 - Multiple Choices",                0 },
+         { "Code 301 - Moved Permanently",               0 },
+         { "Code 302 - Found",                           0 },
+         { "Code 303 - See Other",                       0 },
+         { "Code 304 - Not Modified",                    0 },
+         { "Code 305 - Use Proxy",                       0 },
+         { "Code 307 - Moved Temporarily",               0 },
+         { "Code 400 - Bad Request",                     0 },
+         { "Code 401 - Unauthorized",                    0 },
+         { "Code 402 - Payment Required",                0 },
+         { "Code 403 - Forbidden",                       0 },
+         { "Code 404 - Not Found",                       0 },
+         { "Code 405 - Method Not Allowed",              0 },
+         { "Code 406 - Not Acceptable",                  0 },
+         { "Code 407 - Proxy Authentication Required",   0 },
+         { "Code 408 - Request Timeout",                 0 },
+         { "Code 409 - Conflict",                        0 },
+         { "Code 410 - Gone",                            0 },
+         { "Code 411 - Length Required",                 0 },
+         { "Code 412 - Precondition Failed",             0 },
+         { "Code 413 - Request Entity Too Large",        0 },
+         { "Code 414 - Request-URI Too Long",            0 },
+         { "Code 415 - Unsupported Media Type",          0 },
+         { "Code 416 - Requested Range Not Satisfiable", 0 },
+         { "Code 417 - Expectation Failed",              0 },
+         { "Code 500 - Internal Server Error",           0 },
+         { "Code 501 - Not Implemented",                 0 },
+         { "Code 502 - Bad Gateway",                     0 },
+         { "Code 503 - Service Unavailable",             0 },
+         { "Code 504 - Gateway Timeout",                 0 },
+         { "Code 505 - HTTP Version Not Supported",      0 } };
+
+char *msg_title   = "Στατιστικά στοιχεία για το σύστημα";
+char *msg_h_other = "¶λλο";
+
+/* Country codes (previously in ctry.h header file) */
+
+struct  country_code ctry[] = {
+{ 0,                      "¶γνωστη",                          0,0,0 },
+{ IDX_3C('c','o','m'),    "Εταιρεία (Η.Π.Α.)",                0,0,0 },
+{ IDX_3C('e','d','u'),    "Εκπαιδευτικό Ίδρυμα (Η.Π.Α.)",     0,0,0 },
+{ IDX_3C('g','o','v'),    "Κρατική Υπηρεσία (Η.Π.Α.)",        0,0,0 },
+{ IDX_3C('i','n','t'),    "Διεθνής Οργανισμός",               0,0,0 },
+{ IDX_3C('m','i','l'),    "Στρατιωτικό Σύστημα (Η.Π.Α.)",     0,0,0 },
+{ IDX_3C('n','e','t'),    "Δικτυακός Οργανισμός",             0,0,0 },
+{ IDX_3C('o','r','g'),    "¶λλος Οργανισμός",                 0,0,0 },
+{ IDX_3C('b','i','z'),    "Generic Business (biz)",           0,0,0 },
+{ IDX_3C('c','a','t'),    "Catalan Community (cat)",          0,0,0 },
+{ IDX_3C('p','r','o'),    "Professional (pro)",               0,0,0 },
+{ IDX_3C('t','e','l'),    "Ind. Contact Data (tel)",          0,0,0 },
+{ IDX_4C('a','e','r','o'),"Air Transport Industry (aero)",    0,0,0 },
+{ IDX_4C('a','s','i','a'),"Asia Pacific Community (asia)",    0,0,0 },
+{ IDX_4C('c','o','o','p'),"Cooperative Association (coop)",   0,0,0 },
+{ IDX_4C('i','n','f','o'),"Generic TLD (info)",               0,0,0 },
+{ IDX_4C('j','o','b','s'),"Human Resources (jobs)",           0,0,0 },
+{ IDX_4C('m','o','b','i'),"Generic Mobile TLD (mobi)",        0,0,0 },
+{ IDX_4C('n','a','m','e'),"Individual (name)",                0,0,0 },
+{ IDX_4C('a','r','p','a'),"Παλιές διευθύνσεις (arpa)",        0,0,0 },
+{ IDX_4C('n','a','t','o'),"Ν.Α.Τ.Ο.",                         0,0,0 },
+{ IDX_6C('m','u','s','e','u','m'), "Museums (museum)",        0,0,0 },
+{ IDX_6C('t','r','a','v','e','l'), "Travel Ind. (travel)",    0,0,0 },
+{ IDX_2C('a','c'),        "Ascension Island",                 0,0,0 },
+{ IDX_2C('a','d'),        "Ανδόρα",                           0,0,0 },
+{ IDX_2C('a','e'),        "Ημωνένα Αραβικά Εμιράτα",          0,0,0 },
+{ IDX_2C('a','f'),        "Αφγανιστάν",                       0,0,0 },
+{ IDX_2C('a','g'),        "Αντίγκουα και Μπαρμπούντα",        0,0,0 },
+{ IDX_2C('a','i'),        "Ανγκουίλα",                        0,0,0 },
+{ IDX_2C('a','l'),        "Αλβανία",                          0,0,0 },
+{ IDX_2C('a','m'),        "Αρμενία",                          0,0,0 },
+{ IDX_2C('a','n'),        "Ολλανδικές Αντίλες",               0,0,0 },
+{ IDX_2C('a','o'),        "Ανγκόλα",                          0,0,0 },
+{ IDX_2C('a','q'),        "Ανταρκτική",                       0,0,0 },
+{ IDX_2C('a','r'),        "Αργεντινή",                        0,0,0 },
+{ IDX_2C('a','s'),        "Αμερικανική Σαμόα",                0,0,0 },
+{ IDX_2C('a','t'),        "Αυστρία",                          0,0,0 },
+{ IDX_2C('a','u'),        "Αυστραλία",                        0,0,0 },
+{ IDX_2C('a','w'),        "Αρούμπα",                          0,0,0 },
+{ IDX_2C('a','x'),        "Aland Islands",                    0,0,0 },
+{ IDX_2C('a','z'),        "Αζερμπαϊτζάν",                     0,0,0 },
+{ IDX_2C('b','a'),        "Βοσνία και Ερζεγοβίνη",            0,0,0 },
+{ IDX_2C('b','b'),        "Μπαρμπαντός",                      0,0,0 },
+{ IDX_2C('b','d'),        "Μπαγκλαντές",                      0,0,0 },
+{ IDX_2C('b','e'),        "Βέλγιο",                           0,0,0 },
+{ IDX_2C('b','f'),        "Μπουρκίνα Φάσο",                   0,0,0 },
+{ IDX_2C('b','g'),        "Βουλγαρία",                        0,0,0 },
+{ IDX_2C('b','h'),        "Μπαχρέιν",                         0,0,0 },
+{ IDX_2C('b','i'),        "Μπουρούντι",                       0,0,0 },
+{ IDX_2C('b','j'),        "Μπενίν",                           0,0,0 },
+{ IDX_2C('b','l'),        "Saint Barthelemy",                 0,0,0 },
+{ IDX_2C('b','m'),        "Βερμούδες",                        0,0,0 },
+{ IDX_2C('b','n'),        "Μπρουνέι Νταρούσαλαμ",             0,0,0 },
+{ IDX_2C('b','o'),        "Βολιβία",                          0,0,0 },
+{ IDX_2C('b','r'),        "Βραζιλία",                         0,0,0 },
+{ IDX_2C('b','s'),        "Μπαχάμες",                         0,0,0 },
+{ IDX_2C('b','t'),        "Μπουτάν",                          0,0,0 },
+{ IDX_2C('b','v'),        "Μπουβέτ",                          0,0,0 },
+{ IDX_2C('b','w'),        "Μποτσουάνα",                       0,0,0 },
+{ IDX_2C('b','y'),        "Λευκορωσία",                       0,0,0 },
+{ IDX_2C('b','z'),        "Μπελίζ",                           0,0,0 },
+{ IDX_2C('c','a'),        "Καναδάς",                          0,0,0 },
+{ IDX_2C('c','c'),        "Νησιά Κόκος",                      0,0,0 },
+{ IDX_2C('c','d'),        "Congo, Democratic Republic",       0,0,0 },
+{ IDX_2C('c','f'),        "Κεντρική Αφρικανική Δημοκρατία",   0,0,0 },
+{ IDX_2C('c','g'),        "Κογκό",                            0,0,0 },
+{ IDX_2C('c','h'),        "Ελβετία",                          0,0,0 },
+{ IDX_2C('c','i'),        "Ακτή Ελεφαντοστού",                0,0,0 },
+{ IDX_2C('c','k'),        "Νησιά Κούκ",                       0,0,0 },
+{ IDX_2C('c','l'),        "Χιλή",                             0,0,0 },
+{ IDX_2C('c','m'),        "Καμερούν",                         0,0,0 },
+{ IDX_2C('c','n'),        "Κίνα",                             0,0,0 },
+{ IDX_2C('c','o'),        "Κολομβία",                         0,0,0 },
+{ IDX_2C('c','r'),        "Κόστα Ρίκα",                       0,0,0 },
+{ IDX_2C('c','u'),        "Κούβα",                            0,0,0 },
+{ IDX_2C('c','v'),        "Πράσινο Ακρωτήριο",                0,0,0 },
+{ IDX_2C('c','x'),        "Νησιά των Χριστουγέννων",          0,0,0 },
+{ IDX_2C('c','y'),        "Κύπρος",                           0,0,0 },
+{ IDX_2C('c','z'),        "Τσεχία",                           0,0,0 },
+{ IDX_2C('d','e'),        "Γερμανία",                         0,0,0 },
+{ IDX_2C('d','j'),        "Τζιμπουτί",                        0,0,0 },
+{ IDX_2C('d','k'),        "Δανία",                            0,0,0 },
+{ IDX_2C('d','m'),        "Δομινίκα",                         0,0,0 },
+{ IDX_2C('d','o'),        "Δομινικανική Δημοκρατία",          0,0,0 },
+{ IDX_2C('d','z'),        "Αλγερία",                          0,0,0 },
+{ IDX_2C('e','c'),        "Εκουαδόρ",                         0,0,0 },
+{ IDX_2C('e','e'),        "Εσθονία",                          0,0,0 },
+{ IDX_2C('e','g'),        "Αίγυπτος",                         0,0,0 },
+{ IDX_2C('e','h'),        "Δυτική Σαχάρα",                    0,0,0 },
+{ IDX_2C('e','r'),        "Ερυθραία",                         0,0,0 },
+{ IDX_2C('e','s'),        "Ισπανία",                          0,0,0 },
+{ IDX_2C('e','t'),        "Αιθιοπία",                         0,0,0 },
+{ IDX_2C('e','u'),        "European Union",                   0,0,0 },
+{ IDX_2C('f','i'),        "Φιλανδία",                         0,0,0 },
+{ IDX_2C('f','j'),        "Φίτζι",                            0,0,0 },
+{ IDX_2C('f','k'),        "Νησιά Φόκλαντ",                    0,0,0 },
+{ IDX_2C('f','m'),        "Μικρονησία",                       0,0,0 },
+{ IDX_2C('f','o'),        "Νησιά Φαρόε",                      0,0,0 },
+{ IDX_2C('f','r'),        "Γαλλία",                           0,0,0 },
+{ IDX_2C('g','a'),        "Γκαμπόν",                          0,0,0 },
+{ IDX_2C('g','b'),        "Μεγάλη Βρετανία",                  0,0,0 },
+{ IDX_2C('g','d'),        "Γρενάδα",                          0,0,0 },
+{ IDX_2C('g','e'),        "Γεωργία",                          0,0,0 },
+{ IDX_2C('g','f'),        "Γαλλική Γουιάνα",                  0,0,0 },
+{ IDX_2C('g','g'),        "Guernsey",                         0,0,0 },
+{ IDX_2C('g','h'),        "Γκάνα",                            0,0,0 },
+{ IDX_2C('g','i'),        "Γιβραλτάρ",                        0,0,0 },
+{ IDX_2C('g','l'),        "Γριλανδία",                        0,0,0 },
+{ IDX_2C('g','m'),        "Γκάμπια",                          0,0,0 },
+{ IDX_2C('g','n'),        "Γουινέα",                          0,0,0 },
+{ IDX_2C('g','p'),        "Γουαδελούπη",                      0,0,0 },
+{ IDX_2C('g','q'),        "Ισημερινή Γουινέα",                0,0,0 },
+{ IDX_2C('g','r'),        "Ελλάδα",                           0,0,0 },
+{ IDX_2C('g','s'),        "Νησιά Σάντουιτς",                  0,0,0 },
+{ IDX_2C('g','t'),        "Γουατεμάλα",                       0,0,0 },
+{ IDX_2C('g','u'),        "Γκουάμ",                           0,0,0 },
+{ IDX_2C('g','w'),        "Γουινέα Μπισάου",                  0,0,0 },
+{ IDX_2C('g','y'),        "Γουιάνα",                          0,0,0 },
+{ IDX_2C('h','k'),        "Χογκ Κογκ",                        0,0,0 },
+{ IDX_2C('h','m'),        "Νησιά ΜακΝτόναλντ",                0,0,0 },
+{ IDX_2C('h','n'),        "Ονδούρα",                          0,0,0 },
+{ IDX_2C('h','r'),        "Κροατία",                          0,0,0 },
+{ IDX_2C('h','t'),        "Αϊτή",                             0,0,0 },
+{ IDX_2C('h','u'),        "Ουγκαρία",                         0,0,0 },
+{ IDX_2C('i','d'),        "Ινδονησία",                        0,0,0 },
+{ IDX_2C('i','e'),        "Ιρλανδία",                         0,0,0 },
+{ IDX_2C('i','l'),        "Ισραήλ",                           0,0,0 },
+{ IDX_2C('i','m'),        "Isle of Man",                      0,0,0 },
+{ IDX_2C('i','n'),        "Ινδία",                            0,0,0 },
+{ IDX_2C('i','o'),        "Βρετανικές Κτήσεις Ινδικού",       0,0,0 },
+{ IDX_2C('i','q'),        "Ιράκ",                             0,0,0 },
+{ IDX_2C('i','r'),        "Ιράν",                             0,0,0 },
+{ IDX_2C('i','s'),        "Ισλανδία",                         0,0,0 },
+{ IDX_2C('i','t'),        "Ιταλία",                           0,0,0 },
+{ IDX_2C('j','e'),        "Jersey",                           0,0,0 },
+{ IDX_2C('j','m'),        "Τζαμάικα",                         0,0,0 },
+{ IDX_2C('j','o'),        "Ιορδανία",                         0,0,0 },
+{ IDX_2C('j','p'),        "Ιαπωνία",                          0,0,0 },
+{ IDX_2C('k','e'),        "Κένυα",                            0,0,0 },
+{ IDX_2C('k','g'),        "Κιργιζία",                         0,0,0 },
+{ IDX_2C('k','h'),        "Καμπόντια",                        0,0,0 },
+{ IDX_2C('k','i'),        "Κιριμπάτι",                        0,0,0 },
+{ IDX_2C('k','m'),        "Κομόρος",                          0,0,0 },
+{ IDX_2C('k','n'),        "Σαίντ Κίτς",                       0,0,0 },
+{ IDX_2C('k','p'),        "Βόρεια Κορέα",                     0,0,0 },
+{ IDX_2C('k','r'),        "Νότια Κορέα",                      0,0,0 },
+{ IDX_2C('k','w'),        "Κουβέιτ",                          0,0,0 },
+{ IDX_2C('k','y'),        "Νησιά Κάιμαν",                     0,0,0 },
+{ IDX_2C('k','z'),        "Καζακστάν",                        0,0,0 },
+{ IDX_2C('l','a'),        "Λάος",                             0,0,0 },
+{ IDX_2C('l','b'),        "Λίβανος",                          0,0,0 },
+{ IDX_2C('l','c'),        "Σαίντ Λούτσια",                    0,0,0 },
+{ IDX_2C('l','i'),        "Λιχτενστάιν",                      0,0,0 },
+{ IDX_2C('l','k'),        "Σρι Λάνκα",                        0,0,0 },
+{ IDX_2C('l','r'),        "Λιβερία",                          0,0,0 },
+{ IDX_2C('l','s'),        "Λεσότο",                           0,0,0 },
+{ IDX_2C('l','t'),        "Λιθουανία",                        0,0,0 },
+{ IDX_2C('l','u'),        "Λουξεμβούργο",                     0,0,0 },
+{ IDX_2C('l','v'),        "Λιθουανία",                        0,0,0 },
+{ IDX_2C('l','y'),        "Λιβύη",                            0,0,0 },
+{ IDX_2C('m','a'),        "Μαρόκο",                           0,0,0 },
+{ IDX_2C('m','c'),        "Μονακό",                           0,0,0 },
+{ IDX_2C('m','d'),        "Μόλντοβα",                         0,0,0 },
+{ IDX_2C('m','e'),        "Montenegro",                       0,0,0 },
+{ IDX_2C('m','f'),        "Saint Martin (French part)",       0,0,0 },
+{ IDX_2C('m','g'),        "Μαδαγασκάρη",                      0,0,0 },
+{ IDX_2C('m','h'),        "Νησιά Μάρσαλ",                     0,0,0 },
+{ IDX_2C('m','k'),        "Σκόπια",                           0,0,0 },
+{ IDX_2C('m','l'),        "Μάλι",                             0,0,0 },
+{ IDX_2C('m','m'),        "Μιανμάρ",                          0,0,0 },
+{ IDX_2C('m','n'),        "Μογκολία",                         0,0,0 },
+{ IDX_2C('m','o'),        "Μακάου",                           0,0,0 },
+{ IDX_2C('m','p'),        "Νησιά Βόρεια Μαριάνα",             0,0,0 },
+{ IDX_2C('m','q'),        "Μαρτινίκα",                        0,0,0 },
+{ IDX_2C('m','r'),        "Μαυριτανία",                       0,0,0 },
+{ IDX_2C('m','s'),        "Μοντσεράτ",                        0,0,0 },
+{ IDX_2C('m','t'),        "Μάλτα",                            0,0,0 },
+{ IDX_2C('m','u'),        "Μαυρίκιος",                        0,0,0 },
+{ IDX_2C('m','v'),        "Μαλδίβες",                         0,0,0 },
+{ IDX_2C('m','w'),        "Μαλάουι",                          0,0,0 },
+{ IDX_2C('m','x'),        "Μεξικό",                           0,0,0 },
+{ IDX_2C('m','y'),        "Μαλαισία",                         0,0,0 },
+{ IDX_2C('m','z'),        "Μοαζμβίκη",                        0,0,0 },
+{ IDX_2C('n','a'),        "Ναμίμπια",                         0,0,0 },
+{ IDX_2C('n','c'),        "Νέα Καληδονία",                    0,0,0 },
+{ IDX_2C('n','e'),        "Νίγηρ",                            0,0,0 },
+{ IDX_2C('n','f'),        "Νησιά Νόρφολκ",                    0,0,0 },
+{ IDX_2C('n','g'),        "Νιγηρία",                          0,0,0 },
+{ IDX_2C('n','i'),        "Νικαράγουα",                       0,0,0 },
+{ IDX_2C('n','l'),        "Ολλανδία",                         0,0,0 },
+{ IDX_2C('n','o'),        "Νορβηγία",                         0,0,0 },
+{ IDX_2C('n','p'),        "Νεπάλ",                            0,0,0 },
+{ IDX_2C('n','r'),        "Ναούρου",                          0,0,0 },
+{ IDX_2C('n','u'),        "Νιούε",                            0,0,0 },
+{ IDX_2C('n','z'),        "Νέα Ζηλανδία",                     0,0,0 },
+{ IDX_2C('o','m'),        "Ομάν",                             0,0,0 },
+{ IDX_2C('p','a'),        "Παναμάς",                          0,0,0 },
+{ IDX_2C('p','e'),        "Περού",                            0,0,0 },
+{ IDX_2C('p','f'),        "Γαλλική Πολυνησία",                0,0,0 },
+{ IDX_2C('p','g'),        "Παπούα Νέα Γουινέα",               0,0,0 },
+{ IDX_2C('p','h'),        "Φιλιππίνες",                       0,0,0 },
+{ IDX_2C('p','k'),        "Πακιστάν",                         0,0,0 },
+{ IDX_2C('p','l'),        "Πολωνία",                          0,0,0 },
+{ IDX_2C('p','m'),        "Σαίντ Πιέρ",                       0,0,0 },
+{ IDX_2C('p','n'),        "Πίτκαιρν",                         0,0,0 },
+{ IDX_2C('p','r'),        "Πόρτο Ρίκο",                       0,0,0 },
+{ IDX_2C('p','s'),        "Palestinian Territory, Occupied",  0,0,0 },
+{ IDX_2C('p','t'),        "Πορτογαλία",                       0,0,0 },
+{ IDX_2C('p','w'),        "Παλάου",                           0,0,0 },
+{ IDX_2C('p','y'),        "Παραγουάη",                        0,0,0 },
+{ IDX_2C('q','a'),        "Κατάρ",                            0,0,0 },
+{ IDX_2C('r','e'),        "Επανένωση",                        0,0,0 },
+{ IDX_2C('r','o'),        "Ρουμανία",                         0,0,0 },
+{ IDX_2C('r','s'),        "Serbia",                           0,0,0 },
+{ IDX_2C('r','u'),        "Ρωσία",                            0,0,0 },
+{ IDX_2C('r','w'),        "Ρουάντα",                          0,0,0 },
+{ IDX_2C('s','a'),        "Σαουδική Αραβία",                  0,0,0 },
+{ IDX_2C('s','b'),        "Νησιά Σολομώντα",                  0,0,0 },
+{ IDX_2C('s','c'),        "Σεϋχέλες",                         0,0,0 },
+{ IDX_2C('s','d'),        "Σουδάν",                           0,0,0 },
+{ IDX_2C('s','e'),        "Σουηδία",                          0,0,0 },
+{ IDX_2C('s','g'),        "Σιγκαπούρη",                       0,0,0 },
+{ IDX_2C('s','h'),        "Αγία Ελένη",                       0,0,0 },
+{ IDX_2C('s','i'),        "Σλοβενία",                         0,0,0 },
+{ IDX_2C('s','j'),        "Νησιά Σβάλμπαρντ",                 0,0,0 },
+{ IDX_2C('s','k'),        "Σλοβακία",                         0,0,0 },
+{ IDX_2C('s','l'),        "Σίερα Λεόνε",                      0,0,0 },
+{ IDX_2C('s','m'),        "Σαν Μαρίνο",                       0,0,0 },
+{ IDX_2C('s','n'),        "Σενεγάλη",                         0,0,0 },
+{ IDX_2C('s','o'),        "Σομαλία",                          0,0,0 },
+{ IDX_2C('s','r'),        "Σουρινάμ",                         0,0,0 },
+{ IDX_2C('s','t'),        "Σάο Τόμε και Πριντσίπε",           0,0,0 },
+{ IDX_2C('s','u'),        "Πρώην Ε.Σ.Σ.Δ.",                   0,0,0 },
+{ IDX_2C('s','v'),        "Ελ Σαλβαδόρ",                      0,0,0 },
+{ IDX_2C('s','y'),        "Συρία",                            0,0,0 },
+{ IDX_2C('s','z'),        "Σουαζιλάνδη",                      0,0,0 },
+{ IDX_2C('t','c'),        "Νησιά Κάικος",                     0,0,0 },
+{ IDX_2C('t','d'),        "Τσάντ",                            0,0,0 },
+{ IDX_2C('t','f'),        "Γαλλικές Κτήσεις",                 0,0,0 },
+{ IDX_2C('t','g'),        "Τόγκο",                            0,0,0 },
+{ IDX_2C('t','h'),        "Ταϊλάνδη",                         0,0,0 },
+{ IDX_2C('t','j'),        "Τατζικιστάν",                      0,0,0 },
+{ IDX_2C('t','k'),        "Τοκελάου",                         0,0,0 },
+{ IDX_2C('t','l'),        "Timor-Leste",                      0,0,0 },
+{ IDX_2C('t','m'),        "Τουρκμενιστάν",                    0,0,0 },
+{ IDX_2C('t','n'),        "Τυνησία",                          0,0,0 },
+{ IDX_2C('t','o'),        "Τόγκα",                            0,0,0 },
+{ IDX_2C('t','p'),        "Ανατλικό Τιμόρ",                   0,0,0 },
+{ IDX_2C('t','r'),        "Τουρκία",                          0,0,0 },
+{ IDX_2C('t','t'),        "Τρίνινταντ και Τομπάγκο",          0,0,0 },
+{ IDX_2C('t','v'),        "Τουβαλού",                         0,0,0 },
+{ IDX_2C('t','w'),        "Ταϊβάν",                           0,0,0 },
+{ IDX_2C('t','z'),        "Τανζανία",                         0,0,0 },
+{ IDX_2C('u','a'),        "Ουκρανία",                         0,0,0 },
+{ IDX_2C('u','g'),        "Ουγκάντα",                         0,0,0 },
+{ IDX_2C('u','k'),        "Ηνωμένο Βασίλειο",                 0,0,0 },
+{ IDX_2C('u','m'),        "Νησιά Η.Π.Α.",                     0,0,0 },
+{ IDX_2C('u','s'),        "Η.Π.Α.",                           0,0,0 },
+{ IDX_2C('u','y'),        "Ουρουγουάη",                       0,0,0 },
+{ IDX_2C('u','z'),        "Ουζμπεκιστάν",                     0,0,0 },
+{ IDX_2C('v','a'),        "Βατικανό",                         0,0,0 },
+{ IDX_2C('v','c'),        "Σαίντ Βίνσεντ",                    0,0,0 },
+{ IDX_2C('v','e'),        "Βενεζουέλα",                       0,0,0 },
+{ IDX_2C('v','g'),        "Βρετανικές Παρθένες Νήσοι",        0,0,0 },
+{ IDX_2C('v','i'),        "Παρθένες Νήσοι (Η.Π.Α.)",          0,0,0 },
+{ IDX_2C('v','n'),        "Βιετνάμ",                          0,0,0 },
+{ IDX_2C('v','u'),        "Βανουάτου",                        0,0,0 },
+{ IDX_2C('w','f'),        "Νησιά Γουάλις",                    0,0,0 },
+{ IDX_2C('w','s'),        "Σαμόα",                            0,0,0 },
+{ IDX_2C('y','e'),        "Υεμένη",                           0,0,0 },
+{ IDX_2C('y','t'),        "Μαγιότ",                           0,0,0 },
+{ IDX_2C('y','u'),        "Γιουγκοσλαβία",                    0,0,0 },
+{ IDX_2C('z','a'),        "Νότια Αφρική",                     0,0,0 },
+{ IDX_2C('z','m'),        "Ζάμπια",                           0,0,0 },
+{ IDX_2C('z','w'),        "Ζιμπάμπουε",                       0,0,0 },
+{ IDX_2C('a','1'),        "Anonymous Proxy",                  0,0,0 },
+{ IDX_2C('a','2'),        "Satellite Provider",               0,0,0 },
+{ IDX_2C('o','1'),        "Other",                            0,0,0 },
+{ IDX_2C('a','p'),        "Asia/Pacific Region",              0,0,0 },
+{ IDX_3C('l','a','n'),    "Local Network (lan)",              0,0,0 },
+{ 0,                      NULL,                               0,0,0 }};

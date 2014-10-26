@@ -1,0 +1,116 @@
+#
+# Makefile for webalizer - a web server log analysis program
+#
+# Copyright (C) 1997-2013  Bradford L. Barrett
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version, and provided that the above
+# copyright and permission notice is included with all distributed
+# copies of this or derived software.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details (file "COPYING").
+#
+
+prefix          = @prefix@
+exec_prefix     = @exec_prefix@
+datadir         = @datarootdir@
+
+BINDIR          = @bindir@
+MANDIR          = @mandir@/man1
+ETCDIR          = @sysconfdir@
+GEODB           = @GEODB_LOC@
+CC              = @CC@
+CFLAGS          = @CFLAGS@ @CPPFLAGS@
+LIBS            = @LIBS@
+WCMGR_LIBS      = @WCMGR_LIBS@
+DEFS            = -DETCDIR=\"${ETCDIR}\" -DGEODB_LOC=\"${GEODB}\" @DEFS@ @OPTS@
+LDFLAGS         = @LDFLAGS@
+INSTALL         = @INSTALL@
+INSTALL_PROGRAM = @INSTALL_PROGRAM@
+INSTALL_DATA    = @INSTALL_DATA@
+DEFLANG         = @DEFAULT_LANG@
+
+# Shouldn't have to touch below here!
+
+all: webalizer wcmgr
+
+webalizer:	webalizer.o webalizer.h hashtab.o hashtab.h  \
+		linklist.o linklist.h preserve.o preserve.h  \
+                dns_resolv.o dns_resolv.h parser.o parser.h  \
+                output.o output.h graphs.o graphs.h lang.h   \
+		webalizer_lang.h
+	$(CC) ${LDFLAGS} -o webalizer webalizer.o hashtab.o linklist.o preserve.o parser.o output.o dns_resolv.o graphs.o ${LIBS}
+	rm -f webazolver
+	@LN_S@ webalizer webazolver
+
+webalizer.o:	webalizer.c webalizer.h parser.h output.h preserve.h \
+		graphs.h dns_resolv.h webalizer_lang.h
+	$(CC) ${CFLAGS} ${DEFS} -c webalizer.c
+
+parser.o:	parser.c parser.h webalizer.h lang.h
+	$(CC) ${CFLAGS} ${DEFS} -c parser.c
+
+hashtab.o:	hashtab.c hashtab.h dns_resolv.h webalizer.h lang.h
+	$(CC) ${CFLAGS} ${DEFS} -c hashtab.c
+
+linklist.o:	linklist.c linklist.h webalizer.h lang.h
+	$(CC) ${CFLAGS} ${DEFS} -c linklist.c
+
+output.o:	output.c output.h webalizer.h preserve.h \
+		hashtab.h graphs.h lang.h
+	$(CC) ${CFLAGS} ${DEFS} -c output.c
+
+preserve.o:	preserve.c preserve.h webalizer.h parser.h   \
+		hashtab.h graphs.h lang.h
+	$(CC) ${CFLAGS} ${DEFS} -c preserve.c
+
+dns_resolv.o:	dns_resolv.c dns_resolv.h lang.h webalizer.h
+	$(CC) ${CFLAGS} ${DEFS} -c dns_resolv.c
+
+graphs.o:	graphs.c graphs.h webalizer.h lang.h
+	$(CC) ${CFLAGS} ${DEFS} -c graphs.c
+
+wcmgr:	wcmgr.o
+	$(CC) ${LDFLAGS} -o wcmgr wcmgr.o ${WCMGR_LIBS} 
+
+wcmgr.o:	wcmgr.c webalizer.h
+	$(CC) ${CFLAGS} ${DEFS} -c wcmgr.c
+
+clean:
+	rm -f webalizer webazolver wcmgr *.o usage*.png daily*.png hourly*.png
+	rm -f ctry*.png *.html *.hist *.current core *.gif
+
+distclean: clean
+	rm -f webalizer.conf *.tar *.tgz *.Z *.tar.gz
+	rm -f Makefile webalizer_lang.h config.cache config.log config.status
+	@LN_S@ lang/webalizer_lang.@DEFAULT_LANG@ webalizer_lang.h
+
+install: all
+	mkdir -p ${DESTDIR}${BINDIR}
+	mkdir -p ${DESTDIR}${MANDIR}
+	mkdir -p ${DESTDIR}${ETCDIR}
+	$(INSTALL_PROGRAM) webalizer ${DESTDIR}${BINDIR}/webalizer
+	$(INSTALL_PROGRAM) wcmgr ${DESTDIR}${BINDIR}/wcmgr
+	rm -f ${DESTDIR}${BINDIR}/webazolver
+	@LN_S@ webalizer ${DESTDIR}${BINDIR}/webazolver
+	$(INSTALL_DATA) webalizer.1 ${DESTDIR}${MANDIR}/webalizer.1
+	$(INSTALL_DATA) wcmgr.1 ${DESTDIR}${MANDIR}/wcmgr.1
+	rm -f ${DESTDIR}${MANDIR}/webazolver.1
+	@LN_S@ webalizer.1 ${DESTDIR}${MANDIR}/webazolver.1
+	$(INSTALL_DATA) sample.conf ${DESTDIR}${ETCDIR}/webalizer.conf.sample
+
+uninstall:
+	rm -f ${DESTDIR}${BINDIR}/webalizer
+	rm -f ${DESTDIR}${BINDIR}/webazolver
+	rm -f ${DESTDIR}${BINDIR}/wcmgr
+	rm -f ${DESTDIR}${MANDIR}/webalizer.1
+	rm -f ${DESTDIR}${MANDIR}/webazolver.1
+	rm -f ${DESTDIR}${MANDIR}/wcmgr.1
+	rm -f ${DESTDIR}${ETCDIR}/webalizer.conf.sample
+	rm -f webalizer_lang.h
+	@LN_S@ lang/webalizer_lang.${DEFLANG} webalizer_lang.h

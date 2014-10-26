@@ -1,0 +1,634 @@
+/*
+   webalizer_lang.turkish
+
+   Webalizer V2.0x Language Support file for Turkish.
+   15-May-1998 by Bradford L. Barrett (brad@mrunix.net)
+   31-May-1998 Modified for level 1.1 support (brad@mrunix.net)
+   23-Jul-1998 Modified for level 1.2 support (brad@mrunix.net)
+   08-Mar-1999 Updated HTTP 1.1 response codes by Yves Lafon (ylafon@w3.org)
+   28-Jun-1999 Modified for level 1.3 support (brad@mrunix.net)
+   16-Feb-2000 Modified for level 2.0 support (brad@mrunix.net)
+   20-Aug-2000 Turkish Translation by Evren Yurtesen (yurtesen@ispro.net.tr)
+   26-Mar-2008 Updated to current IANA TLDs (brad@mrunix.net)
+   26-May-2008 Modified for level 2.2 support (brad@mrunix.net)
+
+
+   Language files are named using the following convention:
+
+   webalizer_lang.LANGUAGE
+
+   where 'LANGUAGE' is the name of the language the file is
+   translated into (ie: webalizer_lang.russian for russian).
+   Either copy the desired language file to webalizer_lang.h
+   or create a symbolic link, then re-compile.
+
+   If you translate this file into a different language, please
+   send a copy to brad@mrunix.net.
+
+*/
+
+/***********************************************************************/
+/* DEFINE LANGUAGE NAME here                                           */
+/***********************************************************************/
+
+char *language  = "Turkish";
+char *langcode  = "tr";
+
+/***********************************************************************/
+/*                                                                     */
+/* Informational messages                                              */
+/*                                                                     */
+/* These messages are only displayed while The Webalizer is being run, */
+/* usually to the screen, and are not part of the HTML output.         */
+/*                                                                     */
+/***********************************************************************/
+
+/* these are only used in timing totals */
+/* Format:   XXX records (XXX ignored, XXX bad) in X.XX seconds        */
+char *msg_records = "kayit";
+char *msg_addresses="addres";
+char *msg_ignored = "islenmedi";
+char *msg_bad     = "kotu";
+char *msg_in      = "";
+char *msg_seconds = "saniyede";
+
+/* progress and setup error messages */
+char *msg_log_err = "Hata: Kutuk dosyasi acilamadi";
+char *msg_log_use = "Kullanilan kutukdosyasi";
+char *msg_dir_err = "Hata: Degistirilemeyen dizin";
+char *msg_dir_use = "Ciktinin yaratildigi yer";
+char *msg_cur_dir = "su anki dizin";
+char *msg_hostname= "Raporlar icin makine adi";
+char *msg_ign_hist= "Bir onceki history dosyasi islenmiyor...";
+char *msg_no_hist = "History dosyasi bulunamadi...";
+char *msg_get_hist= "History dosyasi okunuyor...";
+char *msg_put_hist= "History bilgileri kaydediliyor...";
+char *msg_hist_err= "Hata: History dosyasi yazilamiyor";
+char *msg_bad_hist= "Hata: Gecersiz history kaydi islenmiyor";
+char *msg_bad_conf= "Hata: Konfigurasyon dosyasi acilamiyor";
+char *msg_bad_key = "Dikkat: Gecersiz anahtar kelime";
+char *msg_bad_date= "Hata: Kayit islenmeden geciliyor (kotu tarih)";
+char *msg_ign_nscp= "Netscape baslik kaydi islenmeden geciliyor";
+char *msg_bad_rec = "Kotu kayit islenmeden geciliyor";
+char *msg_no_vrec = "Hicbir gecerli kayit bulunamadi!";
+char *msg_gen_rpt = "Raporu yaratilan site";
+char *msg_gen_sum = "Ozet raporu yaratiliyor";
+char *msg_get_data= "Bir onceki calismanin bilgileri okunuyor...";
+char *msg_put_data= "Su anki calisma bilgileri kaydediliyor...";
+char *msg_no_data = "Bir onceki calismanin bilgileri bulunamadi...";
+char *msg_bad_data= "Hata: Calisma bilgileri tekrar kullanilamiyor";
+char *msg_data_err= "Hata: Su anki calisma bilgileri kaydedilemiyor";
+char *msg_dup_data= "Dikkat: Buyuk ihtimalle cift islenmis bilgi bulundu";
+
+/* DNS Stuff */
+char *msg_dns_nocf= "Onbellek dosyasi belirtilmedi, islem iptal ediliyor...";
+char *msg_dns_nodb= "Hata: DNS onbellekleme dosyasi acilamadi";
+char *msg_dns_nolk= "Hata: DNS onbellekleme dosyasi kilitlenemedi";
+char *msg_dns_usec= "Kullanilan DNS onbellekleme dosyasi";
+char *msg_dns_rslv= "DNS bakimi";
+char *msg_dns_none= "Islem yapilmasi gereken kayit yok";
+char *msg_dns_abrt= "DNS support not present, aborting...";
+
+/* Geolocation stuff */
+char *msg_geo_open= "Error opening file";
+char *msg_geo_use = "Using";
+char *msg_geo_nolu= "lookups disabled";
+char *msg_geo_dflt= "default";
+
+/* memory allocation errors */
+char *msg_nomem_ts= "Yeterli hafiza yok, Top Istemciler kapatildi!";
+char *msg_nomem_tr= "Yeterli hafiza yok, Top Referanslar kapatildi!";
+char *msg_nomem_tu= "Yeterli hafiza yok, Top URL'ler kapatildi!";
+char *msg_nomem_tc= "Yeterli hafiza yok, Top Ulkeler kapatildi!";
+char *msg_nomem_ta= "Yeterli hafiza yok, Top Kullanici Ajanlari kapatildi!";
+char *msg_nomem_tsr="Yeterli hafiza yok, Top Arama Girdileri kapatildi!";
+char *msg_nomem_ti= "Yeterli hafiza yok, Top Kullanici Adlari kapatildi!";
+char *msg_nomem_dh= "Hata makine nodu ekleniyor (gunluk), islenmeden geciliyor";
+char *msg_nomem_mh= "Hata makine nodu ekleniyor (aylik), islenmeden geciliyor";
+char *msg_nomem_u = "Hata URL nodu ekleniyor, islenmeden geciliyor";
+char *msg_nomem_a = "Hata Kullanici Ajani ekleniyor, islenmeden geciliyor";
+char *msg_nomem_r = "Hata Referans nodu ekleniyor, islenmeden geciliyor";
+char *msg_nomem_sc= "Hata Arama Girdileri nodu ekleniyor, islenmeden geciliyor";
+char *msg_nomem_i = "Hata Kullanici Adi nodu ekleniyor, islenmeden geciliyor";
+
+/* log record errors */
+char *msg_big_rec = "Hata: Normalden buyuk kutuk kaydi islenmeden geciliyor";
+char *msg_big_host= "Dikkat: Normalden buyuk makine ismi kucultuluyor";
+char *msg_big_date= "Dikkat: Normalden buyuk tarih bolumu kucultuluyor";
+char *msg_big_req = "Dikkat: Normalden buyuk istek bolumu kucultuluyor";
+char *msg_big_ref = "Dikkat: Normalden buyuk referans bolumu kucultuluyor";
+char *msg_big_user= "Dikkat: Normalden buyuk kullanici adi bolumu kucultuluyor";
+char *msg_big_one = "Dikkat: Girdi saklama boyutunu asiyor";
+
+/* misc errors */
+char *msg_no_open = "Hata: Dosya acilamadi";
+
+/* Help display... */
+char *h_usage1 = "Kullanim";
+char *h_usage2 = "[opsiyonlar] [kutuk dosyasi]";
+char *h_msg[]= {
+         "-h        = bu yardim mesajini yazdir"                         ,
+         "-V        = surum bilgilerini yazdir"                          ,
+         "-v        = be verbose"                                        ,
+         "-d        = ek debug bilgileri yazir"                          ,
+         "-F tip    = kutuk tipi. 'tip'= (clf | ftp | squid | w3c)"      ,
+         "-f        = Siralama hatalarini duzelt"                        ,
+         "-i        = history dosyasina bakma"                           ,
+         "-p        = durumu koru (eklemeli)"                            ,
+         "-b        = ignore state (incremental)"                        ,
+         "-q        = bilgi mesajlarini iptal et"                        ,
+         "-Q        = _BUTUN_ mesajlari iptal et"                        ,
+         "-Y        = ulke grafigini iptal et"                           ,
+         "-G        = saate gore grafigini iptal et"                     ,
+         "-H        = saate gore istatistikleri iptal et"                ,
+         "-L        = renk kodlu grafik aciklamalarini iptal et"         ,
+         "-l sayi   = grafiklerde 'sayi' kadar cizgi kullan"             ,
+         "-m sayi   = ziyaret bitim zamani 'sayi'= (seconds)"            ,
+         "-T        = islem suresi bilgisini yazdir"                     ,
+         "-c dosya  = belirtilen konfigurasyon dosyasini kullan 'dosya'" ,
+         "-n ad     = kullanilacak makine adi 'ad'"                      ,
+         "-o dizin  = kullanilacak cikti dizini 'dizin'"                 ,
+         "-t ad     = rapor basligi 'ad'"                                ,
+         "-a ad     = kullanici ajanini sakla 'ad'"                      ,
+         "-r ad     = referansi sakla 'ad'"                              ,
+         "-s ad     = siteyi sakla 'ad'"                                 ,
+         "-u ad     = URL'yi sakla 'ad'"                                 ,
+         "-x ad     = Dosya uzantisini kullan 'ad'"                      ,
+         "-O ad     = Omit page 'ad'"                                    ,
+         "-P ad     = Sayfa uzantisi 'ad'"                               ,
+         "-I ad     = Indeks ismi 'ad'"                                  ,
+         "-K sayi   = sayi months in summary table"                      ,
+         "-k sayi   = sayi months in summary graph"                      ,
+         "-A sayi   = sayi kadar top ajan goster"                        ,
+         "-C sayi   = sayi kadar top ulke goster"                        ,
+         "-R sayi   = sayi kadar top referans goster"                    ,
+         "-S sayi   = sayi kadar top istemci goster"                     ,
+         "-U sayi   = sayi kadar top URL goster"                         ,
+         "-e sayi   = sayi kadar top giris sayfasi goster"               ,
+         "-E sayi   = sayi kadar top cikis sayfasi goster"               ,
+         "-g sayi   = alan adlarini 'sayi' kadar seviyede grupla"        ,
+         "-X        = tek siteleri gizle"                                ,
+         "-z dir    = Use country flags in 'dir'"                        ,
+#ifdef USE_DNS
+         "-D ad     = 'ad' isimli DNS onbellek dosyasini kullan"         ,
+         "-N sayi   = DNS islemcilerinin sayisi (0=iptal)"               ,
+         "-j        = Enable native GeoDB lookups"                       ,
+         "-J ad     = Use GeoDB database 'ad'"                           ,
+#endif
+#ifdef USE_GEOIP
+         "-w        = Enable GeoIP lookups"                ,
+         "-W ad     = Use GeoIP database 'ad'"             ,
+#endif
+         NULL};
+
+/***********************************************************************/
+/*                                                                     */
+/* HTML strings                                                        */
+/*                                                                     */
+/* These strings are used as part of the HTML output generated by The  */
+/* Webalizer.                                                          */ 
+/*                                                                     */
+/***********************************************************************/
+
+/* header strings */
+char *msg_hhdr_sp = "Ozet Periyodu";
+char *msg_hhdr_gt = "Yaratilma Tarihi";
+
+/* main index strings */
+char *msg_main_us = "Kullanim Ozeti";
+/* char *msg_main_per= "Son 12 Ay"; */
+char *msg_main_per= "Ay'a Gore Ozet";
+char *msg_main_sum= "Ay'a Gore Ozet";
+char *msg_main_da = "Gunluk Averaj";
+char *msg_main_mt = "Aylik Toplamlar";
+
+/* month HTML page strings */
+char *msg_hmth_du = "Gunluk Kullanim:";
+char *msg_hmth_hu = "Saatlik Kullanim:";
+
+/* table header strings */
+char *msg_h_by    = "";
+char *msg_h_avg   = "Averaj";
+char *msg_h_max   = "Maksimum";
+char *msg_h_total = "Toplam";
+char *msg_h_totals= "Toplamlar";
+char *msg_h_day   = "Gun";
+char *msg_h_mth   = "Ay";
+char *msg_h_hour  = "Saat";
+char *msg_h_hits  = "HIT'ler";
+char *msg_h_pages = "Sayfa";
+char *msg_h_visits= "Ziyaret";
+char *msg_h_files = "Dosya";
+char *msg_h_sites = "Istemci";
+char *msg_h_xfer  = "KBayt'a Gore";
+char *msg_h_hname = "Makine Adi";
+char *msg_h_url   = "URL";
+char *msg_h_agent = "Kullanici Ajani";
+char *msg_h_ref   = "Referans";
+char *msg_h_ctry  = "Ulke";
+char *msg_h_search= "Arama Girdisi";
+char *msg_h_uname = "Kullanici";
+
+/* links along top of page */
+char *msg_hlnk_ds = "Gunluk Istatistikler";
+char *msg_hlnk_hs = "Saatlik Istatistikler";
+char *msg_hlnk_u  = "URL'ler";
+char *msg_hlnk_s  = "Istemciler";
+char *msg_hlnk_a  = "Ajanlar";
+char *msg_hlnk_c  = "Ulkeler";
+char *msg_hlnk_r  = "Referanslar";
+char *msg_hlnk_en = "Giris";
+char *msg_hlnk_ex = "Cikis";
+char *msg_hlnk_sr = "Arama";
+char *msg_hlnk_i  = "Kullanicilar";
+
+/* monthly total table */
+char *msg_mtot_ms = "Aylik Istatistikler:";
+char *msg_mtot_th = "Toplam HIT'ler";
+char *msg_mtot_tf = "Toplam Dosyalar";
+char *msg_mtot_tx = "Toplam KBaytlar";
+char *msg_mtot_us = "Toplam Ayni Istemciler";
+char *msg_mtot_ur = "Toplam Ayni Referanslar";
+char *msg_mtot_ua = "Toplam Ayni Kullanici Ajanlari";
+char *msg_mtot_uu = "Toplam Ayni URL'ler";
+char *msg_mtot_ui = "Toplam Ayni Kullanici Adlari";
+char *msg_mtot_mhd= "Gunluk HIT";
+char *msg_mtot_mhh= "Saatlik HIT";
+char *msg_mtot_mfd= "Gunluk Dosyalar";
+char *msg_mtot_mpd= "Gunluk Sayfalar";
+char *msg_mtot_msd= "Gunluk Istemciler";
+char *msg_mtot_mvd= "Gunluk Ziyaretler";
+char *msg_mtot_mkd= "Gunluk KBaytlar";
+char *msg_mtot_rc = "Cevap Koduna Gore HIT";
+
+/* daily total table */
+char *msg_dtot_ds = "Gunluk Istatistikler:";
+
+/* hourly total table */
+char *msg_htot_hs = "Saatlik Istatistikler:";
+
+/* country pie chart */
+char *msg_ctry_use= "Ulkeye Gore Kullanim:";
+
+/* top tables */
+/* Formatted as "Top xxx of xxx Total something" */
+char *msg_top_top = "Top";
+char *msg_top_of  = "/";
+char *msg_top_s   = "Toplam Istemciler";
+char *msg_top_u   = "Toplam URL'ler";
+char *msg_top_r   = "Toplam Referanslar";
+char *msg_top_a   = "Toplam Kullanici Ajanlari";
+char *msg_top_c   = "Toplam Ulkeler";
+char *msg_top_en  = "Toplam Giris Sayfalari";
+char *msg_top_ex  = "Toplam Cikis Sayfalari";
+char *msg_top_sr  = "Toplam Arama Girdileri";
+char *msg_top_i   = "Toplam Kullanici Adlari";
+char *msg_v_sites = "Butun Istemcileri Goster";
+char *msg_v_urls  = "Butun URL'leri Goster";
+char *msg_v_refs  = "Butun Referanslar Goster";
+char *msg_v_agents= "Butun Kullanici Ajanlarini Goster";
+char *msg_v_search= "Butun Arama Girdilerini Goster";
+char *msg_v_users = "Butun Kullanici Adlarini Goster";
+
+/* short month names MUST BE 3 CHARS in size... pad if needed*/
+char *s_month[12]={ "Oca", "Sub", "Mar",
+                    "Nis", "May", "Haz",
+                    "Tem", "Agu", "Eyl",
+                    "Eki", "Kas", "Ara"};
+
+/* long month names - can be any length */
+char *l_month[12]={ "Ocak",  "Subat",  "Mart",  "Nisan",
+                    "Mayis",  "Haziran",  "Temmuz",  "Agustos",
+                    "Eylul", "Ekim",  "Kasim", "Aralik"};
+
+/* response code descriptions... order IS important!      */
+struct response_code response[] =
+       { { "Tanimlanmamis cevap kodu",               0 },
+         { "Kod 100 - Devam",                        0 },
+         { "Kod 101 - Protokol Degistirme",          0 },
+         { "Kod 200 - TAMAM",                        0 },
+         { "Kod 201 - Yaratildi",                    0 },
+         { "Kod 202 - Kabul Edildi",                 0 },
+         { "Kod 203 - Otantikasyonu Olmayan Bilgi",  0 },
+         { "Kod 204 - Icerik Yok",                   0 },
+         { "Kod 205 - Icerigi Sifirla",              0 },
+         { "Kod 206 - Bolumsel Icerik",              0 },
+         { "Kod 300 - Bircok Secim",                 0 },
+         { "Kod 301 - Tamamen Tasindi",              0 },
+         { "Kod 302 - Bulundu",                      0 },
+         { "Kod 303 - Digerine Bakiniz",             0 },
+         { "Kod 304 - Degismedi",                    0 },
+         { "Kod 305 - Proxy Kullaniniz",             0 },
+         { "Kod 307 - Gecici Olarak Tasindi",        0 },
+         { "Kod 400 - Kotu Istek",                   0 },
+         { "Kod 401 - Yetkisiz",                     0 },
+         { "Kod 402 - Odeme Gerekli",                0 },
+         { "Kod 403 - Yasak",                        0 },
+         { "Kod 404 - Bulunamadi",                   0 },
+         { "Kod 405 - Metoda Izin Verilmedi",        0 },
+         { "Kod 406 - Kabul Edilemez",               0 },
+         { "Kod 407 - Proxy Otantikasyonu Gerekli",  0 },
+         { "Kod 408 - Istek Zaman Asimi",            0 },
+         { "Kod 409 - Cakisma",                      0 },
+         { "Kod 410 - Gitti",                        0 },
+         { "Kod 411 - Uzunluk Gerekli",              0 },
+         { "Kod 412 - On Kosul Basarisiz",           0 },
+         { "Kod 413 - Istek Varligi Cok Buyuk",      0 },
+         { "Kod 414 - Istek-URI'si Cok Uzun",        0 },
+         { "Kod 415 - Desteklenmeyen Orta Tipi",     0 },
+         { "Kod 416 - Istenen Uzaklik Karsilanamaz", 0 },
+         { "Kod 417 - Beklenti Basarisiz",           0 },
+         { "Kod 500 - Ic Sunucu Hatasi",             0 },
+         { "Kod 501 - Tamamlanmadi",                 0 },
+         { "Kod 502 - Kotu Gecit",                   0 },
+         { "Kod 503 - Servis Kapali",                0 },
+         { "Kod 504 - Gecit Zaman Asimi",            0 },
+         { "Kod 505 - HTTP Surumu Desteklenmiyor",   0 } };
+
+char *msg_title   = "Kullanim Istatistikleri:";
+char *msg_h_other = "Diger";
+
+/* Country codes (previously in ctry.h header file) */
+
+struct  country_code ctry[] = {
+{ 0,                      "Cozumlenemeyen/Bilinemeyen",       0,0,0 },
+{ IDX_3C('c','o','m'),    "Ticari (com)",                     0,0,0 },
+{ IDX_3C('e','d','u'),    "Egitimsel (edu)",                  0,0,0 },
+{ IDX_3C('g','o','v'),    "US Devlet (gov)",                  0,0,0 },
+{ IDX_3C('i','n','t'),    "Uluslarasi (int)",                 0,0,0 },
+{ IDX_3C('m','i','l'),    "US Askeri (mil)",                  0,0,0 },
+{ IDX_3C('n','e','t'),    "Ag (net)",                         0,0,0 },
+{ IDX_3C('o','r','g'),    "Organizasyon (org)",               0,0,0 },
+{ IDX_3C('b','i','z'),    "Generic Business (biz)",           0,0,0 },
+{ IDX_3C('c','a','t'),    "Catalan Community (cat)",          0,0,0 },
+{ IDX_3C('p','r','o'),    "Professional (pro)",               0,0,0 },
+{ IDX_3C('t','e','l'),    "Ind. Contact Data (tel)",          0,0,0 },
+{ IDX_4C('a','e','r','o'),"Air Transport Industry (aero)",    0,0,0 },
+{ IDX_4C('a','s','i','a'),"Asia Pacific Community (asia)",    0,0,0 },
+{ IDX_4C('c','o','o','p'),"Cooperative Association (coop)",   0,0,0 },
+{ IDX_4C('i','n','f','o'),"Generic TLD (info)",               0,0,0 },
+{ IDX_4C('j','o','b','s'),"Human Resources (jobs)",           0,0,0 },
+{ IDX_4C('m','o','b','i'),"Generic Mobile TLD (mobi)",        0,0,0 },
+{ IDX_4C('n','a','m','e'),"Individual (name)",                0,0,0 },
+{ IDX_4C('a','r','p','a'),"Eski stil Arpanet (arpa)",         0,0,0 },
+{ IDX_4C('n','a','t','o'),"Nato alani (nato)",                0,0,0 },
+{ IDX_6C('m','u','s','e','u','m'), "Museums (museum)",        0,0,0 },
+{ IDX_6C('t','r','a','v','e','l'), "Travel Ind. (travel)",    0,0,0 },
+{ IDX_2C('a','c'),        "Ascension Island",                 0,0,0 },
+{ IDX_2C('a','d'),        "Andora",                           0,0,0 },
+{ IDX_2C('a','e'),        "Birlesmis Arab Emirlikleri",       0,0,0 },
+{ IDX_2C('a','f'),        "Afganistan",                       0,0,0 },
+{ IDX_2C('a','g'),        "Antigua ve Barbuda",               0,0,0 },
+{ IDX_2C('a','i'),        "Anguilla",                         0,0,0 },
+{ IDX_2C('a','l'),        "Albanya",                          0,0,0 },
+{ IDX_2C('a','m'),        "Ermenistan",                       0,0,0 },
+{ IDX_2C('a','n'),        "Hollanda Antil Adalari",           0,0,0 },
+{ IDX_2C('a','o'),        "Angola",                           0,0,0 },
+{ IDX_2C('a','q'),        "Antartik",                         0,0,0 },
+{ IDX_2C('a','r'),        "Arjantin",                         0,0,0 },
+{ IDX_2C('a','s'),        "Amerikan Samoa Adalari",           0,0,0 },
+{ IDX_2C('a','t'),        "Avusturya",                        0,0,0 },
+{ IDX_2C('a','u'),        "Avusturalya",                      0,0,0 },
+{ IDX_2C('a','w'),        "Aruba",                            0,0,0 },
+{ IDX_2C('a','x'),        "Aland Islands",                    0,0,0 },
+{ IDX_2C('a','z'),        "Azerbeycan",                       0,0,0 },
+{ IDX_2C('b','a'),        "Bosna ve Herzegova",               0,0,0 },
+{ IDX_2C('b','b'),        "Barbados",                         0,0,0 },
+{ IDX_2C('b','d'),        "Banglades",                        0,0,0 },
+{ IDX_2C('b','e'),        "Belcika",                          0,0,0 },
+{ IDX_2C('b','f'),        "Burkina Faso",                     0,0,0 },
+{ IDX_2C('b','g'),        "Bulgaristan",                      0,0,0 },
+{ IDX_2C('b','h'),        "Bahreyn",                          0,0,0 },
+{ IDX_2C('b','i'),        "Burundi",                          0,0,0 },
+{ IDX_2C('b','j'),        "Benin",                            0,0,0 },
+{ IDX_2C('b','l'),        "Saint Barthelemy",                 0,0,0 },
+{ IDX_2C('b','m'),        "Bermuda",                          0,0,0 },
+{ IDX_2C('b','n'),        "Brunei Darussalam",                0,0,0 },
+{ IDX_2C('b','o'),        "Bolivya",                          0,0,0 },
+{ IDX_2C('b','r'),        "Brezilya",                         0,0,0 },
+{ IDX_2C('b','s'),        "Bahamalar",                        0,0,0 },
+{ IDX_2C('b','t'),        "Bhutan",                           0,0,0 },
+{ IDX_2C('b','v'),        "Bouvet Adasi",                     0,0,0 },
+{ IDX_2C('b','w'),        "Botswana",                         0,0,0 },
+{ IDX_2C('b','y'),        "Belarusya",                        0,0,0 },
+{ IDX_2C('b','z'),        "Belize",                           0,0,0 },
+{ IDX_2C('c','a'),        "Kanada",                           0,0,0 },
+{ IDX_2C('c','c'),        "Cocos (Keeling) Adalari",          0,0,0 },
+{ IDX_2C('c','d'),        "Congo, Democratic Republic",       0,0,0 },
+{ IDX_2C('c','f'),        "Orta Afrika Cumhuriyeti",          0,0,0 },
+{ IDX_2C('c','g'),        "Kongo",                            0,0,0 },
+{ IDX_2C('c','h'),        "Isvicre",                          0,0,0 },
+{ IDX_2C('c','i'),        "Cote D'Ivoire (Ivory Sahili)",     0,0,0 },
+{ IDX_2C('c','k'),        "Cook Adalari",                     0,0,0 },
+{ IDX_2C('c','l'),        "Sile",                             0,0,0 },
+{ IDX_2C('c','m'),        "Kamerun",                          0,0,0 },
+{ IDX_2C('c','n'),        "Cin",                              0,0,0 },
+{ IDX_2C('c','o'),        "Kolombiya",                        0,0,0 },
+{ IDX_2C('c','r'),        "Kosta Rica",                       0,0,0 },
+{ IDX_2C('c','u'),        "Kuba",                             0,0,0 },
+{ IDX_2C('c','v'),        "Cape Verde",                       0,0,0 },
+{ IDX_2C('c','x'),        "Christmas Adalari",                0,0,0 },
+{ IDX_2C('c','y'),        "Kibris",                           0,0,0 },
+{ IDX_2C('c','z'),        "Cek Cumhuriyeti",                  0,0,0 },
+{ IDX_2C('d','e'),        "Almanya",                          0,0,0 },
+{ IDX_2C('d','j'),        "Djibuti",                          0,0,0 },
+{ IDX_2C('d','k'),        "Danimarka",                        0,0,0 },
+{ IDX_2C('d','m'),        "Dominika",                         0,0,0 },
+{ IDX_2C('d','o'),        "Dominik Cumhuriyeti",              0,0,0 },
+{ IDX_2C('d','z'),        "Algeria",                          0,0,0 },
+{ IDX_2C('e','c'),        "Ekvator",                          0,0,0 },
+{ IDX_2C('e','e'),        "Estonya",                          0,0,0 },
+{ IDX_2C('e','g'),        "Misir",                            0,0,0 },
+{ IDX_2C('e','h'),        "Bati Sahara",                      0,0,0 },
+{ IDX_2C('e','r'),        "Eritrea",                          0,0,0 },
+{ IDX_2C('e','s'),        "Ispanya",                          0,0,0 },
+{ IDX_2C('e','t'),        "Etiyopya",                         0,0,0 },
+{ IDX_2C('e','u'),        "European Union",                   0,0,0 },
+{ IDX_2C('f','i'),        "Finlandiya",                       0,0,0 },
+{ IDX_2C('f','j'),        "Fiji",                             0,0,0 },
+{ IDX_2C('f','k'),        "Folkland Adalari (Malvinas)",      0,0,0 },
+{ IDX_2C('f','m'),        "Micronesia",                       0,0,0 },
+{ IDX_2C('f','o'),        "Faroe Adalari",                    0,0,0 },
+{ IDX_2C('f','r'),        "Fransa",                           0,0,0 },
+{ IDX_2C('g','a'),        "Gabon",                            0,0,0 },
+{ IDX_2C('g','b'),        "Buyuk Biritanya (UK)",             0,0,0 },
+{ IDX_2C('g','d'),        "Granada",                          0,0,0 },
+{ IDX_2C('g','e'),        "Georgia",                          0,0,0 },
+{ IDX_2C('g','f'),        "Fransiz Guyanasi",                 0,0,0 },
+{ IDX_2C('g','g'),        "Guernsey",                         0,0,0 },
+{ IDX_2C('g','h'),        "Ghana",                            0,0,0 },
+{ IDX_2C('g','i'),        "Gibraltar",                        0,0,0 },
+{ IDX_2C('g','l'),        "Greenland",                        0,0,0 },
+{ IDX_2C('g','m'),        "Gambia",                           0,0,0 },
+{ IDX_2C('g','n'),        "Gine",                             0,0,0 },
+{ IDX_2C('g','p'),        "Guadeloupe",                       0,0,0 },
+{ IDX_2C('g','q'),        "Ekvator Ginesi",                   0,0,0 },
+{ IDX_2C('g','r'),        "Yunanistan",                       0,0,0 },
+{ IDX_2C('g','s'),        "S. Georgia and S. Sandwich Adalari.", 0,0,0 },
+{ IDX_2C('g','t'),        "Guatemala",                        0,0,0 },
+{ IDX_2C('g','u'),        "Guam",                             0,0,0 },
+{ IDX_2C('g','w'),        "Guinea-Bissau",                    0,0,0 },
+{ IDX_2C('g','y'),        "Guyana",                           0,0,0 },
+{ IDX_2C('h','k'),        "Hong Kong",                        0,0,0 },
+{ IDX_2C('h','m'),        "Heard and McDonald Adalari",       0,0,0 },
+{ IDX_2C('h','n'),        "Honduras",                         0,0,0 },
+{ IDX_2C('h','r'),        "Hirvatistan",                      0,0,0 },
+{ IDX_2C('h','t'),        "Haiti",                            0,0,0 },
+{ IDX_2C('h','u'),        "Macaristan",                       0,0,0 },
+{ IDX_2C('i','d'),        "Endonezya",                        0,0,0 },
+{ IDX_2C('i','e'),        "Irlanda",                          0,0,0 },
+{ IDX_2C('i','l'),        "Israil",                           0,0,0 },
+{ IDX_2C('i','m'),        "Isle of Man",                      0,0,0 },
+{ IDX_2C('i','n'),        "Hindistan",                        0,0,0 },
+{ IDX_2C('i','o'),        "Ingiliz-Hint Okyanis Bolgesi",     0,0,0 },
+{ IDX_2C('i','q'),        "Irak",                             0,0,0 },
+{ IDX_2C('i','r'),        "Iran",                             0,0,0 },
+{ IDX_2C('i','s'),        "Izlanda",                          0,0,0 },
+{ IDX_2C('i','t'),        "Italya",                           0,0,0 },
+{ IDX_2C('j','e'),        "Jersey",                           0,0,0 },
+{ IDX_2C('j','m'),        "Jamaika",                          0,0,0 },
+{ IDX_2C('j','o'),        "Urdun",                            0,0,0 },
+{ IDX_2C('j','p'),        "Japonya",                          0,0,0 },
+{ IDX_2C('k','e'),        "Kenya",                            0,0,0 },
+{ IDX_2C('k','g'),        "Kirgizistan",                      0,0,0 },
+{ IDX_2C('k','h'),        "Kambocya",                         0,0,0 },
+{ IDX_2C('k','i'),        "Kiribati",                         0,0,0 },
+{ IDX_2C('k','m'),        "Comoros",                          0,0,0 },
+{ IDX_2C('k','n'),        "Saint Kitts and Nevis",            0,0,0 },
+{ IDX_2C('k','p'),        "Kore (Kuzey)",                     0,0,0 },
+{ IDX_2C('k','r'),        "Kore (Guney)",                     0,0,0 },
+{ IDX_2C('k','w'),        "Kuveyt",                           0,0,0 },
+{ IDX_2C('k','y'),        "Cayman Islands",                   0,0,0 },
+{ IDX_2C('k','z'),        "Kazakhistan",                      0,0,0 },
+{ IDX_2C('l','a'),        "Laos",                             0,0,0 },
+{ IDX_2C('l','b'),        "Lubnan",                           0,0,0 },
+{ IDX_2C('l','c'),        "Saint Lucia",                      0,0,0 },
+{ IDX_2C('l','i'),        "Liechtenstein",                    0,0,0 },
+{ IDX_2C('l','k'),        "Sri Lanka",                        0,0,0 },
+{ IDX_2C('l','r'),        "Liberya",                          0,0,0 },
+{ IDX_2C('l','s'),        "Lesotho",                          0,0,0 },
+{ IDX_2C('l','t'),        "Litvanya",                         0,0,0 },
+{ IDX_2C('l','u'),        "Luxemburg",                        0,0,0 },
+{ IDX_2C('l','v'),        "Latvia",                           0,0,0 },
+{ IDX_2C('l','y'),        "Libya",                            0,0,0 },
+{ IDX_2C('m','a'),        "Moroko",                           0,0,0 },
+{ IDX_2C('m','c'),        "Monako",                           0,0,0 },
+{ IDX_2C('m','d'),        "Moldova",                          0,0,0 },
+{ IDX_2C('m','e'),        "Montenegro",                       0,0,0 },
+{ IDX_2C('m','f'),        "Saint Martin (French part)",       0,0,0 },
+{ IDX_2C('m','g'),        "Madagascar",                       0,0,0 },
+{ IDX_2C('m','h'),        "Marshall Adalari",                 0,0,0 },
+{ IDX_2C('m','k'),        "Makedonya",                        0,0,0 },
+{ IDX_2C('m','l'),        "Mali",                             0,0,0 },
+{ IDX_2C('m','m'),        "Myanmar",                          0,0,0 },
+{ IDX_2C('m','n'),        "Mongolya",                         0,0,0 },
+{ IDX_2C('m','o'),        "Macau",                            0,0,0 },
+{ IDX_2C('m','p'),        "Kuzey Mariana Adalari",            0,0,0 },
+{ IDX_2C('m','q'),        "Martinik",                         0,0,0 },
+{ IDX_2C('m','r'),        "Moritanya",                        0,0,0 },
+{ IDX_2C('m','s'),        "Montserrat",                       0,0,0 },
+{ IDX_2C('m','t'),        "Malta",                            0,0,0 },
+{ IDX_2C('m','u'),        "Mauritius",                        0,0,0 },
+{ IDX_2C('m','v'),        "Maldivler",                        0,0,0 },
+{ IDX_2C('m','w'),        "Malawi",                           0,0,0 },
+{ IDX_2C('m','x'),        "Meksika",                          0,0,0 },
+{ IDX_2C('m','y'),        "Malezya",                          0,0,0 },
+{ IDX_2C('m','z'),        "Mozambik",                         0,0,0 },
+{ IDX_2C('n','a'),        "Namibya",                          0,0,0 },
+{ IDX_2C('n','c'),        "Yeni Kaledonya",                   0,0,0 },
+{ IDX_2C('n','e'),        "Niger",                            0,0,0 },
+{ IDX_2C('n','f'),        "Norfolk Adalari",                  0,0,0 },
+{ IDX_2C('n','g'),        "Nijerya",                          0,0,0 },
+{ IDX_2C('n','i'),        "Nikaragua",                        0,0,0 },
+{ IDX_2C('n','l'),        "Hollanda",                         0,0,0 },
+{ IDX_2C('n','o'),        "Norvec",                           0,0,0 },
+{ IDX_2C('n','p'),        "Nepal",                            0,0,0 },
+{ IDX_2C('n','r'),        "Nauru",                            0,0,0 },
+{ IDX_2C('n','u'),        "Niue",                             0,0,0 },
+{ IDX_2C('n','z'),        "Yeni Zellanda",                    0,0,0 },
+{ IDX_2C('o','m'),        "Umman",                            0,0,0 },
+{ IDX_2C('p','a'),        "Panama",                           0,0,0 },
+{ IDX_2C('p','e'),        "Peru",                             0,0,0 },
+{ IDX_2C('p','f'),        "Fransiz Polinezyasi",              0,0,0 },
+{ IDX_2C('p','g'),        "Papua Yeni Gine",                  0,0,0 },
+{ IDX_2C('p','h'),        "Filipinler",                       0,0,0 },
+{ IDX_2C('p','k'),        "Pakistan",                         0,0,0 },
+{ IDX_2C('p','l'),        "Polonya",                          0,0,0 },
+{ IDX_2C('p','m'),        "St. Pierre and Miquelon",          0,0,0 },
+{ IDX_2C('p','n'),        "Pitcairn",                         0,0,0 },
+{ IDX_2C('p','r'),        "Porto Riko",                       0,0,0 },
+{ IDX_2C('p','s'),        "Palestinian Territory, Occupied",  0,0,0 },
+{ IDX_2C('p','t'),        "Portekiz",                         0,0,0 },
+{ IDX_2C('p','w'),        "Palau",                            0,0,0 },
+{ IDX_2C('p','y'),        "Paraguay",                         0,0,0 },
+{ IDX_2C('q','a'),        "Katar",                            0,0,0 },
+{ IDX_2C('r','e'),        "Reunion",                          0,0,0 },
+{ IDX_2C('r','o'),        "Romanya",                          0,0,0 },
+{ IDX_2C('r','s'),        "Serbia",                           0,0,0 },
+{ IDX_2C('r','u'),        "Rus Federasyonu",                  0,0,0 },
+{ IDX_2C('r','w'),        "Ruanda",                           0,0,0 },
+{ IDX_2C('s','a'),        "Suudi Arabistan",                  0,0,0 },
+{ IDX_2C('s','b'),        "Solomon Adalari",                  0,0,0 },
+{ IDX_2C('s','c'),        "Seychelles",                       0,0,0 },
+{ IDX_2C('s','d'),        "Sudan",                            0,0,0 },
+{ IDX_2C('s','e'),        "Isvec",                            0,0,0 },
+{ IDX_2C('s','g'),        "Singapur",                         0,0,0 },
+{ IDX_2C('s','h'),        "St. Helena",                       0,0,0 },
+{ IDX_2C('s','i'),        "Slovenya",                         0,0,0 },
+{ IDX_2C('s','j'),        "Svalbard ve Jan Mayen Adalari",    0,0,0 },
+{ IDX_2C('s','k'),        "Slovak Cumhuriyeti",               0,0,0 },
+{ IDX_2C('s','l'),        "Sierra Leone",                     0,0,0 },
+{ IDX_2C('s','m'),        "San Marino",                       0,0,0 },
+{ IDX_2C('s','n'),        "Senegal",                          0,0,0 },
+{ IDX_2C('s','o'),        "Somali",                           0,0,0 },
+{ IDX_2C('s','r'),        "Surinam",                          0,0,0 },
+{ IDX_2C('s','t'),        "Sao Tome and Principe",            0,0,0 },
+{ IDX_2C('s','u'),        "SSCB (eski)",                      0,0,0 },
+{ IDX_2C('s','v'),        "El Salvador",                      0,0,0 },
+{ IDX_2C('s','y'),        "Suriye",                           0,0,0 },
+{ IDX_2C('s','z'),        "Swaziland",                        0,0,0 },
+{ IDX_2C('t','c'),        "Turks ve Caicos Adalari",          0,0,0 },
+{ IDX_2C('t','d'),        "Cad",                              0,0,0 },
+{ IDX_2C('t','f'),        "Fransiz Guney Bolgeleri",          0,0,0 },
+{ IDX_2C('t','g'),        "Togo",                             0,0,0 },
+{ IDX_2C('t','h'),        "Tayland",                          0,0,0 },
+{ IDX_2C('t','j'),        "Tacikistan",                       0,0,0 },
+{ IDX_2C('t','k'),        "Tokelau",                          0,0,0 },
+{ IDX_2C('t','l'),        "Timor-Leste",                      0,0,0 },
+{ IDX_2C('t','m'),        "Turkmenistan",                     0,0,0 },
+{ IDX_2C('t','n'),        "Tunus",                            0,0,0 },
+{ IDX_2C('t','o'),        "Tonga",                            0,0,0 },
+{ IDX_2C('t','p'),        "Dogu Timor",                       0,0,0 },
+{ IDX_2C('t','r'),        "Turkiye",                          0,0,0 },
+{ IDX_2C('t','t'),        "Trinidad ve Tobago",               0,0,0 },
+{ IDX_2C('t','v'),        "Tuvalu",                           0,0,0 },
+{ IDX_2C('t','w'),        "Tayvan",                           0,0,0 },
+{ IDX_2C('t','z'),        "Tanzanya",                         0,0,0 },
+{ IDX_2C('u','a'),        "Ukrayna",                          0,0,0 },
+{ IDX_2C('u','g'),        "Uganda",                           0,0,0 },
+{ IDX_2C('u','k'),        "Ingiltere",                        0,0,0 },
+{ IDX_2C('u','m'),        "US Minor Outlying Adalari",        0,0,0 },
+{ IDX_2C('u','s'),        "United States",                    0,0,0 },
+{ IDX_2C('u','y'),        "Uruguay",                          0,0,0 },
+{ IDX_2C('u','z'),        "Uzbekistan",                       0,0,0 },
+{ IDX_2C('v','a'),        "Vatican Sehiri Devleti (Kutsal Deniz)", 0,0,0 },
+{ IDX_2C('v','c'),        "Saint Vincent ve Grenadines",      0,0,0 },
+{ IDX_2C('v','e'),        "Venezuela",                        0,0,0 },
+{ IDX_2C('v','g'),        "Virgin Adalari (British)",         0,0,0 },
+{ IDX_2C('v','i'),        "Virgin Adalari (U.S.)",            0,0,0 },
+{ IDX_2C('v','n'),        "Vietnam",                          0,0,0 },
+{ IDX_2C('v','u'),        "Vanuatu",                          0,0,0 },
+{ IDX_2C('w','f'),        "Wallis ve Futuna Adalari",         0,0,0 },
+{ IDX_2C('w','s'),        "Samoa",                            0,0,0 },
+{ IDX_2C('y','e'),        "Yemen",                            0,0,0 },
+{ IDX_2C('y','t'),        "Mayotte",                          0,0,0 },
+{ IDX_2C('y','u'),        "Yugoslavya",                       0,0,0 },
+{ IDX_2C('z','a'),        "Guney Afrika",                     0,0,0 },
+{ IDX_2C('z','m'),        "Zambia",                           0,0,0 },
+{ IDX_2C('z','w'),        "Zimbabve",                         0,0,0 },
+{ IDX_2C('a','1'),        "Anonymous Proxy",                  0,0,0 },
+{ IDX_2C('a','2'),        "Satellite Provider",               0,0,0 },
+{ IDX_2C('o','1'),        "Other",                            0,0,0 },
+{ IDX_2C('a','p'),        "Asia/Pacific Region",              0,0,0 },
+{ IDX_3C('l','a','n'),    "Local Network (lan)",              0,0,0 },
+{ 0              ,        NULL,                               0,0,0 }};
