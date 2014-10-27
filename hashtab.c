@@ -124,6 +124,7 @@ HNODEPTR new_hnode(char *str, int len)
          fprintf(stderr,"\n");
       }
       str[MAXHOST-1]=0;
+	  len=MAXHOST-1;
    }
 
    if (( newptr = malloc(sizeof(struct hnode)+len+1)) != NULL)
@@ -133,6 +134,7 @@ HNODEPTR new_hnode(char *str, int len)
       newptr->visit     =0;
       newptr->tstamp    =0;
       newptr->lasturl   =blank_str;
+      newptr->llen      =0;
 	  strcpy(newptr->string,str);
    }
    return newptr;
@@ -318,6 +320,7 @@ UNODEPTR new_unode(char *str, int len)
          fprintf(stderr,"\n");
       }
       str[MAXURLH-1]=0;
+	  len=MAXURLH-1;
    }
 
    if (( newptr = malloc(sizeof(struct unode)+len+1)) != NULL)
@@ -443,6 +446,7 @@ RNODEPTR new_rnode(char *str,int len)
          fprintf(stderr,"\n");
       }
       str[MAXREFH-1]=0;
+	  len=MAXREFH-1;
    }
 
    if (( newptr = malloc(sizeof(struct rnode)+len+1)) != NULL)
@@ -563,6 +567,7 @@ ANODEPTR new_anode(char *str,int len)
          fprintf(stderr,"\n");
       }
       str[MAXAGENT-1]=0;
+	  len=MAXAGENT-1;
    }
 
    if (( newptr = malloc(sizeof(struct anode)+len+1)) != NULL)
@@ -678,6 +683,7 @@ SNODEPTR new_snode(char *str,int len)
          fprintf(stderr,"\n");
       }
       str[MAXSRCHH-1]=0;
+	  len=MAXSRCHH-1;
    }
 
    if (( newptr = malloc(sizeof(struct snode)+len+1)) != NULL)
@@ -781,6 +787,7 @@ INODEPTR new_inode(char *str,int len)
          fprintf(stderr,"\n");
       }
       str[MAXIDENT-1]=0;
+	  len=MAXIDENT-1;
    }
 
    if (( newptr = malloc(sizeof(struct inode)+len+1)) != NULL)
@@ -950,6 +957,7 @@ DNODEPTR new_dnode(char *str,int len)
          fprintf(stderr,"\n");
       }
       str[MAXHOST-1]=0;
+	  len=MAXHOST-1;
    }
 
    if (( newptr = malloc(sizeof(struct dnode)+len+1)) != NULL)

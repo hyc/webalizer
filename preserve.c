@@ -695,7 +695,11 @@ int restore_state()
 
       /* get last url */
       if ((fgets(buffer,BUFSIZE,fp)) == NULL) return 8;  /* error exit */
-      if (buffer[0]=='-') t_hnode.lasturl=blank_str;
+      if (buffer[0]=='-')
+	  {
+	     t_hnode.lasturl=blank_str;
+		 t_hnode.llen=0;
+	  }
       else
       {
 	     t_hnode.llen = strlen(buffer)-1;
@@ -737,7 +741,11 @@ int restore_state()
 
       /* get last url */
       if ((fgets(buffer,BUFSIZE,fp)) == NULL) return 9;  /* error exit */
-      if (buffer[0]=='-') t_hnode.lasturl=blank_str;
+      if (buffer[0]=='-')
+	  {
+	    t_hnode.lasturl=blank_str;
+		t_hnode.llen=0;
+	  }
       else
       {
 	     t_hnode.llen = strlen(buffer)-1;
