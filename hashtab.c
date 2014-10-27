@@ -327,8 +327,7 @@ UNODEPTR new_unode(char *str, int len)
    {
       newptr->string=(char *)(newptr+1);
 	  newptr->slen = len;
-      newptr->count = 0;
-      newptr->flag  = OBJ_REG;
+      newptr->files = 0;
 	  strcpy(newptr->string,str);
    }
    return newptr;
